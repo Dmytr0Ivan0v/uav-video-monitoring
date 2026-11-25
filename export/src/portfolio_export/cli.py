@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 from portfolio_export import console, gt, media
+from portfolio_export.change import export_change
 from portfolio_export.config import Config, load_config
 from portfolio_export.engineering import engineering
 from portfolio_export.facts import facts
@@ -117,6 +118,9 @@ def export(cfg: Config) -> None:
     gt_file = seq / read_yaml(run / 'run_config.yaml')['config']['sequence']['gt']
     done(out, [gt_file] + [run / f for run in nav.runs.values()
                            for f in ('trajectory.tum', 'vo_log.csv', 'eval.json', 'run_config.yaml', 'calibration.yaml')])
+
+    for out, sources in export_change(cfg.change, cfg.course, cfg.data_dir, cfg.media_dir):
+        done(out, sources)
 
     out = cfg.data_dir / 'engineering.json'
     doc, sources = engineering(cfg.engineering, cfg.course)

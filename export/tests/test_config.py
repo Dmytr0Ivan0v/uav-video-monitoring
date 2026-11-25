@@ -41,6 +41,14 @@ detector:
 navigation:
   runs: {{base: runs/l09_vo_base}}
   thumbs: {{every: 8, size: [160, 120], cols: 10}}
+change:
+  run: runs/chg_r4
+  run_nonorm: runs/chg_nonorm_r4
+  config: configs/change_run.yaml
+  fp_labels: configs/fp_labels.yaml
+  examples: images/change
+  pairs: [c185]
+  display_width: 1344
 recipe:
   out: recipe
   train_args: runs_hw3/ft1_train/args.yaml

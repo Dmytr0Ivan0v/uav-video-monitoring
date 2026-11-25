@@ -231,6 +231,15 @@ navigation:                # VO runs on TUM RGB-D fr1_xyz, a handheld camera
     blur: runs/l09_vo_blur   # motion blur 15 px on the VO input
   thumbs: {every: 8, size: [128, 96], cols: 10}   # 100 gray frames per run in one JPEG
 
+change:                    # change detection runs on clip 137, frame pairs
+  run: runs/chg_r4
+  run_nonorm: runs/chg_nonorm_r4   # the same run without light normalization
+  config: configs/change_run.yaml
+  fp_labels: configs/fp_labels.yaml
+  examples: images/change          # crops the report shows
+  pairs: [c185, m045, c205, s075, l060_hard]   # camera motion, static camera, worst alignment, static scene, light
+  display_width: 1344
+
 recipe:
   out: recipe              # relative to this file
   train_args: runs_hw3/ft1_train/args.yaml

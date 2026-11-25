@@ -75,6 +75,17 @@ class Navigation:
 
 
 @dataclass(frozen=True)
+class Change:
+    run: Path               # change run with light normalization, absolute
+    run_nonorm: Path        # the same configuration without it, absolute
+    config: Path            # change_run.yaml of the run, absolute
+    fp_labels: Path         # manual classes of false events, absolute
+    examples: Path          # crops the report shows, absolute
+    pairs: tuple[str, ...]  # pairs the page shows
+    display_width: int      # px of the pictures on the page
+
+
+@dataclass(frozen=True)
 class Recipe:
     out: Path               # export/recipe, absolute
     train_args: Path        # Ultralytics args.yaml of the fine-tune, absolute
@@ -95,6 +106,7 @@ class Config:
     hero: Hero
     detector: Detector
     navigation: Navigation
+    change: Change
     recipe: Recipe
 
     @property
@@ -119,7 +131,8 @@ def load_config(path: Path) -> Config:
     if not (site / 'astro.config.mjs').is_file():
         raise FileNotFoundError(f'site: {site} has no astro.config.mjs')
 
-    c, r, eng, h, det, nav = d['clip'], d['recipe'], d['engineering'], d['hero'], d['detector'], d['navigation']
+    c, r, eng, h, det, nav, chg = (d['clip'], d['recipe'], d['engineering'], d['hero'], d['detector'],
+                                   d['navigation'], d['change'])
     return Config(
         course=course,
         site=site,
@@ -149,6 +162,9 @@ def load_config(path: Path) -> Config:
         ),
         navigation=Navigation(runs={k: course / v for k, v in nav['runs'].items()}, thumbs_every=nav['thumbs']['every'],
                               thumbs_size=tuple(nav['thumbs']['size']), thumbs_cols=nav['thumbs']['cols']),
+        change=Change(run=course / chg['run'], run_nonorm=course / chg['run_nonorm'], config=course / chg['config'],
+                      fp_labels=course / chg['fp_labels'], examples=course / chg['examples'],
+                      pairs=tuple(chg['pairs']), display_width=chg['display_width']),
         recipe=Recipe(out=base / r['out'], train_args=course / r['train_args'],
                       onnx_export=course / r['onnx_export'], train_paths=dict(r['train_paths'])),
     )

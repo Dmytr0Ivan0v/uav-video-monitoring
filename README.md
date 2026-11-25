@@ -28,6 +28,7 @@ make image     # docker image uav-portfolio
 - `site/public/data/engineering.json` - engine benchmarks, scenario results and the long stability run.
 - `site/public/data/detector.json` and `site/public/models/ft1.onnx` - the browser detector: the ONNX model of the course runs, its thresholds, reference boxes on five clip frames, the robustness curves.
 - `site/public/data/navigation.json` and `site/public/media/tum/` - visual odometry runs on TUM RGB-D fr1_xyz: poses after one SE3 alignment, the error at every pose, gray frames the odometry saw.
+- `site/public/data/change.json` - change detection on clip 137: PR curve over the thresholds, pair statistics, light normalization, the hand review of false spots. The aligned frames and the mask levels per threshold are VisDrone pixels and are built into `site/public/media/visdrone/change/`.
 - `site/src/lib/detector/fixtures/` - cv2 and numpy outputs the browser code is tested against.
 - `site/public/data/manifest.json` - sha256 of every exported file and of its sources, commit of the course repository.
 - `export/recipe/` - how the detector weights were made.
