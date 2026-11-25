@@ -1,0 +1,56 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { DICTS, type Lang } from '../i18n';
+import type { Dict } from '../i18n/en';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const other: Lang = t.lang === 'en' ? 'uk' : 'en';
+---
+
+<header>
+  <div class="wrap">
+    <div class="brand">{t.site.title} <span>· {t.site.role}</span></div>
+    <a class="lang" href={getRelativeLocaleUrl(other)} hreflang={other} lang={other}>{DICTS[other].langName}</a>
+  </div>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 20px;
+    padding-block: 12px;
+  }
+
+  .brand {
+    font-family: var(--f-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .brand span {
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .lang {
+    margin-left: auto;
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .lang:hover {
+    color: var(--fg);
+  }
+</style>

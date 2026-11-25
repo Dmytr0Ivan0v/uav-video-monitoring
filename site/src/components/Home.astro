@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import ConsoleSection from './ConsoleSection.astro';
+import Header from './Header.astro';
+import type { Dict } from '../i18n/en';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+---
+
+<Base title={t.site.title} description={t.site.description}>
+  <Header {t} />
+  <main>
+    <ConsoleSection {t} />
+  </main>
+</Base>

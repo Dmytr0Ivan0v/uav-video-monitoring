@@ -1,0 +1,50 @@
+---
+import type { Dict } from '../i18n/en';
+import type { ClipDoc } from '../lib/console/types';
+import { readPublicJson } from '../lib/data/files';
+import { fill } from '../lib/format';
+import Console from './console/Console.svelte';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const clip = readPublicJson<ClipDoc>('data/console/clip137.json');
+---
+
+<section id="console">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">{fill(t.console.eyebrow, { clip: clip.id })}</p>
+      <h2>{t.console.title}</h2>
+      <p class="intro">{t.console.intro}</p>
+    </div>
+    <Console client:visible t={t.console} lang={t.lang} {clip} />
+  </div>
+</section>
+
+<style>
+  section {
+    padding-block: 28px;
+  }
+
+  .head {
+    margin-bottom: 14px;
+  }
+
+  .eyebrow {
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 6px;
+    font-size: 28px;
+  }
+
+  .intro {
+    max-width: 70ch;
+    margin: 4px 0 0;
+    color: var(--muted);
+  }
+</style>
