@@ -1,0 +1,45 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Base from '../layouts/Base.astro';
+import type { Dict } from '../i18n/en';
+import type { ClipDoc } from '../lib/console/types';
+import { readPublicJson } from '../lib/data/files';
+import { PROFILE } from '../profile';
+import Footer from './Footer.astro';
+import Header from './Header.astro';
+import SectionHead from './SectionHead.astro';
+import DetectorLab from './lab/DetectorLab.svelte';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const clip = readPublicJson<ClipDoc>('data/console/clip137.json');
+const name = PROFILE.name[t.lang as 'en' | 'uk'];
+---
+
+<Base
+  title={`${t.lab.title} · ${name}`}
+  description={t.lab.description}
+  alternates={[
+    { lang: 'en', path: getRelativeLocaleUrl('en', 'lab/detector') },
+    { lang: 'uk', path: getRelativeLocaleUrl('uk', 'lab/detector') },
+    { lang: 'x-default', path: getRelativeLocaleUrl('en', 'lab/detector') },
+  ]}
+>
+  <Header {t} path="lab/detector" />
+  <main class="wrap">
+    <SectionHead eyebrow={t.lab.eyebrow} title={t.lab.title}>
+      <p>{t.lab.intro}</p>
+    </SectionHead>
+    <DetectorLab client:load t={t.lab} groups={t.console.groups} clip={clip.id} />
+  </main>
+  <Footer {t} />
+</Base>
+
+<style>
+  main {
+    padding-block: 28px;
+  }
+</style>

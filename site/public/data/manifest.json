@@ -126,6 +126,53 @@
         "runs/l12_nominal/frames.csv": "ffff8742b92c7c360fe6381954dd38a7b48ffbed93630486ee2dad65d4859411"
       }
     },
+    "models/ft1.onnx": {
+      "sha256": "92d9cd0a5c14f519e19c9396cc8a3d937acddb44e5f1fa5f6d045846189e1091",
+      "sources": {
+        "runs/l11_export/ft1.onnx": "92d9cd0a5c14f519e19c9396cc8a3d937acddb44e5f1fa5f6d045846189e1091"
+      }
+    },
+    "data/detector.json": {
+      "sha256": "99a055bf11d60618ef619ee0ed13e645dc064d83217e342d21d07f9cd0ce6563",
+      "sources": {
+        "configs/degradations.yaml": "ecd6628c7e1c1e8bd26453c953c4c8bad80e7a0e1af6183cd993514550a9f695",
+        "configs/deploy.yaml": "153b1d765a8d6a6321cbff1bacfbe89a9b11b60067bed1d296541fe1d257cd6c",
+        "configs/eval_classes.json": "7360b35ec8f97495bc3aa54f6e4d4e754e9edcfdcc5131df07cd2489323c9ae6",
+        "configs/video_run_stride2.yaml": "d331a039837b794addc30e7dc332deefdb005a59c7bc746d8a487cdb43120c76",
+        "runs/l11_export/export.json": "8e03868d591cfdcc3629b160f3ed0790bfc1d15f79946d24cabdb43469ad66cf",
+        "runs_hw4/degradations/curves.json": "453ce167d1ff3122928642625a17eaffc3688b1c6481fbd1aaf3b8dcd40da0a8"
+      }
+    },
+    "media/visdrone/detector/frame_030.png": {
+      "sha256": "91dbd6ab17a136d615c66e8fdfbf9ba70111974e09459b2d5c7beefa96fee77a",
+      "sources": {
+        "clips/uav0000137_00458_v.mp4": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866"
+      }
+    },
+    "media/visdrone/detector/frame_070.png": {
+      "sha256": "4ede566f19b15f68bad421acfd6f5a89e489562acadd66fe9e00b41de298a0ed",
+      "sources": {
+        "clips/uav0000137_00458_v.mp4": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866"
+      }
+    },
+    "media/visdrone/detector/frame_110.png": {
+      "sha256": "a5278b16c2ca5a9b22c194e7e0d99b35a2c6ed2df426075601c315d9daa96a97",
+      "sources": {
+        "clips/uav0000137_00458_v.mp4": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866"
+      }
+    },
+    "media/visdrone/detector/frame_150.png": {
+      "sha256": "996a3bd3ea7405e3dfa9452e9f862b82bd874ed1618883764e116e5cba28680d",
+      "sources": {
+        "clips/uav0000137_00458_v.mp4": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866"
+      }
+    },
+    "media/visdrone/detector/frame_190.png": {
+      "sha256": "52c30c9956caf62b6e6282f6042e6204a607506a32303ab810b0800b13609f84",
+      "sources": {
+        "clips/uav0000137_00458_v.mp4": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866"
+      }
+    },
     "data/console/clip137.json": {
       "sha256": "0a63f616347f333dc727ebcffd39cadea72a563b270f479010820d58e95aedc2",
       "sources": {

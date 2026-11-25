@@ -213,6 +213,18 @@ hero:
     1: '#b394ff'           # bicycle
     3: '#b394ff'           # motorcycle
 
+detector:                  # browser lab: model, reference frames, tolerance
+  onnx_export: runs/l11_export/export.json
+  deploy: configs/deploy.yaml
+  browser_limits:            # |Δscore| limit of each browser backend, a key of consistency.max_score_diff
+    wasm: onnx_fp32          # CPU, as ONNX FP32 against PyTorch
+    webgpu: tensorrt_fp16    # GPU kernels, as TensorRT on a GPU
+  reference_frames: [30, 70, 110, 150, 190]  # snapshot frames of the nominal run
+  fixture_min_score: 0.05    # half of conf 0.1: anchors below it never become candidates
+  degradations: configs/degradations.yaml
+  curves: runs_hw4/degradations/curves.json
+  fixtures: ../site/src/lib/detector/fixtures   # relative to this file
+
 recipe:
   out: recipe              # relative to this file
   train_args: runs_hw3/ft1_train/args.yaml

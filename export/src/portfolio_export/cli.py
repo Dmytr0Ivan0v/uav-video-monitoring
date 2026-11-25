@@ -9,6 +9,7 @@ from portfolio_export.engineering import engineering
 from portfolio_export.facts import facts
 from portfolio_export.hero import hero_clip
 from portfolio_export.manifest import course_git, entry
+from portfolio_export.model import export_model
 from portfolio_export.outputs import sha256, write_json
 from portfolio_export.recipe import write_recipe
 from portfolio_export.runs import RUN_FILES, check_rows, read_json, read_yaml
@@ -73,6 +74,9 @@ def export(cfg: Config) -> None:
               cfg.hero.colors, cfg.hero.crf)
     for out in (hero_mp4, hero_poster):
         done(out, [video, hero_run.run / 'events.jsonl', hero_run.run / 'frames.csv'])
+
+    for out, sources in export_model(cfg, video):
+        done(out, sources)
 
     to_model, names = gt.class_map(cfg.eval_classes)
     clip_doc = console.clip(cfg.clip.id, run_config, read_yaml(cfg.contract), names, cfg.clip.size, {

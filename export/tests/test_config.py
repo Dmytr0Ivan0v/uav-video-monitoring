@@ -29,6 +29,15 @@ engineering:
   scenarios: runs/l12_scenarios/results.json
   stability: runs/l12_stability/stability.json
 hero: {{run: nominal, crf: 30, colors: {{0: '#ff77b0'}}}}
+detector:
+  onnx_export: runs/l11_export/export.json
+  deploy: configs/deploy.yaml
+  browser_limits: {{wasm: onnx_fp32, webgpu: tensorrt_fp16}}
+  reference_frames: [30, 70]
+  fixture_min_score: 0.05
+  degradations: configs/degradations.yaml
+  curves: runs_hw4/degradations/curves.json
+  fixtures: ../site/src/lib/detector/fixtures
 recipe:
   out: recipe
   train_args: runs_hw3/ft1_train/args.yaml

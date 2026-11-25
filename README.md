@@ -26,6 +26,8 @@ make image     # docker image uav-portfolio
 - `site/public/data/console/` - replay of recorded runs on VisDrone clip 137: boxes per frame, statuses, stage timings, checks of the scenario tables.
 - `site/public/data/facts.json` - every number the page texts quote, each with the course file and field it comes from.
 - `site/public/data/engineering.json` - engine benchmarks, scenario results and the long stability run.
+- `site/public/data/detector.json` and `site/public/models/ft1.onnx` - the browser detector: the ONNX model of the course runs, its thresholds, reference boxes on five clip frames, the robustness curves.
+- `site/src/lib/detector/fixtures/` - cv2 and numpy outputs the browser code is tested against.
 - `site/public/data/manifest.json` - sha256 of every exported file and of its sources, commit of the course repository.
 - `export/recipe/` - how the detector weights were made.
 

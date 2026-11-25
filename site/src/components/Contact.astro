@@ -10,7 +10,6 @@ interface Props {
 
 const { t } = Astro.props;
 const c = t.home.contact;
-const f = t.home.footer;
 const base = import.meta.env.BASE_URL;
 // a link with `hidden` is encoded in PROFILE and becomes a link only after a click
 interface Link {
@@ -50,14 +49,6 @@ links.push({ label: c.source, href: PROFILE.source });
     <p class="course">{c.course}</p>
   </div>
 </section>
-
-<footer>
-  <div class="wrap">
-    <p class="name">{PROFILE.name[t.lang as Lang]}</p>
-    <p>{f.data}</p>
-    <p>{f.license} <a href={PROFILE.source}>{f.source}</a></p>
-  </div>
-</footer>
 
 <style>
   section {
@@ -104,28 +95,6 @@ links.push({ label: c.source, href: PROFILE.source });
   .course {
     margin: 12px 0 0;
     font-size: 13px;
-    color: var(--muted);
-  }
-
-  footer {
-    margin-top: 20px;
-    border-top: 1px solid var(--line);
-  }
-
-  footer .wrap {
-    padding-block: 24px 40px;
-  }
-
-  footer p {
-    max-width: 90ch;
-    margin: 6px 0 0;
-    font-size: 12.5px;
-    color: var(--faint);
-  }
-
-  footer .name {
-    font-family: var(--f-display);
-    font-size: 15px;
     color: var(--muted);
   }
 

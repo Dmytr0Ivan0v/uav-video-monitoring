@@ -6,24 +6,27 @@ import { PROFILE } from '../profile';
 
 interface Props {
   t: Dict;
+  path?: string; // the page without the locale prefix, '' for the main page
 }
 
-const { t } = Astro.props;
+const { t, path = '' } = Astro.props;
 const lang = t.lang as Lang;
 const other: Lang = lang === 'en' ? 'uk' : 'en';
 const nav = t.home.nav;
+const home = getRelativeLocaleUrl(lang);
 ---
 
 <header>
   <div class="wrap">
-    <a class="brand" href={getRelativeLocaleUrl(lang)}>{PROFILE.name[lang]} <span>· {t.site.project}</span></a>
+    <a class="brand" href={home}>{PROFILE.name[lang]} <span>· {t.site.project}</span></a>
     <nav>
-      <a href="#console">{nav.console}</a>
-      <a href="#engineering">{nav.engineering}</a>
-      <a href="#decisions">{nav.decisions}</a>
-      <a href="#contact">{nav.contact}</a>
+      <a href={`${home}#console`}>{nav.console}</a>
+      <a href={getRelativeLocaleUrl(lang, 'lab/detector')}>{nav.detector}</a>
+      <a href={`${home}#engineering`}>{nav.engineering}</a>
+      <a href={`${home}#decisions`}>{nav.decisions}</a>
+      <a href={`${home}#contact`}>{nav.contact}</a>
     </nav>
-    <a class="lang" href={getRelativeLocaleUrl(other)} hreflang={other} lang={other}>{DICTS[other].langName}</a>
+    <a class="lang" href={getRelativeLocaleUrl(other, path)} hreflang={other} lang={other}>{DICTS[other].langName}</a>
   </div>
 </header>
 

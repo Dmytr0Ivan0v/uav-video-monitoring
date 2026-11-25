@@ -55,6 +55,18 @@ class Hero:
 
 
 @dataclass(frozen=True)
+class Detector:
+    onnx_export: Path       # export.json of the FP32 ONNX run, absolute
+    deploy: Path            # deploy.yaml: input shape, consistency protocol and limits
+    browser_limits: dict[str, str]  # browser backend -> key of consistency.max_score_diff in deploy.yaml
+    reference_frames: tuple[int, ...]  # clip frames the browser is checked on
+    fixture_min_score: float  # decode fixture keeps anchors with a best score at least this
+    degradations: Path      # degradations.yaml of the robustness homework
+    curves: Path            # curves.json of the robustness homework
+    fixtures: Path          # site test fixtures, absolute
+
+
+@dataclass(frozen=True)
 class Recipe:
     out: Path               # export/recipe, absolute
     train_args: Path        # Ultralytics args.yaml of the fine-tune, absolute
@@ -73,6 +85,7 @@ class Config:
     facts: tuple[Fact, ...]
     engineering: Engineering
     hero: Hero
+    detector: Detector
     recipe: Recipe
 
     @property
@@ -97,7 +110,7 @@ def load_config(path: Path) -> Config:
     if not (site / 'astro.config.mjs').is_file():
         raise FileNotFoundError(f'site: {site} has no astro.config.mjs')
 
-    c, r, eng, h = d['clip'], d['recipe'], d['engineering'], d['hero']
+    c, r, eng, h, det = d['clip'], d['recipe'], d['engineering'], d['hero'], d['detector']
     return Config(
         course=course,
         site=site,
@@ -118,6 +131,13 @@ def load_config(path: Path) -> Config:
             stability=course / eng['stability'],
         ),
         hero=Hero(run=h['run'], crf=h['crf'], colors={int(k): v for k, v in h['colors'].items()}),
+        detector=Detector(
+            onnx_export=course / det['onnx_export'], deploy=course / det['deploy'],
+            browser_limits=dict(det['browser_limits']),
+            reference_frames=tuple(det['reference_frames']), fixture_min_score=det['fixture_min_score'],
+            degradations=course / det['degradations'], curves=course / det['curves'],
+            fixtures=(base / det['fixtures']).resolve(),
+        ),
         recipe=Recipe(out=base / r['out'], train_args=course / r['train_args'],
                       onnx_export=course / r['onnx_export'], train_paths=dict(r['train_paths'])),
     )

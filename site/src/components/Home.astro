@@ -9,6 +9,7 @@ import ConsoleSection from './ConsoleSection.astro';
 import Contact from './Contact.astro';
 import Decisions from './Decisions.astro';
 import Engineering from './Engineering.astro';
+import Footer from './Footer.astro';
 import Header from './Header.astro';
 import Hero from './Hero.astro';
 import NotMeasured from './NotMeasured.astro';
@@ -44,5 +45,6 @@ const name = PROFILE.name[t.lang as 'en' | 'uk'];
     <NotMeasured {t} />
     <Contact {t} />
   </main>
+  <Footer {t} />
   <Reveal />
 </Base>
