@@ -5,7 +5,9 @@ from pathlib import Path
 
 from portfolio_export import console, gt, media
 from portfolio_export.config import Config, load_config
+from portfolio_export.engineering import engineering
 from portfolio_export.facts import facts
+from portfolio_export.hero import hero_clip
 from portfolio_export.manifest import course_git, entry
 from portfolio_export.outputs import sha256, write_json
 from portfolio_export.recipe import write_recipe
@@ -39,9 +41,11 @@ def export(cfg: Config) -> None:
         raise ValueError(f'{video}: frame count differs from nb_frames {clip_cfg["nb_frames"]} of the run config')
     fps = clip_cfg['fps_src']
 
+    runs = {}
     for c in cfg.console:
         out = cfg.data_dir / 'console' / f'{c.id}.json'
-        write_json(out, console.scenario(c.id, c.run, cfg.course, check_rows(c.results, c.row), fps))
+        runs[c.id] = console.scenario(c.id, c.run, cfg.course, check_rows(c.results, c.row), fps)
+        write_json(out, runs[c.id])
         done(out, [c.run / f for f in RUN_FILES] + [c.results])
 
     # media: the clip, its poster and the picture every freeze scenario repeats
@@ -62,11 +66,21 @@ def export(cfg: Config) -> None:
         still_files[str(frame)] = out.relative_to(public).as_posix()
         done(out, [video])
 
+    hero_mp4 = media_dir / f'hero{cfg.clip.id}.mp4'
+    hero_poster = media_dir / f'hero{cfg.clip.id}.webp'
+    hero_run = next(c for c in cfg.console if c.id == cfg.hero.run)
+    hero_clip(video, hero_mp4, hero_poster, runs[cfg.hero.run], clip_cfg['resolution'], cfg.clip.size, fps,
+              cfg.hero.colors, cfg.hero.crf)
+    for out in (hero_mp4, hero_poster):
+        done(out, [video, hero_run.run / 'events.jsonl', hero_run.run / 'frames.csv'])
+
     to_model, names = gt.class_map(cfg.eval_classes)
     clip_doc = console.clip(cfg.clip.id, run_config, read_yaml(cfg.contract), names, cfg.clip.size, {
         'video': clip_mp4.relative_to(public).as_posix(),
         'poster': still_files[str(cfg.clip.poster_frame)],
         'stills': still_files,
+        'hero': hero_mp4.relative_to(public).as_posix(),
+        'hero_poster': hero_poster.relative_to(public).as_posix(),
     })
     out = cfg.data_dir / 'console' / f'{name}.json'
     write_json(out, clip_doc, compact=False)
@@ -79,7 +93,12 @@ def export(cfg: Config) -> None:
 
     out = cfg.data_dir / 'facts.json'
     write_json(out, facts(cfg.facts, cfg.course), compact=False)
-    done(out, [f.results for f in cfg.facts])
+    done(out, [f.file for f in cfg.facts])
+
+    out = cfg.data_dir / 'engineering.json'
+    doc, sources = engineering(cfg.engineering, cfg.course)
+    write_json(out, doc, compact=False)
+    done(out, sources)
 
     for f in write_recipe(cfg.recipe):
         print(f'{(cfg.recipe.out / f).relative_to(cfg.site.parent)}')

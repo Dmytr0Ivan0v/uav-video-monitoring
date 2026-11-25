@@ -1,22 +1,51 @@
-"""Headline facts: fields of check rows in results.json -> facts document."""
+"""Facts for the site texts: fields of course result files (JSON, YAML, CSV) -> facts document."""
 
+import csv
 from pathlib import Path
 
 from portfolio_export.config import Fact
-from portfolio_export.runs import check_rows
+from portfolio_export.runs import read_json, read_yaml
+
+
+def number(text: str) -> int | float | str:
+    for cast in (int, float):
+        try:
+            return cast(text)
+        except ValueError:
+            pass
+    return text
+
+
+def load(path: Path):
+    if path.suffix == '.json':
+        return read_json(path)
+    if path.suffix in ('.yaml', '.yml'):
+        return read_yaml(path)
+    if path.suffix == '.csv':
+        with path.open(encoding='utf-8', newline='') as f:
+            return [{k: number(v) for k, v in row.items()} for row in csv.DictReader(f)]
+    raise ValueError(f'{path}: no reader for {path.suffix}')
 
 
 def fact_value(f: Fact):
-    rows = [r for r in check_rows(f.results, f.row) if r['check'] == f.check]
-    if len(rows) != 1:
-        raise ValueError(f'fact {f.name}: {len(rows)} rows {f.row}/{f.check} in {f.results}')
-    value = rows[0]
+    doc = load(f.file)
+    if f.match:
+        items = doc if isinstance(doc, list) else doc[f.list]
+        hits = [r for r in items if all(r.get(k) == v for k, v in f.match.items())]
+        if len(hits) != 1:
+            raise ValueError(f'fact {f.name}: {len(hits)} rows match {f.match} in {f.file}')
+        doc = hits[0]
     for key in f.field.split('.'):
-        value = value[key]
-    return value
+        doc = doc[key]
+    return doc
 
 
 def facts(items: tuple[Fact, ...], course: Path) -> dict:
-    return {f.name: {'value': fact_value(f), 'source': f.results.relative_to(course).as_posix(),
-                     'row': f.row, 'check': f.check, 'field': f.field}
-            for f in items}
+    out = {}
+    for f in items:
+        entry = {'value': fact_value(f), 'source': f.file.relative_to(course).as_posix()}
+        if f.match:
+            entry['match'] = f.match
+        entry['field'] = f.field
+        out[f.name] = entry
+    return out

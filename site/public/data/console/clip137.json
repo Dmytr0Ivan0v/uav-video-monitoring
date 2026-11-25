@@ -36,6 +36,8 @@
     "stills": {
       "0": "media/visdrone/clip137_f000.jpg",
       "100": "media/visdrone/clip137_f100.jpg"
-    }
+    },
+    "hero": "media/visdrone/hero137.mp4",
+    "hero_poster": "media/visdrone/hero137.webp"
   }
 }

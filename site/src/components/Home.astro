@@ -1,19 +1,48 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import Base from '../layouts/Base.astro';
-import ConsoleSection from './ConsoleSection.astro';
-import Header from './Header.astro';
 import type { Dict } from '../i18n/en';
+import type { ClipDoc } from '../lib/console/types';
+import { readPublicJson } from '../lib/data/files';
+import { PROFILE } from '../profile';
+import ConsoleSection from './ConsoleSection.astro';
+import Contact from './Contact.astro';
+import Decisions from './Decisions.astro';
+import Engineering from './Engineering.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import NotMeasured from './NotMeasured.astro';
+import Reveal from './Reveal.astro';
 
 interface Props {
   t: Dict;
 }
 
 const { t } = Astro.props;
+const clip = readPublicJson<ClipDoc>('data/console/clip137.json');
+const poster = import.meta.env.BASE_URL + clip.media.hero_poster;
+const name = PROFILE.name[t.lang as 'en' | 'uk'];
 ---
 
-<Base title={t.site.title} description={t.site.description}>
+<Base
+  title={`${name} · ${t.site.project}`}
+  description={t.site.description}
+  image={clip.media.hero_poster}
+  preloadImage={poster}
+  alternates={[
+    { lang: 'en', path: getRelativeLocaleUrl('en') },
+    { lang: 'uk', path: getRelativeLocaleUrl('uk') },
+    { lang: 'x-default', path: getRelativeLocaleUrl('en') },
+  ]}
+>
   <Header {t} />
   <main>
+    <Hero {t} {poster} />
     <ConsoleSection {t} />
+    <Engineering {t} />
+    <Decisions {t} />
+    <NotMeasured {t} />
+    <Contact {t} />
   </main>
+  <Reveal />
 </Base>

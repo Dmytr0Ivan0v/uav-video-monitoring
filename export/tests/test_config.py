@@ -22,7 +22,13 @@ clip: {{id: '137', size: [960, 540], crf: 25, gop: 10, poster_frame: 0}}
 console:
   - {{id: freeze, run: runs/l12_freeze, results: runs/l12_scenarios/results.json, row: freeze}}
 facts:
-  frozen_detected: {{results: runs/l12_scenarios/results.json, row: freeze, check: frozen, field: ms}}
+  frozen_detected: {{file: runs/l12_scenarios/results.json, match: {{row: freeze, check: frozen}}, field: ms}}
+engineering:
+  engines:
+    - {{id: tensorrt_t4, bench: runs/l11_bench_trt, results: runs/l11_quality_t4/results.json, row: TRT}}
+  scenarios: runs/l12_scenarios/results.json
+  stability: runs/l12_stability/stability.json
+hero: {{run: nominal, crf: 30, colors: {{0: '#ff77b0'}}}}
 recipe:
   out: recipe
   train_args: runs_hw3/ft1_train/args.yaml
@@ -44,6 +50,8 @@ def test_paths_resolve_against_config_file(tmp_path, monkeypatch):
     assert cfg.data_dir == (tmp_path / 'portfolio' / 'site' / 'public' / 'data').resolve()
     assert cfg.console[0].run == cfg.course / 'runs' / 'l12_freeze'
     assert cfg.recipe.out == (tmp_path / 'portfolio' / 'export' / 'recipe').resolve()
+    assert cfg.facts[0].list == 'rows'
+    assert cfg.hero.colors == {0: '#ff77b0'}
 
 
 def test_wrong_course_path_fails(tmp_path):

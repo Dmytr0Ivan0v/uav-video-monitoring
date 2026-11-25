@@ -19,6 +19,9 @@ site/.astro/
 site/public/media/visdrone/
 site/public/data/visdrone/
 
+# CV PDFs carry contacts in plain text: kept out of the public history, copied to the server with the media
+site/public/cv/
+
 # Editors / OS
 .idea/
 .vscode/

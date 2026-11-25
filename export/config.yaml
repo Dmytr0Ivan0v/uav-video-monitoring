@@ -47,48 +47,171 @@ console:
     results: runs/l11_quality_t4/results.json
     row: TRT
 
-# Headline numbers: each one is a field of a check row, never typed by hand.
+# Numbers the site texts quote: one field of one course file each, never typed by hand.
+# match picks the single row with these values (rows of results.json, lines of a CSV).
 facts:
+  # stream scenarios, runs/l12_*
   ok_in_freeze_nocheck:
-    results: runs/l12_scenarios/results.json
-    row: freeze_nocheck
-    check: ok_in_freeze
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze_nocheck, check: ok_in_freeze}
+    field: ms
+  ok_in_freeze_check:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: ok_in_freeze}
     field: ms
   frozen_detected:
-    results: runs/l12_scenarios/results.json
-    row: freeze
-    check: frozen
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: frozen}
     field: ms
   frozen_expected:
-    results: runs/l12_scenarios/results.json
-    row: freeze
-    check: frozen
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: frozen}
     field: m0
   idf1_drop_rel_nocheck:
-    results: runs/l12_scenarios/results.json
-    row: freeze_nocheck
-    check: idf1
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze_nocheck, check: idf1}
     field: delta_rel
-  frame_dropped:
-    results: runs/l12_scenarios/results.json
-    row: drop_every
-    check: frame_dropped
+  switches_after_freeze_nominal:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: switches_window}
+    field: m0
+  switches_after_freeze:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: switches_window}
     field: ms
+  frame_dropped:
+    file: runs/l12_scenarios/results.json
+    match: {row: drop_every, check: frame_dropped}
+    field: ms
+  drop_every_n:
+    file: runs/l12_drop_every/manifest.json
+    field: scenario.drop_every.every
+  idf1_drop_rel_drop_every:
+    file: runs/l12_scenarios/results.json
+    match: {row: drop_every, check: idf1}
+    field: delta_rel
+  idf1_limit_drop_every:
+    file: runs/l12_scenarios/results.json
+    match: {row: drop_every, check: idf1}
+    field: threshold
+  # engines, runs/l11_*
   idf1_drop_rel_onnx:
-    results: runs/l11_quality/results.json
-    row: ONNX
-    check: idf1
+    file: runs/l11_quality/results.json
+    match: {row: ONNX, check: idf1}
     field: delta_rel
   idf1_drop_rel_tensorrt:
-    results: runs/l11_quality_t4/results.json
-    row: TRT
-    check: idf1
+    file: runs/l11_quality_t4/results.json
+    match: {row: TRT, check: idf1}
     field: delta_rel
-  p95_ms_tensorrt:
-    results: runs/l11_quality_t4/results.json
-    row: TRT
-    check: p95_ms
+  idf1_limit_engine:
+    file: runs/l11_quality_t4/results.json
+    match: {row: TRT, check: idf1}
+    field: threshold
+  inference_p95_ms_pytorch_t4:
+    file: runs/l11_bench_pytorch_gpu/bench.json
+    field: summary.inference_p95_ms
+  inference_p95_ms_tensorrt:
+    file: runs/l11_bench_trt/bench.json
+    field: summary.inference_p95_ms
+  frame_p95_ms_pytorch_t4:
+    file: runs/l11_quality_t4/results.json
+    match: {row: TRT, check: p95_ms}
+    field: m0
+  frame_p95_ms_tensorrt:
+    file: runs/l11_quality_t4/results.json
+    match: {row: TRT, check: p95_ms}
     field: ms
+  # fine-tuning, runs_hw3: COCO weights (B0) against FT1 on the cleaned VisDrone val
+  recall_coco:
+    file: runs_hw3/b0_640.json
+    field: metrics.recall
+  recall_finetuned:
+    file: runs_hw3/ft1_640.json
+    field: metrics.recall
+  map_coco:
+    file: runs_hw3/b0_640.json
+    field: metrics.mAP50-95
+  map_finetuned:
+    file: runs_hw3/ft1_640.json
+    field: metrics.mAP50-95
+  precision_coco:
+    file: runs_hw3/b0_640.json
+    field: metrics.precision
+  precision_finetuned:
+    file: runs_hw3/ft1_640.json
+    field: metrics.precision
+  false_positives_coco:
+    file: runs_hw3/b0_640.json
+    field: metrics.fp
+  false_positives_finetuned:
+    file: runs_hw3/ft1_640.json
+    field: metrics.fp
+  # every second frame, clip 137
+  clip_fps:
+    file: runs/l12_nominal/run_config.yaml
+    field: config.clips.137.fps_src
+  inference_p50_ms_pytorch_cpu:
+    file: runs/l11_bench_pytorch/bench.json
+    field: summary.inference_p50_ms
+  idf1_every_frame:
+    file: runs/base_137_r1/eval.csv
+    match: {class: OVERALL}
+    field: idf1
+  idf1_every_second_frame:
+    file: runs/stride2_137_r1/eval.csv
+    match: {class: OVERALL}
+    field: idf1
+  recall_every_frame:
+    file: runs/base_137_r1/eval.csv
+    match: {class: OVERALL}
+    field: recall
+  recall_every_second_frame:
+    file: runs/stride2_137_r1/eval.csv
+    match: {class: OVERALL}
+    field: recall
+  # thresholds before the runs, runs/l10_*: blur scenario S4
+  recall_drop_rel_blur:
+    file: runs/l10_scenarios/results.json
+    match: {row: S4, check: recall}
+    field: delta_rel
+  recall_limit_blur:
+    file: runs/l10_scenarios/results.json
+    match: {row: S4, check: recall}
+    field: threshold
+  bicycle_recall_nominal:
+    file: runs/l10_s1_nominal/eval.csv
+    match: {class: bicycle}
+    field: recall
+  bicycle_recall_blur:
+    file: runs/l10_s4_blur/eval.csv
+    match: {class: bicycle}
+    field: recall
+  # stability, runs/l12_stability
+  rss_growth_extrapolated_mb:
+    file: runs/l12_stability/stability.json
+    list: checks
+    match: {check: rss_growth_extrapolated_mb}
+    field: value
+
+engineering:
+  engines:                 # bench of the engine and its quality row against PyTorch on the same hardware
+    - {id: pytorch_cpu, bench: runs/l11_bench_pytorch, results: runs/l11_quality/results.json, row: S1}
+    - {id: onnx_cpu, bench: runs/l11_bench_onnx, results: runs/l11_quality/results.json, row: ONNX}
+    - {id: pytorch_t4, bench: runs/l11_bench_pytorch_gpu, results: runs/l11_quality_t4/results.json, row: S1}
+    - {id: tensorrt_t4, bench: runs/l11_bench_trt, results: runs/l11_quality_t4/results.json, row: TRT}
+  scenarios: runs/l12_scenarios/results.json
+  stability: runs/l12_stability/stability.json
+
+hero:
+  run: nominal             # console run whose boxes are drawn into the clip
+  crf: 30
+  colors:                  # model class id -> the legend colour of the site (tokens.css)
+    0: '#ff77b0'           # person
+    2: '#49c6e5'           # car
+    5: '#f4d35e'           # bus
+    7: '#f4d35e'           # truck
+    1: '#b394ff'           # bicycle
+    3: '#b394ff'           # motorcycle
 
 recipe:
   out: recipe              # relative to this file

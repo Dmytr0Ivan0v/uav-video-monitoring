@@ -1,0 +1,35 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+}
+
+const { eyebrow, title } = Astro.props;
+---
+
+<div class="head">
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h2>{title}</h2>
+  <slot />
+</div>
+
+<style>
+  .head {
+    margin-bottom: 14px;
+  }
+
+  .eyebrow {
+    margin: 0;
+  }
+
+  h2 {
+    margin-top: 6px;
+    font-size: 28px;
+  }
+
+  .head :global(p:not(.eyebrow)) {
+    max-width: 70ch;
+    margin: 4px 0 0;
+    color: var(--muted);
+  }
+</style>

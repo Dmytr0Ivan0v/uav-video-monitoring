@@ -8,7 +8,7 @@
   --line: #263240;
   --fg: #dde5ec;
   --muted: #8a99a8;
-  --faint: #5d6c7b;
+  --faint: #7d8c9b; /* 4.5:1 on --panel-2, the lightest background */
   --accent: #8fc7ff;
   --on-accent: #0b1420;
 

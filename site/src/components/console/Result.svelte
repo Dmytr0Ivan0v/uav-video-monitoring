@@ -17,7 +17,7 @@
     const vars = storyVars(run);
     return t.stories[runId].map((p) => fill(p, vars));
   });
-  const verdict = $derived(limits(run));
+  const verdict = $derived(limits(run.checks));
   const hardware = $derived(run.engine.gpu ? `${run.engine.gpu} · ${run.engine.cpu}` : run.engine.cpu);
 
   function checkName(row: CheckRow): string {

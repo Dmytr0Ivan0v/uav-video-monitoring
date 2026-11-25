@@ -2,18 +2,27 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { DICTS, type Lang } from '../i18n';
 import type { Dict } from '../i18n/en';
+import { PROFILE } from '../profile';
 
 interface Props {
   t: Dict;
 }
 
 const { t } = Astro.props;
-const other: Lang = t.lang === 'en' ? 'uk' : 'en';
+const lang = t.lang as Lang;
+const other: Lang = lang === 'en' ? 'uk' : 'en';
+const nav = t.home.nav;
 ---
 
 <header>
   <div class="wrap">
-    <div class="brand">{t.site.title} <span>· {t.site.role}</span></div>
+    <a class="brand" href={getRelativeLocaleUrl(lang)}>{PROFILE.name[lang]} <span>· {t.site.project}</span></a>
+    <nav>
+      <a href="#console">{nav.console}</a>
+      <a href="#engineering">{nav.engineering}</a>
+      <a href="#decisions">{nav.decisions}</a>
+      <a href="#contact">{nav.contact}</a>
+    </nav>
     <a class="lang" href={getRelativeLocaleUrl(other)} hreflang={other} lang={other}>{DICTS[other].langName}</a>
   </div>
 </header>
@@ -36,6 +45,8 @@ const other: Lang = t.lang === 'en' ? 'uk' : 'en';
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 0.02em;
+    color: var(--fg);
+    text-decoration: none;
   }
 
   .brand span {
@@ -43,14 +54,37 @@ const other: Lang = t.lang === 'en' ? 'uk' : 'en';
     color: var(--muted);
   }
 
-  .lang {
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
     margin-left: auto;
+  }
+
+  nav a,
+  .lang {
     font-size: 14px;
     color: var(--muted);
     text-decoration: none;
   }
 
+  nav a:hover,
   .lang:hover {
     color: var(--fg);
+  }
+
+  /* the other language's name in a system font: a page in one language loads no glyphs of the other */
+  .lang {
+    font-family: system-ui, sans-serif;
+  }
+
+  @media (max-width: 760px) {
+    nav {
+      display: none;
+    }
+
+    .lang {
+      margin-left: auto;
+    }
   }
 </style>

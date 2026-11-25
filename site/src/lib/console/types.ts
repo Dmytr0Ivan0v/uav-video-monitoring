@@ -27,6 +27,8 @@ export interface ClipDoc {
     video: string;
     poster: string;
     stills: Record<string, string>;
+    hero: string;         // clip with the boxes of the nominal run drawn in
+    hero_poster: string;  // its first frame
   };
 }
 

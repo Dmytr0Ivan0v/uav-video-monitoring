@@ -31,8 +31,8 @@ export function row(run: RunDoc, check: string): CheckRow | undefined {
 }
 
 // only rows with a limit have a result; the rest are shown for context
-export function limits(run: RunDoc): { passed: number; total: number } {
-  const judged = run.checks.filter((c) => c.result != null);
+export function limits(rows: CheckRow[]): { passed: number; total: number } {
+  const judged = rows.filter((c) => c.result != null);
   return { passed: judged.filter((c) => c.result === 'pass').length, total: judged.length };
 }
 

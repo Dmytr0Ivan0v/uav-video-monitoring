@@ -1,0 +1,138 @@
+---
+import type { Lang } from '../i18n';
+import type { Dict } from '../i18n/en';
+import { PROFILE } from '../profile';
+import SectionHead from './SectionHead.astro';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const c = t.home.contact;
+const f = t.home.footer;
+const base = import.meta.env.BASE_URL;
+// a link with `hidden` is encoded in PROFILE and becomes a link only after a click
+interface Link {
+  label: string;
+  href?: string;
+  hidden?: { value: string; kind: 'mailto' | 'url' | 'file' };
+}
+const links: Link[] = [];
+if (PROFILE.cv) links.push({ label: c.cv, hidden: { value: PROFILE.cv[t.lang as Lang], kind: 'file' } });
+if (PROFILE.email) links.push({ label: c.email, hidden: { value: PROFILE.email, kind: 'mailto' } });
+if (PROFILE.linkedin) links.push({ label: c.linkedin, hidden: { value: PROFILE.linkedin, kind: 'url' } });
+if (PROFILE.telegram) links.push({ label: c.telegram, hidden: { value: PROFILE.telegram, kind: 'url' } });
+links.push({ label: c.source, href: PROFILE.source });
+---
+
+<section id="contact">
+  <div class="wrap">
+    <SectionHead title={c.title}>
+      <p>{c.text}</p>
+    </SectionHead>
+    <ul class="links">
+      {
+        links.map((l) => (
+          <li>
+            <span>{l.label}</span>
+            {l.hidden ? (
+              <button class="reveal" type="button" data-hidden={l.hidden.value} data-kind={l.hidden.kind} data-base={base}>
+                {l.hidden.kind === 'file' ? c.open : c.show}
+              </button>
+            ) : (
+              <a href={l.href}>{l.href!.replace(/^https?:\/\//, '')}</a>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <p class="course">{c.course}</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="name">{PROFILE.name[t.lang as Lang]}</p>
+    <p>{f.data}</p>
+    <p>{f.license} <a href={PROFILE.source}>{f.source}</a></p>
+  </div>
+</footer>
+
+<style>
+  section {
+    padding-block: 28px;
+  }
+
+  .links {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .links li {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .links span {
+    color: var(--muted);
+  }
+
+  /* :global - the revealed links are created by the script and carry no scoped attribute */
+  .links :global(a),
+  .reveal {
+    font-family: var(--f-mono);
+    overflow-wrap: anywhere;
+  }
+
+  .reveal {
+    justify-self: start;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px dashed var(--accent);
+    background: none;
+    color: var(--accent);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .course {
+    margin: 12px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  footer {
+    margin-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  footer .wrap {
+    padding-block: 24px 40px;
+  }
+
+  footer p {
+    max-width: 90ch;
+    margin: 6px 0 0;
+    font-size: 12.5px;
+    color: var(--faint);
+  }
+
+  footer .name {
+    font-family: var(--f-display);
+    font-size: 15px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 560px) {
+    .links li {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+  }
+</style>

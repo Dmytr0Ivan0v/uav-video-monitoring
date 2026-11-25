@@ -4,8 +4,11 @@ import { ENGINES, STREAMS } from '../lib/console/runs';
 import type { RunDoc } from '../lib/console/types';
 import { readPublicJson } from '../lib/data/files';
 import { fill } from '../lib/format';
+import { factVars } from '../lib/home/facts';
+import type { FactsDoc } from '../lib/home/types';
 import { DICTS } from './index';
 
+const facts = factVars(readPublicJson<FactsDoc>('data/facts.json'));
 const runs = [...STREAMS, ...ENGINES].map((id) => [id, readPublicJson<RunDoc>(`data/console/${id}.json`)] as const);
 
 describe.each(Object.values(DICTS))('$lang dictionary', (t) => {
@@ -22,5 +25,15 @@ describe.each(Object.values(DICTS))('$lang dictionary', (t) => {
     for (const [id, run] of runs) {
       for (const p of t.console.stories[id]) expect(() => fill(p, storyVars(run))).not.toThrow();
     }
+  });
+
+  it('fills every fact of the main page from facts.json', () => {
+    const h = t.home;
+    const templates = [
+      ...h.facts.flatMap((f) => [f.value, f.text]),
+      ...h.decisions.items.flatMap((d) => [d.problem, d.decision, d.result, d.cost]),
+      h.engineering.engines.text,
+    ];
+    for (const p of templates) expect(() => fill(p, facts), p).not.toThrow();
   });
 });

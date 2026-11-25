@@ -26,10 +26,32 @@ class ConsoleRun:
 @dataclass(frozen=True)
 class Fact:
     name: str
-    results: Path           # results.json, absolute
+    file: Path              # JSON, YAML or CSV of the course, absolute
+    match: dict | None      # pick the one row whose keys equal these values
+    list: str               # key of the row list in a JSON document
+    field: str              # dots go into nested dicts
+
+
+@dataclass(frozen=True)
+class Engine:
+    id: str                 # console run id of the same engine
+    bench: Path             # bench run folder, absolute
+    results: Path           # quality results.json, absolute
     row: str
-    check: str
-    field: str              # key of the check row, dots go into nested dicts
+
+
+@dataclass(frozen=True)
+class Engineering:
+    engines: tuple[Engine, ...]
+    scenarios: Path         # results.json of the stream scenarios
+    stability: Path         # stability.json of the long run
+
+
+@dataclass(frozen=True)
+class Hero:
+    run: str                # console run whose boxes are drawn into the clip
+    crf: int
+    colors: dict[int, str]  # model class id -> box colour, the site legend colours
 
 
 @dataclass(frozen=True)
@@ -49,6 +71,8 @@ class Config:
     clip: Clip
     console: tuple[ConsoleRun, ...]
     facts: tuple[Fact, ...]
+    engineering: Engineering
+    hero: Hero
     recipe: Recipe
 
     @property
@@ -73,7 +97,7 @@ def load_config(path: Path) -> Config:
     if not (site / 'astro.config.mjs').is_file():
         raise FileNotFoundError(f'site: {site} has no astro.config.mjs')
 
-    c, r = d['clip'], d['recipe']
+    c, r, eng, h = d['clip'], d['recipe'], d['engineering'], d['hero']
     return Config(
         course=course,
         site=site,
@@ -84,9 +108,16 @@ def load_config(path: Path) -> Config:
         console=tuple(ConsoleRun(id=e['id'], run=course / e['run'], results=course / e['results'],
                                  row=e['row'])
                       for e in d['console']),
-        facts=tuple(Fact(name=name, results=course / e['results'], row=e['row'], check=e['check'],
-                         field=e['field'])
-                    for name, e in d['facts'].items()),
+        facts=tuple(Fact(name=name, file=course / f['file'], match=f.get('match'), list=f.get('list', 'rows'),
+                         field=f['field'])
+                    for name, f in d['facts'].items()),
+        engineering=Engineering(
+            engines=tuple(Engine(id=g['id'], bench=course / g['bench'], results=course / g['results'], row=g['row'])
+                          for g in eng['engines']),
+            scenarios=course / eng['scenarios'],
+            stability=course / eng['stability'],
+        ),
+        hero=Hero(run=h['run'], crf=h['crf'], colors={int(k): v for k, v in h['colors'].items()}),
         recipe=Recipe(out=base / r['out'], train_args=course / r['train_args'],
                       onnx_export=course / r['onnx_export'], train_paths=dict(r['train_paths'])),
     )
