@@ -1,0 +1,718 @@
+{
+  "protocol": {
+    "batch": 1,
+    "warmup": 30,
+    "iters": 300,
+    "series": 3
+  },
+  "engines": [
+    {
+      "id": "pytorch_cpu",
+      "engine": "pytorch",
+      "precision": "fp32",
+      "cpu": "AMD Ryzen 7 250 w/ Radeon 780M Graphics",
+      "gpu": null,
+      "bench": {
+        "inference_p50_ms": 41.935,
+        "inference_p95_ms": 51.435,
+        "step_p95_ms": 56.116,
+        "throughput_fps": 20.7,
+        "peak_rss_mb": 879.2
+      },
+      "quality": {
+        "idf1": {
+          "check": "idf1",
+          "frames": "all",
+          "m0": [
+            0.398,
+            0.398
+          ],
+          "ms": 0.398,
+          "delta_rel": null,
+          "threshold": "= звіт 07",
+          "result": "pass"
+        },
+        "recall": {
+          "check": "recall",
+          "frames": "all",
+          "m0": [
+            0.48,
+            0.48
+          ],
+          "ms": 0.48,
+          "delta_rel": null,
+          "threshold": "= звіт 07",
+          "result": "pass"
+        },
+        "p95_ms": {
+          "check": "p95_ms",
+          "frames": "all",
+          "m0": [
+            65.959,
+            67.624
+          ],
+          "ms": 65.81,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null
+        }
+      },
+      "sources": [
+        "runs/l11_bench_pytorch/bench.json",
+        "runs/l11_quality/results.json"
+      ]
+    },
+    {
+      "id": "onnx_cpu",
+      "engine": "onnxruntime",
+      "precision": "fp32",
+      "cpu": "AMD Ryzen 7 250 w/ Radeon 780M Graphics",
+      "gpu": null,
+      "bench": {
+        "inference_p50_ms": 42.776,
+        "inference_p95_ms": 47.321,
+        "step_p95_ms": 56.064,
+        "throughput_fps": 22.0,
+        "peak_rss_mb": 904.2
+      },
+      "quality": {
+        "idf1": {
+          "check": "idf1",
+          "frames": "all",
+          "m0": 0.398,
+          "ms": 0.398,
+          "delta_rel": 0.0,
+          "threshold": 0.02,
+          "result": "pass"
+        },
+        "recall": {
+          "check": "recall",
+          "frames": "all",
+          "m0": 0.48,
+          "ms": 0.48,
+          "delta_rel": 0.0,
+          "threshold": 0.02,
+          "result": "pass"
+        },
+        "p95_ms": {
+          "check": "p95_ms",
+          "frames": "all",
+          "m0": 65.81,
+          "ms": 79.218,
+          "delta_rel": -0.204,
+          "threshold": null,
+          "result": null
+        }
+      },
+      "sources": [
+        "runs/l11_bench_onnx/bench.json",
+        "runs/l11_quality/results.json"
+      ]
+    },
+    {
+      "id": "pytorch_t4",
+      "engine": "pytorch",
+      "precision": "fp32",
+      "cpu": "Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz",
+      "gpu": "Tesla T4",
+      "bench": {
+        "inference_p50_ms": 10.839,
+        "inference_p95_ms": 11.61,
+        "step_p95_ms": 16.488,
+        "throughput_fps": 69.2,
+        "peak_rss_mb": 1844.1
+      },
+      "quality": {
+        "idf1": {
+          "check": "idf1",
+          "frames": "all",
+          "m0": [
+            0.398,
+            0.398
+          ],
+          "ms": 0.398,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null
+        },
+        "recall": {
+          "check": "recall",
+          "frames": "all",
+          "m0": [
+            0.48,
+            0.48
+          ],
+          "ms": 0.48,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null
+        },
+        "p95_ms": {
+          "check": "p95_ms",
+          "frames": "all",
+          "m0": [
+            65.959,
+            67.624
+          ],
+          "ms": 61.836,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null
+        }
+      },
+      "sources": [
+        "runs/l11_bench_pytorch_gpu/bench.json",
+        "runs/l11_quality_t4/results.json"
+      ]
+    },
+    {
+      "id": "tensorrt_t4",
+      "engine": "tensorrt",
+      "precision": "fp16",
+      "cpu": "Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz",
+      "gpu": "Tesla T4",
+      "bench": {
+        "inference_p50_ms": 1.834,
+        "inference_p95_ms": 1.856,
+        "step_p95_ms": 7.042,
+        "throughput_fps": 160.1,
+        "peak_rss_mb": 1860.8
+      },
+      "quality": {
+        "idf1": {
+          "check": "idf1",
+          "frames": "all",
+          "m0": 0.398,
+          "ms": 0.391,
+          "delta_rel": 0.017,
+          "threshold": 0.02,
+          "result": "pass"
+        },
+        "recall": {
+          "check": "recall",
+          "frames": "all",
+          "m0": 0.48,
+          "ms": 0.479,
+          "delta_rel": 0.002,
+          "threshold": 0.02,
+          "result": "pass"
+        },
+        "p95_ms": {
+          "check": "p95_ms",
+          "frames": "all",
+          "m0": 61.836,
+          "ms": 64.809,
+          "delta_rel": -0.048,
+          "threshold": null,
+          "result": null
+        }
+      },
+      "sources": [
+        "runs/l11_bench_trt/bench.json",
+        "runs/l11_quality_t4/results.json"
+      ]
+    }
+  ],
+  "scenarios": {
+    "source": "runs/l12_scenarios/results.json",
+    "rows": {
+      "nominal": [
+        {
+          "check": "idf1",
+          "frames": "all",
+          "m0": [
+            0.398,
+            0.398
+          ],
+          "ms": 0.398,
+          "delta_rel": null,
+          "threshold": "= звіт 07",
+          "result": "pass"
+        },
+        {
+          "check": "recall",
+          "frames": "all",
+          "m0": [
+            0.48,
+            0.48
+          ],
+          "ms": 0.48,
+          "delta_rel": null,
+          "threshold": "= звіт 07",
+          "result": "pass"
+        },
+        {
+          "check": "precision",
+          "frames": "all",
+          "m0": [
+            0.684,
+            0.684
+          ],
+          "ms": 0.684,
+          "delta_rel": null,
+          "threshold": "= звіт 07",
+          "result": "pass"
+        },
+        {
+          "check": "num_switches",
+          "frames": "all",
+          "m0": [
+            617.0,
+            617.0
+          ],
+          "ms": 617,
+          "delta_rel": null,
+          "threshold": "= звіт 07",
+          "result": "pass"
+        },
+        {
+          "check": "p95_ms",
+          "frames": "all",
+          "m0": [
+            65.959,
+            67.624
+          ],
+          "ms": 66.55,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "frozen",
+          "frames": null,
+          "m0": null,
+          "ms": 0,
+          "delta_rel": null,
+          "threshold": "= 0",
+          "result": "pass"
+        },
+        {
+          "check": "contract",
+          "frames": null,
+          "m0": null,
+          "ms": 0,
+          "delta_rel": null,
+          "threshold": "= 0",
+          "result": "pass",
+          "detail": {
+            "events": 8257,
+            "errors": []
+          }
+        }
+      ],
+      "drop_every": [
+        {
+          "check": "idf1",
+          "frames": "common",
+          "m0": 0.398,
+          "ms": 0.368,
+          "delta_rel": 0.075,
+          "threshold": 0.1,
+          "result": "pass",
+          "excluded_mot_frames": [
+            8,
+            230
+          ],
+          "excluded_count": 69
+        },
+        {
+          "check": "recall",
+          "frames": "common",
+          "m0": 0.485,
+          "ms": 0.452,
+          "delta_rel": 0.069,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "precision",
+          "frames": "common",
+          "m0": 0.684,
+          "ms": 0.693,
+          "delta_rel": -0.013,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "num_switches",
+          "frames": "common",
+          "m0": 553,
+          "ms": 621,
+          "delta_rel": -0.123,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "p95_ms",
+          "frames": "common",
+          "m0": 66.55,
+          "ms": 62.962,
+          "delta_rel": 0.054,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "frame_dropped",
+          "frames": null,
+          "m0": 23,
+          "ms": 23,
+          "delta_rel": null,
+          "threshold": "= 23, t очікуваних кадрів",
+          "result": "pass",
+          "detail": {
+            "expected": 23,
+            "frame_dropped": 23,
+            "t_match": true,
+            "ok_at_dropped": 0
+          }
+        },
+        {
+          "check": "ok_at_dropped",
+          "frames": null,
+          "m0": null,
+          "ms": 0,
+          "delta_rel": null,
+          "threshold": "= 0",
+          "result": "pass"
+        },
+        {
+          "check": "contract",
+          "frames": null,
+          "m0": null,
+          "ms": 0,
+          "delta_rel": null,
+          "threshold": "= 0",
+          "result": "pass",
+          "detail": {
+            "events": 5884,
+            "errors": []
+          }
+        }
+      ],
+      "freeze_nocheck": [
+        {
+          "check": "idf1",
+          "frames": "common",
+          "m0": 0.41,
+          "ms": 0.386,
+          "delta_rel": 0.06,
+          "threshold": null,
+          "result": null,
+          "excluded_mot_frames": [
+            102,
+            130
+          ]
+        },
+        {
+          "check": "recall",
+          "frames": "common",
+          "m0": 0.488,
+          "ms": 0.478,
+          "delta_rel": 0.02,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "precision",
+          "frames": "common",
+          "m0": 0.694,
+          "ms": 0.695,
+          "delta_rel": -0.001,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "num_switches",
+          "frames": "common",
+          "m0": 562,
+          "ms": 556,
+          "delta_rel": 0.011,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "p95_ms",
+          "frames": "common",
+          "m0": 66.55,
+          "ms": 63.499,
+          "delta_rel": 0.046,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "switches_window",
+          "frames": "all",
+          "m0": 111,
+          "ms": 155,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null,
+          "detail": {
+            "mot_frames": [
+              131,
+              160
+            ]
+          }
+        },
+        {
+          "check": "frozen",
+          "frames": null,
+          "m0": 14,
+          "ms": 0,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null,
+          "detail": {
+            "expected": 14,
+            "frozen": 0,
+            "frames_match": false,
+            "t_match": true,
+            "ok_in_freeze": 1863,
+            "freeze_frames": [
+              101,
+              129
+            ]
+          }
+        },
+        {
+          "check": "ok_in_freeze",
+          "frames": null,
+          "m0": null,
+          "ms": 1863,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null,
+          "detail": {
+            "freeze_frames": [
+              101,
+              129
+            ]
+          }
+        },
+        {
+          "check": "contract",
+          "frames": null,
+          "m0": null,
+          "ms": 0,
+          "delta_rel": null,
+          "threshold": "= 0",
+          "result": "pass",
+          "detail": {
+            "events": 8844,
+            "errors": []
+          }
+        }
+      ],
+      "freeze": [
+        {
+          "check": "idf1",
+          "frames": "common",
+          "m0": 0.41,
+          "ms": 0.389,
+          "delta_rel": 0.052,
+          "threshold": 0.1,
+          "result": "pass",
+          "excluded_mot_frames": [
+            102,
+            130
+          ]
+        },
+        {
+          "check": "recall",
+          "frames": "common",
+          "m0": 0.488,
+          "ms": 0.477,
+          "delta_rel": 0.022,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "precision",
+          "frames": "common",
+          "m0": 0.694,
+          "ms": 0.692,
+          "delta_rel": 0.002,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "num_switches",
+          "frames": "common",
+          "m0": 562,
+          "ms": 551,
+          "delta_rel": 0.02,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "p95_ms",
+          "frames": "common",
+          "m0": 66.55,
+          "ms": 65.583,
+          "delta_rel": 0.015,
+          "threshold": null,
+          "result": null
+        },
+        {
+          "check": "switches_window",
+          "frames": "all",
+          "m0": 111,
+          "ms": 155,
+          "delta_rel": null,
+          "threshold": null,
+          "result": null,
+          "detail": {
+            "mot_frames": [
+              131,
+              160
+            ]
+          }
+        },
+        {
+          "check": "frozen",
+          "frames": null,
+          "m0": 14,
+          "ms": 14,
+          "delta_rel": null,
+          "threshold": "= 14, кадри застигання",
+          "result": "pass",
+          "detail": {
+            "expected": 14,
+            "frozen": 14,
+            "frames_match": true,
+            "t_match": true,
+            "ok_in_freeze": 0,
+            "freeze_frames": [
+              101,
+              129
+            ]
+          }
+        },
+        {
+          "check": "ok_in_freeze",
+          "frames": null,
+          "m0": null,
+          "ms": 0,
+          "delta_rel": null,
+          "threshold": "= 0",
+          "result": "pass",
+          "detail": {
+            "freeze_frames": [
+              101,
+              129
+            ]
+          }
+        },
+        {
+          "check": "contract",
+          "frames": null,
+          "m0": null,
+          "ms": 0,
+          "delta_rel": null,
+          "threshold": "= 0",
+          "result": "pass",
+          "detail": {
+            "events": 7013,
+            "errors": []
+          }
+        }
+      ]
+    }
+  },
+  "stability": {
+    "source": "runs/l12_stability/stability.json",
+    "window_video_s": 7.8,
+    "rss_start_mb": 393.8,
+    "windows": [
+      {
+        "window": 1,
+        "frames_timed": 102,
+        "p50_ms": 54.456,
+        "p95_ms": 63.534,
+        "rss_mb": 832.5,
+        "events_in_memory": 8257,
+        "idf1": 0.398,
+        "recall": 0.48
+      },
+      {
+        "window": 2,
+        "frames_timed": 117,
+        "p50_ms": 56.84,
+        "p95_ms": 66.927,
+        "rss_mb": 879.9,
+        "events_in_memory": 16364,
+        "idf1": 0.396,
+        "recall": 0.474
+      },
+      {
+        "window": 3,
+        "frames_timed": 117,
+        "p50_ms": 58.304,
+        "p95_ms": 68.595,
+        "rss_mb": 902.2,
+        "events_in_memory": 24471,
+        "idf1": 0.396,
+        "recall": 0.474
+      },
+      {
+        "window": 4,
+        "frames_timed": 117,
+        "p50_ms": 61.009,
+        "p95_ms": 67.666,
+        "rss_mb": 904.8,
+        "events_in_memory": 32578,
+        "idf1": 0.396,
+        "recall": 0.474
+      },
+      {
+        "window": 5,
+        "frames_timed": 117,
+        "p50_ms": 60.009,
+        "p95_ms": 67.436,
+        "rss_mb": 901.4,
+        "events_in_memory": 40685,
+        "idf1": 0.396,
+        "recall": 0.474
+      }
+    ],
+    "checks": [
+      {
+        "check": "window1_idf1",
+        "reference": [
+          0.398,
+          0.398
+        ],
+        "value": 0.398,
+        "threshold": "= звіт 07",
+        "result": "pass"
+      },
+      {
+        "check": "window1_recall",
+        "reference": [
+          0.48,
+          0.48
+        ],
+        "value": 0.48,
+        "threshold": "= звіт 07",
+        "result": "pass"
+      },
+      {
+        "check": "p95_growth_rel",
+        "reference": 66.927,
+        "value": 0.008,
+        "threshold": 0.1,
+        "result": "pass"
+      },
+      {
+        "check": "rss_growth_extrapolated_mb",
+        "reference": 879.9,
+        "value": 3307.7,
+        "per_window_mb": 7.17,
+        "windows_per_span": 461.5,
+        "hours": 1.0,
+        "threshold": 500.0,
+        "result": "fail"
+      }
+    ]
+  }
+}

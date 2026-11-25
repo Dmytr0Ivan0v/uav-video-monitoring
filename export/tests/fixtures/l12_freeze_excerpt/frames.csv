@@ -1,0 +1,5 @@
+frame_idx,decode_ms,preprocess_ms,inference_ms,postprocess_ms,track_other_ms,total_ms,n_tracks,status,frame_diff
+98,2.198,1.318,48.796,0.799,8.875,61.987,112,ok,7.183
+100,2.874,1.393,40.058,0.886,9.334,54.545,111,ok,7.823
+102,2.282,0.0,0.0,0.0,0.411,2.693,0,frozen,0.0
+104,4.059,0.0,0.0,0.0,0.777,4.836,0,frozen,0.0

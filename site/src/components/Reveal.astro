@@ -1,0 +1,22 @@
+<!-- Contacts and the CV path are stored encoded (src/profile.ts): a click turns the button into a link. -->
+<script is:inline>
+  document.querySelectorAll('button[data-hidden]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const value = atob(b.dataset.hidden).split('').reverse().join('');
+      const kind = b.dataset.kind;
+      const a = document.createElement('a');
+      a.href = kind === 'mailto' ? 'mailto:' + value : kind === 'file' ? b.dataset.base + value : value;
+      a.textContent = kind === 'file' ? b.textContent.trim() : value.replace(/^https?:\/\//, '');
+      a.className = b.className;
+      // scoped styles of the component match by this attribute
+      for (const at of b.attributes) if (at.name.startsWith('data-astro-cid')) a.setAttribute(at.name, '');
+      if (kind === 'file') {
+        a.target = '_blank';
+        a.rel = 'noopener';
+      }
+      b.replaceWith(a);
+      if (kind === 'file') a.click();
+      else a.focus();
+    }),
+  );
+</script>

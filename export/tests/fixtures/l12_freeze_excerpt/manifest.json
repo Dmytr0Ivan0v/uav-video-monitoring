@@ -1,0 +1,38 @@
+{
+  "run_id": "l12_freeze",
+  "clip": "uav0000137_00458_v",
+  "clip_file": "clips/uav0000137_00458_v.mp4",
+  "clip_sha256": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866",
+  "weights": "weights/ft1.pt",
+  "weights_sha256": "7c72d8dfd79162506fc335403a946d58b1b6a33d6ed770a17df58d88bc000a33",
+  "imgsz": 640,
+  "conf": 0.1,
+  "iou": 0.7,
+  "tracker": "configs/bytetrack.yaml",
+  "tracker_sha256": "395701d947a749179dee3e327b1181b730c4ca98e7cac5a2ab05280aae573b8b",
+  "vid_stride": 2,
+  "max_frames": null,
+  "scenario": {
+    "id": "freeze",
+    "kind": "freeze",
+    "seed": 42,
+    "blur": null,
+    "drop_segment": null,
+    "drop_every": null,
+    "freeze": {
+      "start_frame": 100,
+      "end_frame": 130
+    }
+  },
+  "frozen_check": {
+    "eps": 0.5,
+    "pixel_step": 8
+  },
+  "order": "decode -> freeze -> preprocess",
+  "config_file": "configs/video_run_freeze.yaml",
+  "config_sha256": "5a4574ec21e8a79faa748ba7d6382dbe2ec30b4ee8fc2ab506b33aeb62019b91",
+  "git": {
+    "commit": "2e7b92d7fc560becd573ac27351c1eee0b5b78e7",
+    "dirty": false
+  }
+}

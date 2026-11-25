@@ -1,0 +1,50 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Base from '../layouts/Base.astro';
+import type { Dict } from '../i18n/en';
+import { PROFILE } from '../profile';
+import Footer from './Footer.astro';
+import Header from './Header.astro';
+import SectionHead from './SectionHead.astro';
+import NavigationLab from './lab/NavigationLab.svelte';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const name = PROFILE.name[t.lang as 'en' | 'uk'];
+---
+
+<Base
+  title={`${t.navigation.title} · ${name}`}
+  description={t.navigation.description}
+  alternates={[
+    { lang: 'en', path: getRelativeLocaleUrl('en', 'lab/navigation') },
+    { lang: 'uk', path: getRelativeLocaleUrl('uk', 'lab/navigation') },
+    { lang: 'x-default', path: getRelativeLocaleUrl('en', 'lab/navigation') },
+  ]}
+>
+  <Header {t} path="lab/navigation" />
+  <main class="wrap">
+    <SectionHead eyebrow={t.navigation.eyebrow} title={t.navigation.title}>
+      <p>{t.navigation.intro}</p>
+    </SectionHead>
+    <NavigationLab client:load t={t.navigation} />
+    <p class="data">{t.navigation.data}</p>
+  </main>
+  <Footer {t} />
+</Base>
+
+<style>
+  main {
+    padding-block: 28px;
+  }
+
+  .data {
+    max-width: 90ch;
+    margin: 18px 0 0;
+    font-size: 12.5px;
+    color: var(--faint);
+  }
+</style>

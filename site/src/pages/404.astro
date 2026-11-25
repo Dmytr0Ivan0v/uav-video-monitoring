@@ -1,0 +1,40 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Base from '../layouts/Base.astro';
+import { en } from '../i18n/en';
+import { uk } from '../i18n/uk';
+---
+
+<Base title={en.home.notFound.title} description={en.home.notFound.text}>
+  <main class="wrap">
+    <p class="eyebrow">404</p>
+    {
+      [
+        { t: en, href: getRelativeLocaleUrl('en') },
+        { t: uk, href: getRelativeLocaleUrl('uk') },
+      ].map(({ t, href }) => (
+        <div lang={t.lang}>
+          <h1>{t.home.notFound.title}</h1>
+          <p>
+            {t.home.notFound.text} <a href={href}>{t.home.notFound.home}</a>
+          </p>
+        </div>
+      ))
+    }
+  </main>
+</Base>
+
+<style>
+  main {
+    padding-block: 64px;
+  }
+
+  h1 {
+    margin-top: 18px;
+    font-size: 32px;
+  }
+
+  p {
+    color: var(--muted);
+  }
+</style>

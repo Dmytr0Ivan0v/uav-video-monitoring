@@ -1,0 +1,274 @@
+---
+import type { Dict } from '../i18n/en';
+import { deltaText, limits, valueText } from '../lib/console/checks';
+import type { CheckRow } from '../lib/console/types';
+import { readPublicJson } from '../lib/data/files';
+import { fill } from '../lib/format';
+import { factVars } from '../lib/home/facts';
+import type { EngineeringDoc, FactsDoc, StabilityCheck } from '../lib/home/types';
+import SectionHead from './SectionHead.astro';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const e = t.home.engineering;
+const doc = readPublicJson<EngineeringDoc>('data/engineering.json');
+const vars = factVars(readPublicJson<FactsDoc>('data/facts.json'));
+const st = doc.stability;
+const rss = st.checks.find((c) => c.check === 'rss_growth_extrapolated_mb')!;
+
+// shorter numbers stay readable with two decimals, longer ones need one
+const ms = (v: number) => (v < 10 ? v.toFixed(2) : v.toFixed(1));
+
+function limitText(threshold: CheckRow['threshold'] | StabilityCheck['threshold']): string {
+  if (threshold == null) return '-';
+  if (typeof threshold === 'number') return `≤ ${threshold}`;
+  return t.console.thresholds[threshold as keyof typeof t.console.thresholds];
+}
+
+function stabilityValue(c: StabilityCheck): string {
+  return c.check === 'rss_growth_extrapolated_mb' ? c.value.toFixed(1) : String(c.value);
+}
+---
+
+<section id="engineering">
+  <div class="wrap">
+    <SectionHead eyebrow={e.eyebrow} title={e.title} />
+
+    <h3>{e.engines.title}</h3>
+    <p class="text">{fill(e.engines.text, vars)}</p>
+    <div class="tbl">
+      <table>
+        <thead>
+          <tr>
+            <th>{e.engines.engine}</th>
+            <th>{e.engines.hardware}</th>
+            <th class="n">{e.engines.inference}</th>
+            <th class="n">{e.engines.step}</th>
+            <th class="n">{e.engines.memory}</th>
+            <th class="n">{e.engines.idf1}</th>
+            <th class="n">{e.engines.delta}</th>
+            <th>{e.engines.limit}</th>
+            <th>{e.engines.result}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            doc.engines.map((g) => (
+              <tr>
+                <td>{t.console.runs[g.id].title}</td>
+                <td class="hw">{g.gpu ?? g.cpu}</td>
+                <td class="n">{ms(g.bench.inference_p95_ms)}</td>
+                <td class="n">{ms(g.bench.step_p95_ms)}</td>
+                <td class="n">{g.bench.peak_rss_mb.toFixed(0)}</td>
+                <td class="n">{valueText(g.quality.idf1, 'ms')}</td>
+                <td class="n">{deltaText(g.quality.idf1)}</td>
+                <td>{g.quality.idf1.delta_rel == null ? e.engines.reference : limitText(g.quality.idf1.threshold)}</td>
+                <td class:list={['n', g.quality.idf1.result]}>{g.quality.idf1.delta_rel == null ? '-' : (g.quality.idf1.result ?? '-')}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <p class="note">{fill(e.engines.protocol, doc.protocol)}</p>
+    <p class="src mono">{doc.engines.flatMap((g) => g.sources).filter((s, i, all) => all.indexOf(s) === i).join(' · ')}</p>
+
+    <div class="cols">
+      <div>
+        <h3>{e.scenarios.title}</h3>
+        <p class="text">{e.scenarios.text}</p>
+        <div class="tbl">
+          <table>
+            <thead>
+              <tr>
+                <th>{e.scenarios.scenario}</th>
+                <th class="n">{e.scenarios.limits}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                Object.entries(doc.scenarios.rows).map(([id, rows]) => {
+                  const v = limits(rows);
+                  return (
+                    <tr>
+                      <td>{t.console.runs[id as keyof typeof t.console.runs].title}</td>
+                      <td class:list={['n', v.passed === v.total ? 'pass' : 'fail']}>
+                        {v.passed} / {v.total}
+                      </td>
+                    </tr>
+                  );
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="note"><a href="#console">{e.scenarios.open} ↑</a></p>
+        <p class="src mono">{doc.scenarios.source}</p>
+      </div>
+
+      <div>
+        <h3>{e.stability.title}</h3>
+        <p class="text">{fill(e.stability.text, { windows: st.windows.length, seconds: st.window_video_s })}</p>
+        <div class="tbl">
+          <table>
+            <thead>
+              <tr>
+                <th>{e.stability.window}</th>
+                <th class="n">{e.stability.p50}</th>
+                <th class="n">{e.stability.p95}</th>
+                <th class="n">{e.stability.rss}</th>
+                <th class="n">{e.stability.events}</th>
+                <th class="n">{e.stability.idf1}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                st.windows.map((w) => (
+                  <tr>
+                    <td class="n">{w.window}</td>
+                    <td class="n">{w.p50_ms.toFixed(1)}</td>
+                    <td class="n">{w.p95_ms.toFixed(1)}</td>
+                    <td class="n">{w.rss_mb.toFixed(1)}</td>
+                    <td class="n">{w.events_in_memory}</td>
+                    <td class="n">{w.idf1.toFixed(3)}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl checks">
+          <table>
+            <thead>
+              <tr>
+                <th>{e.stability.check}</th>
+                <th class="n">{e.stability.value}</th>
+                <th>{e.stability.limit}</th>
+                <th>{e.stability.result}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                st.checks.map((c) => (
+                  <tr>
+                    <td>{e.stability.checks[c.check as keyof typeof e.stability.checks]}</td>
+                    <td class="n">{stabilityValue(c)}</td>
+                    <td>{limitText(c.threshold)}</td>
+                    <td class:list={['n', c.result]}>{c.result}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="note">{fill(e.stability.rssNote, { perWindow: rss.per_window_mb!, perHour: rss.windows_per_span! })}</p>
+        <p class="src mono">{st.source}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  section {
+    padding-block: 28px;
+  }
+
+  h3 {
+    margin: 22px 0 6px;
+    font-size: 20px;
+  }
+
+  .text {
+    max-width: 75ch;
+    margin: 0 0 10px;
+    color: var(--muted);
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 28px;
+  }
+
+  .tbl {
+    overflow-x: auto;
+    padding: 4px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+
+  .tbl.checks {
+    margin-top: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  th,
+  td {
+    padding: 7px 12px 7px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
+  th {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .n {
+    font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  th.n {
+    font-family: var(--f-mono);
+  }
+
+  .hw {
+    color: var(--muted);
+    font-size: 12.5px;
+  }
+
+  .pass {
+    color: var(--ok);
+  }
+
+  .fail {
+    color: var(--frozen);
+  }
+
+  .note {
+    max-width: 75ch;
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .src {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: var(--faint);
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 980px) {
+    .cols {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

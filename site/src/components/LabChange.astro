@@ -1,0 +1,42 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Base from '../layouts/Base.astro';
+import type { Dict } from '../i18n/en';
+import { PROFILE } from '../profile';
+import Footer from './Footer.astro';
+import Header from './Header.astro';
+import SectionHead from './SectionHead.astro';
+import ChangeLab from './lab/ChangeLab.svelte';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const name = PROFILE.name[t.lang as 'en' | 'uk'];
+---
+
+<Base
+  title={`${t.change.title} · ${name}`}
+  description={t.change.description}
+  alternates={[
+    { lang: 'en', path: getRelativeLocaleUrl('en', 'lab/change') },
+    { lang: 'uk', path: getRelativeLocaleUrl('uk', 'lab/change') },
+    { lang: 'x-default', path: getRelativeLocaleUrl('en', 'lab/change') },
+  ]}
+>
+  <Header {t} path="lab/change" />
+  <main class="wrap">
+    <SectionHead eyebrow={t.change.eyebrow} title={t.change.title}>
+      <p>{t.change.intro}</p>
+    </SectionHead>
+    <ChangeLab client:load t={t.change} />
+  </main>
+  <Footer {t} />
+</Base>
+
+<style>
+  main {
+    padding-block: 28px;
+  }
+</style>

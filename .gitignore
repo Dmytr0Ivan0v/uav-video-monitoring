@@ -14,10 +14,15 @@ __pycache__/
 node_modules/
 site/dist/
 site/.astro/
+site/test-results/
+site/playwright-report/
 
 # VisDrone has no license: its pixels and labels are built locally by export, never committed
 site/public/media/visdrone/
 site/public/data/visdrone/
+
+# CV PDFs carry contacts in plain text: kept out of the public history, copied to the server with the media
+site/public/cv/
 
 # Editors / OS
 .idea/

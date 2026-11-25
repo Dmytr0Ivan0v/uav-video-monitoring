@@ -9,3 +9,4 @@ site/.astro/
 # VisDrone media is built locally and reaches the server by a separate step, not through the image
 site/public/media/visdrone/
 site/public/data/visdrone/
+site/public/cv/

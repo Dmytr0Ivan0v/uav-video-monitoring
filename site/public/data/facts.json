@@ -1,0 +1,276 @@
+{
+  "ok_in_freeze_nocheck": {
+    "value": 1863,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "freeze_nocheck",
+      "check": "ok_in_freeze"
+    },
+    "field": "ms"
+  },
+  "ok_in_freeze_check": {
+    "value": 0,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "freeze",
+      "check": "ok_in_freeze"
+    },
+    "field": "ms"
+  },
+  "frozen_detected": {
+    "value": 14,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "freeze",
+      "check": "frozen"
+    },
+    "field": "ms"
+  },
+  "frozen_expected": {
+    "value": 14,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "freeze",
+      "check": "frozen"
+    },
+    "field": "m0"
+  },
+  "idf1_drop_rel_nocheck": {
+    "value": 0.06,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "freeze_nocheck",
+      "check": "idf1"
+    },
+    "field": "delta_rel"
+  },
+  "switches_after_freeze_nominal": {
+    "value": 111,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "freeze",
+      "check": "switches_window"
+    },
+    "field": "m0"
+  },
+  "switches_after_freeze": {
+    "value": 155,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "freeze",
+      "check": "switches_window"
+    },
+    "field": "ms"
+  },
+  "frame_dropped": {
+    "value": 23,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "drop_every",
+      "check": "frame_dropped"
+    },
+    "field": "ms"
+  },
+  "drop_every_n": {
+    "value": 5,
+    "source": "runs/l12_drop_every/manifest.json",
+    "field": "scenario.drop_every.every"
+  },
+  "idf1_drop_rel_drop_every": {
+    "value": 0.075,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "drop_every",
+      "check": "idf1"
+    },
+    "field": "delta_rel"
+  },
+  "idf1_limit_drop_every": {
+    "value": 0.1,
+    "source": "runs/l12_scenarios/results.json",
+    "match": {
+      "row": "drop_every",
+      "check": "idf1"
+    },
+    "field": "threshold"
+  },
+  "idf1_drop_rel_onnx": {
+    "value": 0.0,
+    "source": "runs/l11_quality/results.json",
+    "match": {
+      "row": "ONNX",
+      "check": "idf1"
+    },
+    "field": "delta_rel"
+  },
+  "idf1_drop_rel_tensorrt": {
+    "value": 0.017,
+    "source": "runs/l11_quality_t4/results.json",
+    "match": {
+      "row": "TRT",
+      "check": "idf1"
+    },
+    "field": "delta_rel"
+  },
+  "idf1_limit_engine": {
+    "value": 0.02,
+    "source": "runs/l11_quality_t4/results.json",
+    "match": {
+      "row": "TRT",
+      "check": "idf1"
+    },
+    "field": "threshold"
+  },
+  "inference_p95_ms_pytorch_t4": {
+    "value": 11.61,
+    "source": "runs/l11_bench_pytorch_gpu/bench.json",
+    "field": "summary.inference_p95_ms"
+  },
+  "inference_p95_ms_tensorrt": {
+    "value": 1.856,
+    "source": "runs/l11_bench_trt/bench.json",
+    "field": "summary.inference_p95_ms"
+  },
+  "frame_p95_ms_pytorch_t4": {
+    "value": 61.836,
+    "source": "runs/l11_quality_t4/results.json",
+    "match": {
+      "row": "TRT",
+      "check": "p95_ms"
+    },
+    "field": "m0"
+  },
+  "frame_p95_ms_tensorrt": {
+    "value": 64.809,
+    "source": "runs/l11_quality_t4/results.json",
+    "match": {
+      "row": "TRT",
+      "check": "p95_ms"
+    },
+    "field": "ms"
+  },
+  "recall_coco": {
+    "value": 0.2066,
+    "source": "runs_hw3/b0_640.json",
+    "field": "metrics.recall"
+  },
+  "recall_finetuned": {
+    "value": 0.5061,
+    "source": "runs_hw3/ft1_640.json",
+    "field": "metrics.recall"
+  },
+  "map_coco": {
+    "value": 0.1124,
+    "source": "runs_hw3/b0_640.json",
+    "field": "metrics.mAP50-95"
+  },
+  "map_finetuned": {
+    "value": 0.2286,
+    "source": "runs_hw3/ft1_640.json",
+    "field": "metrics.mAP50-95"
+  },
+  "precision_coco": {
+    "value": 0.7426,
+    "source": "runs_hw3/b0_640.json",
+    "field": "metrics.precision"
+  },
+  "precision_finetuned": {
+    "value": 0.6647,
+    "source": "runs_hw3/ft1_640.json",
+    "field": "metrics.precision"
+  },
+  "false_positives_coco": {
+    "value": 2719,
+    "source": "runs_hw3/b0_640.json",
+    "field": "metrics.fp"
+  },
+  "false_positives_finetuned": {
+    "value": 9688,
+    "source": "runs_hw3/ft1_640.json",
+    "field": "metrics.fp"
+  },
+  "clip_fps": {
+    "value": 30,
+    "source": "runs/l12_nominal/run_config.yaml",
+    "field": "config.clips.137.fps_src"
+  },
+  "inference_p50_ms_pytorch_cpu": {
+    "value": 41.935,
+    "source": "runs/l11_bench_pytorch/bench.json",
+    "field": "summary.inference_p50_ms"
+  },
+  "idf1_every_frame": {
+    "value": 0.417,
+    "source": "runs/base_137_r1/eval.csv",
+    "match": {
+      "class": "OVERALL"
+    },
+    "field": "idf1"
+  },
+  "idf1_every_second_frame": {
+    "value": 0.398,
+    "source": "runs/stride2_137_r1/eval.csv",
+    "match": {
+      "class": "OVERALL"
+    },
+    "field": "idf1"
+  },
+  "recall_every_frame": {
+    "value": 0.574,
+    "source": "runs/base_137_r1/eval.csv",
+    "match": {
+      "class": "OVERALL"
+    },
+    "field": "recall"
+  },
+  "recall_every_second_frame": {
+    "value": 0.48,
+    "source": "runs/stride2_137_r1/eval.csv",
+    "match": {
+      "class": "OVERALL"
+    },
+    "field": "recall"
+  },
+  "recall_drop_rel_blur": {
+    "value": 0.08,
+    "source": "runs/l10_scenarios/results.json",
+    "match": {
+      "row": "S4",
+      "check": "recall"
+    },
+    "field": "delta_rel"
+  },
+  "recall_limit_blur": {
+    "value": 0.15,
+    "source": "runs/l10_scenarios/results.json",
+    "match": {
+      "row": "S4",
+      "check": "recall"
+    },
+    "field": "threshold"
+  },
+  "bicycle_recall_nominal": {
+    "value": 0.17,
+    "source": "runs/l10_s1_nominal/eval.csv",
+    "match": {
+      "class": "bicycle"
+    },
+    "field": "recall"
+  },
+  "bicycle_recall_blur": {
+    "value": 0.021,
+    "source": "runs/l10_s4_blur/eval.csv",
+    "match": {
+      "class": "bicycle"
+    },
+    "field": "recall"
+  },
+  "rss_growth_extrapolated_mb": {
+    "value": 3307.7,
+    "source": "runs/l12_stability/stability.json",
+    "match": {
+      "check": "rss_growth_extrapolated_mb"
+    },
+    "field": "value"
+  }
+}

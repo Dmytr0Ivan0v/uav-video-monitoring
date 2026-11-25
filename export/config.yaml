@@ -1,3 +1,251 @@
-# Paths are relative to this file.
+# Paths are relative to this file; paths below course are relative to the cv_course checkout.
 course: ../../cv_course   # cv_course checkout, read only
 site: ../site             # Astro project that receives public/data and public/media
+
+contract: configs/cv_contract.yaml       # frame budget and statuses shown on the timeline
+eval_classes: configs/eval_classes.json  # VisDrone categories -> model class ids, as in evaluation
+
+clip:
+  id: '137'                # control clip of report 07; every console run below must use it
+  size: [960, 540]         # site video, px; boxes stay in source pixels
+  crf: 25
+  gop: 10                  # keyframe every 10 frames: seeking to any frame decodes at most 9 more
+  poster_frame: 0
+
+# Console runs: one file site/public/data/console/<id>.json each, checks from the row of results.
+console:
+  - id: nominal
+    run: runs/l12_nominal
+    results: runs/l12_scenarios/results.json
+    row: nominal
+  - id: drop_every
+    run: runs/l12_drop_every
+    results: runs/l12_scenarios/results.json
+    row: drop_every
+  - id: freeze_nocheck
+    run: runs/l12_freeze_nocheck
+    results: runs/l12_scenarios/results.json
+    row: freeze_nocheck
+  - id: freeze
+    run: runs/l12_freeze
+    results: runs/l12_scenarios/results.json
+    row: freeze
+  - id: pytorch_cpu        # reference of the ONNX row
+    run: runs/l10_s1_nominal
+    results: runs/l11_quality/results.json
+    row: S1
+  - id: onnx_cpu
+    run: runs/l11_quality_onnx
+    results: runs/l11_quality/results.json
+    row: ONNX
+  - id: pytorch_t4         # reference of the TensorRT row, same T4 host
+    run: runs/l11_quality_gpu
+    results: runs/l11_quality_t4/results.json
+    row: S1
+  - id: tensorrt_t4
+    run: runs/l11_quality_trt
+    results: runs/l11_quality_t4/results.json
+    row: TRT
+
+# Numbers the site texts quote: one field of one course file each, never typed by hand.
+# match picks the single row with these values (rows of results.json, lines of a CSV).
+facts:
+  # stream scenarios, runs/l12_*
+  ok_in_freeze_nocheck:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze_nocheck, check: ok_in_freeze}
+    field: ms
+  ok_in_freeze_check:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: ok_in_freeze}
+    field: ms
+  frozen_detected:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: frozen}
+    field: ms
+  frozen_expected:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: frozen}
+    field: m0
+  idf1_drop_rel_nocheck:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze_nocheck, check: idf1}
+    field: delta_rel
+  switches_after_freeze_nominal:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: switches_window}
+    field: m0
+  switches_after_freeze:
+    file: runs/l12_scenarios/results.json
+    match: {row: freeze, check: switches_window}
+    field: ms
+  frame_dropped:
+    file: runs/l12_scenarios/results.json
+    match: {row: drop_every, check: frame_dropped}
+    field: ms
+  drop_every_n:
+    file: runs/l12_drop_every/manifest.json
+    field: scenario.drop_every.every
+  idf1_drop_rel_drop_every:
+    file: runs/l12_scenarios/results.json
+    match: {row: drop_every, check: idf1}
+    field: delta_rel
+  idf1_limit_drop_every:
+    file: runs/l12_scenarios/results.json
+    match: {row: drop_every, check: idf1}
+    field: threshold
+  # engines, runs/l11_*
+  idf1_drop_rel_onnx:
+    file: runs/l11_quality/results.json
+    match: {row: ONNX, check: idf1}
+    field: delta_rel
+  idf1_drop_rel_tensorrt:
+    file: runs/l11_quality_t4/results.json
+    match: {row: TRT, check: idf1}
+    field: delta_rel
+  idf1_limit_engine:
+    file: runs/l11_quality_t4/results.json
+    match: {row: TRT, check: idf1}
+    field: threshold
+  inference_p95_ms_pytorch_t4:
+    file: runs/l11_bench_pytorch_gpu/bench.json
+    field: summary.inference_p95_ms
+  inference_p95_ms_tensorrt:
+    file: runs/l11_bench_trt/bench.json
+    field: summary.inference_p95_ms
+  frame_p95_ms_pytorch_t4:
+    file: runs/l11_quality_t4/results.json
+    match: {row: TRT, check: p95_ms}
+    field: m0
+  frame_p95_ms_tensorrt:
+    file: runs/l11_quality_t4/results.json
+    match: {row: TRT, check: p95_ms}
+    field: ms
+  # fine-tuning, runs_hw3: COCO weights (B0) against FT1 on the cleaned VisDrone val
+  recall_coco:
+    file: runs_hw3/b0_640.json
+    field: metrics.recall
+  recall_finetuned:
+    file: runs_hw3/ft1_640.json
+    field: metrics.recall
+  map_coco:
+    file: runs_hw3/b0_640.json
+    field: metrics.mAP50-95
+  map_finetuned:
+    file: runs_hw3/ft1_640.json
+    field: metrics.mAP50-95
+  precision_coco:
+    file: runs_hw3/b0_640.json
+    field: metrics.precision
+  precision_finetuned:
+    file: runs_hw3/ft1_640.json
+    field: metrics.precision
+  false_positives_coco:
+    file: runs_hw3/b0_640.json
+    field: metrics.fp
+  false_positives_finetuned:
+    file: runs_hw3/ft1_640.json
+    field: metrics.fp
+  # every second frame, clip 137
+  clip_fps:
+    file: runs/l12_nominal/run_config.yaml
+    field: config.clips.137.fps_src
+  inference_p50_ms_pytorch_cpu:
+    file: runs/l11_bench_pytorch/bench.json
+    field: summary.inference_p50_ms
+  idf1_every_frame:
+    file: runs/base_137_r1/eval.csv
+    match: {class: OVERALL}
+    field: idf1
+  idf1_every_second_frame:
+    file: runs/stride2_137_r1/eval.csv
+    match: {class: OVERALL}
+    field: idf1
+  recall_every_frame:
+    file: runs/base_137_r1/eval.csv
+    match: {class: OVERALL}
+    field: recall
+  recall_every_second_frame:
+    file: runs/stride2_137_r1/eval.csv
+    match: {class: OVERALL}
+    field: recall
+  # thresholds before the runs, runs/l10_*: blur scenario S4
+  recall_drop_rel_blur:
+    file: runs/l10_scenarios/results.json
+    match: {row: S4, check: recall}
+    field: delta_rel
+  recall_limit_blur:
+    file: runs/l10_scenarios/results.json
+    match: {row: S4, check: recall}
+    field: threshold
+  bicycle_recall_nominal:
+    file: runs/l10_s1_nominal/eval.csv
+    match: {class: bicycle}
+    field: recall
+  bicycle_recall_blur:
+    file: runs/l10_s4_blur/eval.csv
+    match: {class: bicycle}
+    field: recall
+  # stability, runs/l12_stability
+  rss_growth_extrapolated_mb:
+    file: runs/l12_stability/stability.json
+    list: checks
+    match: {check: rss_growth_extrapolated_mb}
+    field: value
+
+engineering:
+  engines:                 # bench of the engine and its quality row against PyTorch on the same hardware
+    - {id: pytorch_cpu, bench: runs/l11_bench_pytorch, results: runs/l11_quality/results.json, row: S1}
+    - {id: onnx_cpu, bench: runs/l11_bench_onnx, results: runs/l11_quality/results.json, row: ONNX}
+    - {id: pytorch_t4, bench: runs/l11_bench_pytorch_gpu, results: runs/l11_quality_t4/results.json, row: S1}
+    - {id: tensorrt_t4, bench: runs/l11_bench_trt, results: runs/l11_quality_t4/results.json, row: TRT}
+  scenarios: runs/l12_scenarios/results.json
+  stability: runs/l12_stability/stability.json
+
+hero:
+  run: nominal             # console run whose boxes are drawn into the clip
+  crf: 30
+  colors:                  # model class id -> the legend colour of the site (tokens.css)
+    0: '#ff77b0'           # person
+    2: '#49c6e5'           # car
+    5: '#f4d35e'           # bus
+    7: '#f4d35e'           # truck
+    1: '#b394ff'           # bicycle
+    3: '#b394ff'           # motorcycle
+
+detector:                  # browser lab: model, reference frames, tolerance
+  onnx_export: runs/l11_export/export.json
+  deploy: configs/deploy.yaml
+  browser_limits:            # |Δscore| limit of each browser backend, a key of consistency.max_score_diff
+    wasm: onnx_fp32          # CPU, as ONNX FP32 against PyTorch
+    webgpu: tensorrt_fp16    # GPU kernels, as TensorRT on a GPU
+  reference_frames: [30, 70, 110, 150, 190]  # snapshot frames of the nominal run
+  fixture_min_score: 0.05    # half of conf 0.1: anchors below it never become candidates
+  degradations: configs/degradations.yaml
+  curves: runs_hw4/degradations/curves.json
+  fixtures: ../site/src/lib/detector/fixtures   # relative to this file
+
+navigation:                # VO runs on TUM RGB-D fr1_xyz, a handheld camera
+  runs:
+    base: runs/l09_vo_base
+    blur: runs/l09_vo_blur   # motion blur 15 px on the VO input
+  thumbs: {every: 8, size: [128, 96], cols: 10}   # 100 gray frames per run in one JPEG
+
+change:                    # change detection runs on clip 137, frame pairs
+  run: runs/chg_r4
+  run_nonorm: runs/chg_nonorm_r4   # the same run without light normalization
+  config: configs/change_run.yaml
+  fp_labels: configs/fp_labels.yaml
+  examples: images/change          # crops the report shows
+  pairs: [c185, m045, c205, s075, l060_hard]   # camera motion, static camera, worst alignment, static scene, light
+  display_width: 1344
+
+recipe:
+  out: recipe              # relative to this file
+  train_args: runs_hw3/ft1_train/args.yaml
+  onnx_export: runs/l11_export/export.json
+  # absolute paths of the training machine -> paths inside cv_course
+  train_paths:
+    data: configs/visdrone_coco_classes.yaml
+    project: runs_hw3
+    save_dir: runs_hw3/ft1_train

@@ -1,0 +1,42 @@
+---
+import type { Dict } from '../i18n/en';
+import SectionHead from './SectionHead.astro';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const n = t.home.notMeasured;
+---
+
+<section id="not-measured">
+  <div class="wrap">
+    <SectionHead eyebrow={n.eyebrow} title={n.title} />
+    <ul>
+      {n.items.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  section {
+    padding-block: 28px;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: 8px 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 8px 0 8px 14px;
+    border-left: 2px solid var(--line);
+    font-size: 14px;
+    color: var(--muted);
+  }
+</style>

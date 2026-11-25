@@ -1,0 +1,95 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { DICTS, type Lang } from '../i18n';
+import type { Dict } from '../i18n/en';
+import { PROFILE } from '../profile';
+
+interface Props {
+  t: Dict;
+  path?: string; // the page without the locale prefix, '' for the main page
+}
+
+const { t, path = '' } = Astro.props;
+const lang = t.lang as Lang;
+const other: Lang = lang === 'en' ? 'uk' : 'en';
+const nav = t.home.nav;
+const home = getRelativeLocaleUrl(lang);
+---
+
+<header>
+  <div class="wrap">
+    <a class="brand" href={home}>{PROFILE.name[lang]} <span>· {t.site.project}</span></a>
+    <nav>
+      <a href={`${home}#console`}>{nav.console}</a>
+      <a href={getRelativeLocaleUrl(lang, 'lab/navigation')}>{nav.navigation}</a>
+      <a href={getRelativeLocaleUrl(lang, 'lab/detector')}>{nav.detector}</a>
+      <a href={getRelativeLocaleUrl(lang, 'lab/change')}>{nav.change}</a>
+      <a href={`${home}#engineering`}>{nav.engineering}</a>
+      <a href={`${home}#decisions`}>{nav.decisions}</a>
+      <a href={`${home}#contact`}>{nav.contact}</a>
+    </nav>
+    <a class="lang" href={getRelativeLocaleUrl(other, path)} hreflang={other} lang={other}>{DICTS[other].langName}</a>
+  </div>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 20px;
+    padding-block: 12px;
+  }
+
+  .brand {
+    font-family: var(--f-display);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  .brand span {
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-left: auto;
+  }
+
+  nav a,
+  .lang {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  nav a:hover,
+  .lang:hover {
+    color: var(--fg);
+  }
+
+  /* the other language's name in a system font: a page in one language loads no glyphs of the other */
+  .lang {
+    font-family: system-ui, sans-serif;
+  }
+
+  @media (max-width: 760px) {
+    nav {
+      display: none;
+    }
+
+    .lang {
+      margin-left: auto;
+    }
+  }
+</style>

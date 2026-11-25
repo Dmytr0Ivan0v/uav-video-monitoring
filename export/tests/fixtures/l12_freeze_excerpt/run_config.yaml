@@ -1,0 +1,18 @@
+run_id: l12_freeze
+versions:
+  python: 3.12.3
+  opencv: 5.0.0
+  torch: 2.14.1+cpu
+  ultralytics: 8.4.174
+  numpy: 2.5.3
+  lap: 0.5.13
+  motmetrics: 1.4.0
+  pyyaml: 6.0.3
+hardware:
+  cpu: AMD Ryzen 7 250 w/ Radeon 780M Graphics
+  gpu: null
+config:
+  model:
+    weights: weights/ft1.pt
+  inference:
+    device: cpu

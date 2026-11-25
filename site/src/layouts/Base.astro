@@ -6,18 +6,38 @@ import '../styles/base.css';
 interface Props {
   title: string;
   description: string;
+  image?: string;        // path from the site root, for link previews
+  preloadImage?: string; // the largest image of the first screen
+  alternates?: { lang: string; path: string }[];
 }
 
-const { title, description } = Astro.props;
+const { title, description, image, preloadImage, alternates = [] } = Astro.props;
+const lang = Astro.currentLocale ?? 'en';
+// absolute URLs need the domain, which is set in astro.config.mjs once it exists
+const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : null);
+const imageUrl = image ? abs(image) : null;
+const canonical = abs(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang={Astro.currentLocale ?? 'en'}>
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#0d1217" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {alternates.map((a) => abs(a.path) && <link rel="alternate" hreflang={a.lang} href={abs(a.path)} />)}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === 'uk' ? 'uk_UA' : 'en_US'} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {imageUrl && <meta property="og:image" content={imageUrl} />}
+    <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
   </head>
   <body>
     <slot />
