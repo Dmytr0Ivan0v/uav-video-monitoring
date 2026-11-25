@@ -1,0 +1,31 @@
+# Working notes and assistant files stay local
+/context/
+CLAUDE.local.md
+/.claude/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+site/dist/
+site/.astro/
+
+# VisDrone has no license: its pixels and labels are built locally by export, never committed
+site/public/media/visdrone/
+site/public/data/visdrone/
+
+# Editors / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Secrets
+.env
+.env.*
+!.env.example

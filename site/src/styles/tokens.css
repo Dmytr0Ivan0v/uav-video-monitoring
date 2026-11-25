@@ -1,0 +1,41 @@
+/* One dark look on purpose: the site reads as an operator ground station. */
+:root {
+  color-scheme: dark;
+
+  --bg: #0d1217;
+  --panel: #141b22;
+  --panel-2: #1a232c;
+  --line: #263240;
+  --fg: #dde5ec;
+  --muted: #8a99a8;
+  --faint: #5d6c7b;
+  --accent: #8fc7ff;
+  --on-accent: #0b1420;
+
+  /* stream status */
+  --ok: #46c28e;
+  --drop: #edb24a;
+  --frozen: #ef5b57;
+
+  /* detector classes */
+  --c-person: #ff77b0;
+  --c-car: #49c6e5;
+  --c-heavy: #f4d35e;
+  --c-two: #b394ff;
+
+  /* pipeline stages */
+  --s-decode: #5b6b7c;
+  --s-prepost: #7f95ab;
+  --s-infer: #8fc7ff;
+  --s-track: #c3a6f0;
+
+  --gt: rgba(255, 255, 255, 0.85);
+
+  --f-display: 'Fira Sans Condensed', 'Arial Narrow', 'Segoe UI', sans-serif;
+  --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --radius: 4px;
+  --wrap: 1240px;
+  --gutter: 16px;
+}
