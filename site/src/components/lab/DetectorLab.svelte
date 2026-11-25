@@ -32,7 +32,7 @@
   let gpu = $state(false);
   let backend = $state<Backend>('wasm');
   let status = $state<'idle' | 'loading' | 'starting' | 'ready' | 'error'>('idle');
-  let progress = $state({ done: 0, total: 0 });
+  let loadedBytes = $state(0);
   let modelError = $state('');
   let modelBytes: Uint8Array | null = null;
   let session: Session | null = null;
@@ -102,7 +102,7 @@
     if (!doc) return;
     try {
       status = 'loading';
-      modelBytes = await fetchModel(url(doc.model.path), (done, total) => (progress = { done, total }));
+      modelBytes = await fetchModel(url(doc.model.path), (done) => (loadedBytes = done));
       await startSession();
       runs = 0;
       if (original) await detect();
@@ -269,7 +269,7 @@
           {/if}
           {#if status === 'loading'}
             <p class="mono status">
-              {fill(t.model.loading, { done: mb(progress.done), total: mb(progress.total || doc.model.bytes) })}
+              {fill(t.model.loading, { done: mb(loadedBytes), total: mb(doc.model.bytes) })}
             </p>
           {:else if status === 'starting'}
             <p class="mono status">{fill(t.model.starting, { backend: t.backends[backend] })}</p>
