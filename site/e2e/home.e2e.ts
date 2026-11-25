@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { fact } from './data';
+import { fact, publicJson } from './data';
 
 // the first-screen budget fixed before the stage 3 measurement: 250 KB until load, the clip after it
 const BUDGET_BYTES = 250 * 1024;
@@ -42,4 +42,17 @@ test('keyboard focus is visible on the first link of the page', async ({ page })
   await page.keyboard.press('Tab');
   const outline = await page.evaluate(() => getComputedStyle(document.activeElement!).outlineStyle);
   expect(outline).not.toBe('none');
+});
+
+test('on a phone the menu stays and the labs section links every lab', async ({ page }) => {
+  const nav = publicJson<{ runs: { base: { ate_m: { rmse: number } } } }>('data/navigation.json');
+  await page.setViewportSize({ width: 400, height: 850 });
+  await page.goto('/');
+  await page.locator('header nav').getByRole('link', { name: 'Labs' }).click();
+  await expect(page).toHaveURL(/#labs$/);
+  const labs = page.locator('#labs');
+  for (const path of ['/lab/navigation/', '/lab/detector/', '/lab/change/']) {
+    await expect(labs.locator(`a[href="${path}"]`)).toBeVisible();
+  }
+  await expect(labs).toContainText(`ATE RMSE ${nav.runs.base.ate_m.rmse} m`);
 });

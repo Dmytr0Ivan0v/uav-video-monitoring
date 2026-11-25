@@ -1,0 +1,118 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { Lang } from '../i18n';
+import type { Dict } from '../i18n/en';
+import type { ChangeDoc } from '../lib/change/types';
+import { readPublicJson } from '../lib/data/files';
+import type { DetectorDoc } from '../lib/detector/types';
+import { fill } from '../lib/format';
+import type { NavigationDoc } from '../lib/navigation/types';
+import SectionHead from './SectionHead.astro';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const l = t.home.labs;
+const lang = t.lang as Lang;
+const nav = readPublicJson<NavigationDoc>('data/navigation.json');
+const det = readPublicJson<DetectorDoc>('data/detector.json');
+const chg = readPublicJson<ChangeDoc>('data/change.json');
+const working = chg.pr_curve.find((p) => p.tau === chg.tau)!;
+
+// in the order the site puts them: navigation first, change detection last
+const cards = [
+  {
+    path: 'lab/navigation',
+    title: t.navigation.title,
+    text: l.navigation.text,
+    stat: fill(l.navigation.stat, { ate: nav.runs.base.ate_m.rmse, path: nav.gt_path_length_m }),
+  },
+  {
+    path: 'lab/detector',
+    title: t.lab.title,
+    text: l.detector.text,
+    stat: fill(l.detector.stat, { n: det.references.length }),
+  },
+  {
+    path: 'lab/change',
+    title: t.change.title,
+    text: l.change.text,
+    stat: fill(l.change.stat, { f1: working.f1, tau: chg.tau, n: working.n_pairs }),
+  },
+];
+---
+
+<section id="labs">
+  <div class="wrap">
+    <SectionHead eyebrow={l.eyebrow} title={l.title} />
+    <ul>
+      {
+        cards.map((c) => (
+          <li>
+            <a href={getRelativeLocaleUrl(lang, c.path)}>
+              <h3>{c.title}</h3>
+              <p class="text">{c.text}</p>
+              <p class="stat mono">{c.stat}</p>
+              <span class="open">{l.open} →</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  section {
+    padding-block: 28px;
+  }
+
+  ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+    color: var(--fg);
+    text-decoration: none;
+  }
+
+  a:hover {
+    border-color: var(--accent);
+  }
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 19px;
+  }
+
+  .text {
+    flex: 1;
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .stat {
+    margin: 0 0 10px;
+    font-size: 13px;
+  }
+
+  .open {
+    font-size: 14px;
+    color: var(--accent);
+  }
+</style>

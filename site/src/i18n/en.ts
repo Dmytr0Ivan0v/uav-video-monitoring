@@ -9,12 +9,27 @@ export const en = {
   home: {
     nav: {
       console: 'Console',
+      labs: 'Labs',
       engineering: 'Engineering',
       decisions: 'Decisions',
       contact: 'Contact',
-      navigation: 'Navigation',
-      detector: 'Detector lab',
-      change: 'Changes',
+    },
+    labs: {
+      eyebrow: 'Interactive, in your browser',
+      title: 'Labs',
+      open: 'Open',
+      navigation: {
+        text: 'My visual odometry against motion capture on TUM RGB-D fr1_xyz, a handheld camera over a desk. The path in 3D, the error at every moment, the same run with motion blur.',
+        stat: 'ATE RMSE {ate} m over a {path} m path',
+      },
+      detector: {
+        text: 'The fine-tuned YOLO11s runs on your device with ONNX Runtime Web. VisDrone frames or your own picture, the distortions from my robustness tests.',
+        stat: '{n} reference frames to check box by box against Python',
+      },
+      change: {
+        text: 'Two frames of a drone clip, aligned by a homography. Move the threshold and see what the difference mask finds and what it costs.',
+        stat: 'F1 {f1} at the working threshold τ {tau}, {n} real pairs',
+      },
     },
     hero: {
       eyebrow: 'Detection · tracking · deployment · reliability for drone video',
