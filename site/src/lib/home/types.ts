@@ -31,6 +31,23 @@ export interface StabilityCheck {
   hours?: number;
 }
 
+export type ObjectSize = 'small' | 'medium' | 'large' | 'all';
+
+// one VisDrone-DET val evaluation; sizes are COCO area classes in the original frame
+export interface EvalRun {
+  name: string;
+  imgsz: number;
+  by_size: Record<ObjectSize, { objects: number; map50_95: number }>;
+  recall: number;
+  time_mean_ms: number;
+}
+
+// two evaluations on one split
+export interface EvalPair {
+  sources: [string, string];
+  runs: [EvalRun, EvalRun];
+}
+
 // public/data/engineering.json
 export interface EngineeringDoc {
   protocol: { batch: number; warmup: number; iters: number; series: number };
@@ -52,4 +69,5 @@ export interface EngineeringDoc {
     }[];
     checks: StabilityCheck[];
   };
+  sizes: { finetune: EvalPair; resolution: EvalPair };
 }

@@ -12,6 +12,7 @@ import Engineering from './Engineering.astro';
 import Footer from './Footer.astro';
 import Header from './Header.astro';
 import Hero from './Hero.astro';
+import Labs from './Labs.astro';
 import NotMeasured from './NotMeasured.astro';
 import Reveal from './Reveal.astro';
 
@@ -40,6 +41,7 @@ const name = PROFILE.name[t.lang as 'en' | 'uk'];
   <main>
     <Hero {t} {poster} />
     <ConsoleSection {t} />
+    <Labs {t} />
     <Engineering {t} />
     <Decisions {t} />
     <NotMeasured {t} />

@@ -9,12 +9,27 @@ export const en = {
   home: {
     nav: {
       console: 'Console',
+      labs: 'Labs',
       engineering: 'Engineering',
       decisions: 'Decisions',
       contact: 'Contact',
-      navigation: 'Navigation',
-      detector: 'Detector lab',
-      change: 'Changes',
+    },
+    labs: {
+      eyebrow: 'Interactive, in your browser',
+      title: 'Labs',
+      open: 'Open',
+      navigation: {
+        text: 'My visual odometry against motion capture on TUM RGB-D fr1_xyz, a handheld camera over a desk. The path in 3D, the error at every moment, the same run with motion blur.',
+        stat: 'ATE RMSE {ate} m over a {path} m path',
+      },
+      detector: {
+        text: 'The fine-tuned YOLO11s runs on your device with ONNX Runtime Web. VisDrone frames or your own picture, the distortions from my robustness tests.',
+        stat: '{n} reference frames to check box by box against Python',
+      },
+      change: {
+        text: 'Two frames of a drone clip, aligned by a homography. Move the threshold and see what the difference mask finds and what it costs.',
+        stat: 'F1 {f1} at the working threshold τ {tau}, {n} real pairs',
+      },
     },
     hero: {
       eyebrow: 'Detection · tracking · deployment · reliability for drone video',
@@ -77,6 +92,23 @@ export const en = {
         },
         rssNote: 'The fail is arithmetic, not a measured hour: {perWindow} MB per window × {perHour} windows per hour. In the last windows RSS is almost flat; only a real hour-long run will settle it.',
       },
+      sizes: {
+        title: 'Small objects',
+        text: 'Most VisDrone objects are small: {small} of {all} on the cleaned val are below 32×32 px, the COCO size class. On clip 137 a frame is {width} px wide, and the model sees it at {imgsz} px. Fine-tuning at {imgsz} px raised small mAP50-95 from {before} to {after}, yet small objects stay the weakest size.',
+        finetune: 'mAP50-95 by object size · cleaned val · {imgsz} px input',
+        size: 'Size',
+        objects: 'Objects',
+        coco: 'COCO weights',
+        finetuned: 'Fine-tuned',
+        names: { small: 'small (< 32²)', medium: 'medium', large: 'large (≥ 96²)', all: 'all' },
+        resolution: 'Input size · COCO weights · val before cleaning',
+        input: 'Input, px',
+        smallMap: 'Small mAP50-95',
+        allMap: 'All mAP50-95',
+        recall: 'Recall',
+        time: 'Time per image, ms',
+        note: 'A larger input helps small objects most, at a price in time: {time} ms per image is far above the {budget} ms frame budget of the stream (time per DET image on the CPU, not a stream frame). I tried it on the COCO weights only. Fine-tuning at {big} px, and the two changes together, I did not run: on a CPU the training would take several times longer.',
+      },
     },
     decisions: {
       eyebrow: 'From my decision journal',
@@ -96,9 +128,9 @@ export const en = {
         {
           title: 'Process every second frame',
           problem: 'Inference alone, {inference_p50_ms_pytorch_cpu} ms p50 on the laptop CPU, is longer than one frame of {clip_fps} fps video.',
-          decision: 'Run the model on every second frame. One variable changed, the rest of the configuration stayed.',
-          result: 'The pipeline keeps up with the source. On clip 137 IDF1 {idf1_every_frame} -> {idf1_every_second_frame}.',
-          cost: 'Recall {recall_every_frame} -> {recall_every_second_frame}: fewer frames, fewer confirmed objects. I took this price to stay in real time.',
+          decision: 'Run the model on 1 of {vid_stride} frames (vid_stride = {vid_stride}): {stream_hz} of the {clip_fps} frames each second, {frame_budget_ms} ms for each. One variable changed, the rest of the configuration stayed.',
+          result: 'The whole frame takes {frame_p50_ms_every_second_frame} ms p50 on the laptop CPU, inside the budget. p95 sits at the budget: {frame_p95_ms_every_second_frame_r1}, {frame_p95_ms_every_second_frame_r2} and {frame_p95_ms_every_second_frame_r3} ms in three repeats. On clip 137 IDF1 {idf1_every_frame} -> {idf1_every_second_frame}.',
+          cost: 'The output is {stream_hz} frames per second, not {clip_fps}. Recall {recall_every_frame} -> {recall_every_second_frame}: fewer frames, fewer confirmed objects. I took this price to keep up with a {clip_fps} fps source on a laptop CPU.',
         },
         {
           title: 'Pass and fail before the runs',
@@ -134,6 +166,7 @@ export const en = {
         'A live camera for the frozen check. The threshold was set on replay.',
         'Own flight footage or a simulator. Detection and tracking run on VisDrone clips.',
         'A resolution change mid-stream and monitoring of input frame statistics.',
+        'Tiling (SAHI) for small objects. Fine-tuning at 1280 px, and fine-tuning together with a 1280 px input.',
       ],
     },
     contact: {
@@ -235,6 +268,15 @@ export const en = {
     },
     frameNote: 'What VO saw: the gray frame.',
     frameNoteBlur: 'What VO saw: the gray frame with motion blur.',
+    metrics: {
+      title: 'Both runs',
+      metric: 'Metric',
+      ate: 'ATE RMSE',
+      ateMax: 'ATE max',
+      rpe: 'RPE over {delta} {unit}',
+      degraded: 'DEGRADED · LOST frames',
+      note: 'ATE: position error after one {alignment} alignment of the whole run to motion capture. RPE: error of the relative motion over a fixed span, translation RMSE and mean rotation; it shows drift and does not depend on that alignment.',
+    },
     stats: {
       title: 'Whole run',
       ate: 'ATE RMSE',

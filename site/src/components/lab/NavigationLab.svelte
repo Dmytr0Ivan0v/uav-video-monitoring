@@ -23,6 +23,8 @@
   let playing = $state(false);
   let scene: NavScene | null = null;
   let lastTs = 0;
+  // playback time, s: kept apart from the pose time, or a display frame shorter than one pose interval is lost
+  let clock = 0;
 
   const run = $derived<VoRun | null>(doc ? doc.runs[name] : null);
   const pose = $derived(run ? run.poses[Math.min(index, run.poses.length - 1)]! : null);
@@ -81,10 +83,11 @@
   function step(ts: number): void {
     if (!playing || !run) return;
     if (lastTs) {
-      const now = run.poses[index]![0] + (ts - lastTs) / 1000;
-      let i = index;
-      while (i < run.poses.length - 1 && run.poses[i + 1]![0] <= now) i += 1;
-      seek(i >= run.poses.length - 1 ? 0 : i);
+      clock += (ts - lastTs) / 1000;
+      if (clock > total) clock = 0;
+      let i = clock < run.poses[index]![0] ? 0 : index;
+      while (i < run.poses.length - 1 && run.poses[i + 1]![0] <= clock) i += 1;
+      if (i !== index) seek(i);
     }
     lastTs = ts;
     requestAnimationFrame(step);
@@ -93,7 +96,9 @@
   function toggle(): void {
     playing = !playing;
     lastTs = 0;
-    if (playing) requestAnimationFrame(step);
+    if (!playing || !run) return;
+    clock = run.poses[index]![0];
+    requestAnimationFrame(step);
   }
 
   function scrub(e: PointerEvent): void {

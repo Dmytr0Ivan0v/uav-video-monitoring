@@ -153,6 +153,32 @@ facts:
   inference_p50_ms_pytorch_cpu:
     file: runs/l11_bench_pytorch/bench.json
     field: summary.inference_p50_ms
+  vid_stride:
+    file: runs/stride2_137_r1/run_config.yaml
+    field: config.run.vid_stride
+  stream_hz:
+    file: configs/cv_contract.yaml
+    field: cv_component.outputs.tracks.hz
+  frame_budget_ms:
+    file: configs/cv_contract.yaml
+    field: cv_component.outputs.tracks.frame_budget_ms
+  # the whole frame on the laptop CPU, three repeats of the stride 2 run
+  frame_p50_ms_every_second_frame:
+    file: runs/stride2_137_r1/stages.csv
+    match: {stage: total}
+    field: p50
+  frame_p95_ms_every_second_frame_r1:
+    file: runs/stride2_137_r1/stages.csv
+    match: {stage: total}
+    field: p95
+  frame_p95_ms_every_second_frame_r2:
+    file: runs/stride2_137_r2/stages.csv
+    match: {stage: total}
+    field: p95
+  frame_p95_ms_every_second_frame_r3:
+    file: runs/stride2_137_r3/stages.csv
+    match: {stage: total}
+    field: p95
   idf1_every_frame:
     file: runs/base_137_r1/eval.csv
     match: {class: OVERALL}
@@ -201,6 +227,9 @@ engineering:
     - {id: tensorrt_t4, bench: runs/l11_bench_trt, results: runs/l11_quality_t4/results.json, row: TRT}
   scenarios: runs/l12_scenarios/results.json
   stability: runs/l12_stability/stability.json
+  # mAP50-95 by object size on VisDrone-DET val
+  finetune: [runs_hw3/b0_640.json, runs_hw3/ft1_640.json]          # COCO weights -> fine-tuned, cleaned val
+  resolution: [runs_hw2/baseline_640.json, runs_hw2/imgsz_1280.json]  # COCO weights, val before cleaning
 
 hero:
   run: nominal             # console run whose boxes are drawn into the clip

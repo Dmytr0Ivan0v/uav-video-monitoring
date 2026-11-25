@@ -189,8 +189,9 @@
       }
     },
     "data/facts.json": {
-      "sha256": "ec61bca9b31b5efc093cf7a2ca4a5537cc964819035f02ee5e5527ca71f1a505",
+      "sha256": "cf9f3f3477ba25b3847b1db85c65bf6d846103306847372e475484ad9862c46c",
       "sources": {
+        "configs/cv_contract.yaml": "361ed14d1b2bb88273cb2e13d1d2477353189d3265c6deed8a2c1ecd6ef14e15",
         "runs/base_137_r1/eval.csv": "3373d3e45aaa334a366626a189ce89a9930a8a5ef9c91e63450c33e7f75dda28",
         "runs/l10_s1_nominal/eval.csv": "f19442ea97e4a837597b5a8e9333c7d60759504469168590c2ea8ecc9bb64fd4",
         "runs/l10_s4_blur/eval.csv": "2ecf7d090a9f4caac636b5e2db28df1d7a9153d9cc2aaefbb586989eff733403",
@@ -205,6 +206,10 @@
         "runs/l12_scenarios/results.json": "0d5364ea5db3c7b0c5e8c9e5915634a78aab10ba074b0eae0f3f165dfafe8f8e",
         "runs/l12_stability/stability.json": "e28ec3858a9d2b4ea4180d509b864f8eb08b1dee54e6527224ab080d75fc4158",
         "runs/stride2_137_r1/eval.csv": "f19442ea97e4a837597b5a8e9333c7d60759504469168590c2ea8ecc9bb64fd4",
+        "runs/stride2_137_r1/run_config.yaml": "22e2eae2ed2b0825c5ec3be7695ba671af42469875427a430949e11a6be8a456",
+        "runs/stride2_137_r1/stages.csv": "8a29c45b3937f643cb2d32dc4c427f73857ca9e29a53ea7eadb1663a8b41bd23",
+        "runs/stride2_137_r2/stages.csv": "f05c91238c4eb41c2c2d1f5d8877df0de4fb3e52bf5d7ab6938b3582a07706a1",
+        "runs/stride2_137_r3/stages.csv": "948309d751f2df9d3d72af2b2a4ad5f08109553ed3d3212bd0e6c7f09338ad7d",
         "runs_hw3/b0_640.json": "4ec7e3ac2578fcbc3c86cbaba80e145ac58f51c665eb72fe9e7d2345b51c4143",
         "runs_hw3/ft1_640.json": "86acc2b661974d6ca26d75fa0787a3711f8536fc5441cfb1d283bcb308d25dce"
       }
@@ -416,7 +421,7 @@
       }
     },
     "data/engineering.json": {
-      "sha256": "bbcb282885c8da7aa5853a086329d0315b3ea430ff7578b7bc3c54f630e29538",
+      "sha256": "4f124487a06d1e3929cbd5e2eb0d4a167803bcffd1d110ff8566f3a8d2be3056",
       "sources": {
         "runs/l11_bench_onnx/bench.json": "2a5fe630e7368701b55bd4332275ce9154cc4f28b19302b4301a94ccedf5b520",
         "runs/l11_bench_pytorch/bench.json": "c697af7689c2b9cbd60208f79e46dda5dc7658033f2f7a74a209552c88909910",
@@ -425,7 +430,11 @@
         "runs/l11_quality/results.json": "38b7f513809c2f0571811c4c23ea46ef9dadba24fc2f54c8fee57973105e0ee9",
         "runs/l11_quality_t4/results.json": "f41a0e410577cd714a84ceeecef2e6f48cd6b394096577d5032956cfed961489",
         "runs/l12_scenarios/results.json": "0d5364ea5db3c7b0c5e8c9e5915634a78aab10ba074b0eae0f3f165dfafe8f8e",
-        "runs/l12_stability/stability.json": "e28ec3858a9d2b4ea4180d509b864f8eb08b1dee54e6527224ab080d75fc4158"
+        "runs/l12_stability/stability.json": "e28ec3858a9d2b4ea4180d509b864f8eb08b1dee54e6527224ab080d75fc4158",
+        "runs_hw2/baseline_640.json": "628ce9f76d5b6678e713ae687ce09804904779facca42d2427266b3adfa4a35a",
+        "runs_hw2/imgsz_1280.json": "6cec9981d2ba3be258b6d91ec68cc50049f9a6cd6adbdc58ea505f5dcc2a1ff5",
+        "runs_hw3/b0_640.json": "4ec7e3ac2578fcbc3c86cbaba80e145ac58f51c665eb72fe9e7d2345b51c4143",
+        "runs_hw3/ft1_640.json": "86acc2b661974d6ca26d75fa0787a3711f8536fc5441cfb1d283bcb308d25dce"
       }
     }
   }

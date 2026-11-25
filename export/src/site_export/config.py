@@ -45,6 +45,8 @@ class Engineering:
     engines: tuple[Engine, ...]
     scenarios: Path         # results.json of the stream scenarios
     stability: Path         # stability.json of the long run
+    finetune: tuple[Path, Path]     # eval JSON before and after fine-tuning, one split
+    resolution: tuple[Path, Path]   # eval JSON at two input sizes, one split
 
 
 @dataclass(frozen=True)
@@ -151,6 +153,8 @@ def load_config(path: Path) -> Config:
                           for g in eng['engines']),
             scenarios=course / eng['scenarios'],
             stability=course / eng['stability'],
+            finetune=(course / eng['finetune'][0], course / eng['finetune'][1]),
+            resolution=(course / eng['resolution'][0], course / eng['resolution'][1]),
         ),
         hero=Hero(run=h['run'], crf=h['crf'], colors={int(k): v for k, v in h['colors'].items()}),
         detector=Detector(

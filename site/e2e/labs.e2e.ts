@@ -5,7 +5,10 @@ interface Detector {
   references: { image: string }[];
 }
 interface Navigation {
-  runs: Record<'base' | 'blur', { ate_m: { rmse: number }; status_counts: Record<string, number> }>;
+  runs: Record<
+    'base' | 'blur',
+    { ate_m: { rmse: number }; rpe: { trans_rmse_m: number; rot_mean_deg: number }[]; status_counts: Record<string, number> }
+  >;
 }
 interface Change {
   taus: number[];
@@ -27,6 +30,12 @@ test('the browser detector finds the boxes Python found on all reference frames'
 test('the navigation lab shows the ATE of each run', async ({ page }) => {
   const doc = publicJson<Navigation>('data/navigation.json');
   await page.goto('/lab/navigation/');
+  const metrics = page.locator('.metrics');
+  for (const run of [doc.runs.base, doc.runs.blur]) {
+    await expect(metrics).toContainText(String(run.ate_m.rmse));
+    await expect(metrics).toContainText(`${run.rpe[0]!.trans_rmse_m} m`);
+    await expect(metrics).toContainText(`${run.rpe[0]!.rot_mean_deg}°`);
+  }
   const side = page.locator('.side');
   await expect(side).toContainText(`${doc.runs.base.ate_m.rmse} m`);
   await page.getByRole('button', { name: /Motion blur/ }).click();
@@ -40,6 +49,14 @@ test('the time slider moves the moment shown', async ({ page }) => {
   const before = await time.textContent();
   await page.getByRole('slider', { name: 'Time' }).fill('400');
   await expect(time).not.toHaveText(before!);
+});
+
+test('play moves through the run', async ({ page }) => {
+  await page.goto('/lab/navigation/');
+  const slider = page.getByRole('slider', { name: 'Time' });
+  await expect(slider).toHaveValue('0');
+  await page.getByRole('button', { name: 'Play' }).click();
+  await expect(async () => expect(Number(await slider.inputValue())).toBeGreaterThan(10)).toPass({ timeout: 5000 });
 });
 
 test('the change threshold changes what the mask finds', async ({ page }) => {

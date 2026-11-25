@@ -7,6 +7,7 @@ import Footer from './Footer.astro';
 import Header from './Header.astro';
 import SectionHead from './SectionHead.astro';
 import NavigationLab from './lab/NavigationLab.svelte';
+import VoMetrics from './lab/VoMetrics.astro';
 
 interface Props {
   t: Dict;
@@ -30,6 +31,7 @@ const name = PROFILE.name[t.lang as 'en' | 'uk'];
     <SectionHead eyebrow={t.navigation.eyebrow} title={t.navigation.title}>
       <p>{t.navigation.intro}</p>
     </SectionHead>
+    <VoMetrics t={t.navigation} />
     <NavigationLab client:load t={t.navigation} />
     <p class="data">{t.navigation.data}</p>
   </main>
