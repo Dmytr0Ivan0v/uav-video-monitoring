@@ -10,6 +10,10 @@ export default defineConfig({
       'Cross-Origin-Embedder-Policy': 'require-corp',
     },
   },
+  vite: {
+    // three.js, about 140 KB gzipped, is one chunk loaded only by the navigation lab
+    build: { chunkSizeWarningLimit: 600 },
+  },
   i18n: {
     locales: ['en', 'uk'],
     defaultLocale: 'en',

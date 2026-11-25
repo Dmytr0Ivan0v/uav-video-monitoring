@@ -209,6 +209,36 @@
         "runs_hw3/ft1_640.json": "86acc2b661974d6ca26d75fa0787a3711f8536fc5441cfb1d283bcb308d25dce"
       }
     },
+    "media/tum/base.jpg": {
+      "sha256": "a68b872289fdf37bd89a2b74b58ab805353caf8d48871cb840846e2ed075a15e",
+      "sources": {
+        "data/tum/rgbd_dataset_freiburg1_xyz/rgb.txt": "532884d60bef0c9a05e14bf311998883baf59a2fa47009d1021f2c7937bd69a3",
+        "runs/l09_vo_base/run_config.yaml": "06e09f62a2157b8c7af2ac1f56267cc1e84b365b852047e0b3fef0e02eef3010"
+      }
+    },
+    "media/tum/blur.jpg": {
+      "sha256": "9aaeca957e927fd647ae19d25bf73bca8527cef0f470d1c4db2b4702dec60ec1",
+      "sources": {
+        "data/tum/rgbd_dataset_freiburg1_xyz/rgb.txt": "532884d60bef0c9a05e14bf311998883baf59a2fa47009d1021f2c7937bd69a3",
+        "runs/l09_vo_blur/run_config.yaml": "5b48adb50b73be96aba70fcb8ad1aa8f0c7f7504aabdf82e4953fed541d24a10"
+      }
+    },
+    "data/navigation.json": {
+      "sha256": "2892e5dc07b5af8532444fa3be02c0e25b84d2cadf5b785c42300ce12bc5d2ec",
+      "sources": {
+        "data/tum/rgbd_dataset_freiburg1_xyz/groundtruth.txt": "aac0319a6ef4e1cdf61e779d2152b95aa7e9f7b1749d6d18717b43ddabffede2",
+        "runs/l09_vo_base/calibration.yaml": "17bfedb854c93b255b0e394fd5f6bc9ce71d0c8504544fc7cc9dccf7635d7815",
+        "runs/l09_vo_base/eval.json": "55067a3a385826307d1767c1b5ce865bc1fb56184b84ed307b76df5b460fce4e",
+        "runs/l09_vo_base/run_config.yaml": "06e09f62a2157b8c7af2ac1f56267cc1e84b365b852047e0b3fef0e02eef3010",
+        "runs/l09_vo_base/trajectory.tum": "7b24a5b4c689f033d615be5d28591a10de5a063ada9f0c5d45c50051a6773afc",
+        "runs/l09_vo_base/vo_log.csv": "2547d16293019b5a82cf63f0a2de10e8ecca0613c486553946f972b5d410ca72",
+        "runs/l09_vo_blur/calibration.yaml": "17bfedb854c93b255b0e394fd5f6bc9ce71d0c8504544fc7cc9dccf7635d7815",
+        "runs/l09_vo_blur/eval.json": "b5f58b958791845310fc9244dea46740f713ba16c8f4dae9c4b0541d7f3c37b2",
+        "runs/l09_vo_blur/run_config.yaml": "5b48adb50b73be96aba70fcb8ad1aa8f0c7f7504aabdf82e4953fed541d24a10",
+        "runs/l09_vo_blur/trajectory.tum": "af2fb4326d99992a78b5ffbb516f9f80668e991e37fa12ae3752680295f9af31",
+        "runs/l09_vo_blur/vo_log.csv": "a12743be9c50516eb2d4f3f6b49600f27e95596c8bd73014caf17eec1e092075"
+      }
+    },
     "data/engineering.json": {
       "sha256": "bbcb282885c8da7aa5853a086329d0315b3ea430ff7578b7bc3c54f630e29538",
       "sources": {
