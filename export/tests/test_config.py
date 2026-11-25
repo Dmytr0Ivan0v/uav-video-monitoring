@@ -38,6 +38,9 @@ detector:
   degradations: configs/degradations.yaml
   curves: runs_hw4/degradations/curves.json
   fixtures: ../site/src/lib/detector/fixtures
+navigation:
+  runs: {{base: runs/l09_vo_base}}
+  thumbs: {{every: 8, size: [160, 120], cols: 10}}
 recipe:
   out: recipe
   train_args: runs_hw3/ft1_train/args.yaml

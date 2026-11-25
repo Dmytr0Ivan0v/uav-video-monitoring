@@ -67,6 +67,14 @@ class Detector:
 
 
 @dataclass(frozen=True)
+class Navigation:
+    runs: dict[str, Path]   # run name on the site -> VO run folder, absolute
+    thumbs_every: int       # every n-th frame of the sequence goes into the atlas
+    thumbs_size: tuple[int, int]  # width, height of one thumbnail, px
+    thumbs_cols: int
+
+
+@dataclass(frozen=True)
 class Recipe:
     out: Path               # export/recipe, absolute
     train_args: Path        # Ultralytics args.yaml of the fine-tune, absolute
@@ -86,6 +94,7 @@ class Config:
     engineering: Engineering
     hero: Hero
     detector: Detector
+    navigation: Navigation
     recipe: Recipe
 
     @property
@@ -110,7 +119,7 @@ def load_config(path: Path) -> Config:
     if not (site / 'astro.config.mjs').is_file():
         raise FileNotFoundError(f'site: {site} has no astro.config.mjs')
 
-    c, r, eng, h, det = d['clip'], d['recipe'], d['engineering'], d['hero'], d['detector']
+    c, r, eng, h, det, nav = d['clip'], d['recipe'], d['engineering'], d['hero'], d['detector'], d['navigation']
     return Config(
         course=course,
         site=site,
@@ -138,6 +147,8 @@ def load_config(path: Path) -> Config:
             degradations=course / det['degradations'], curves=course / det['curves'],
             fixtures=(base / det['fixtures']).resolve(),
         ),
+        navigation=Navigation(runs={k: course / v for k, v in nav['runs'].items()}, thumbs_every=nav['thumbs']['every'],
+                              thumbs_size=tuple(nav['thumbs']['size']), thumbs_cols=nav['thumbs']['cols']),
         recipe=Recipe(out=base / r['out'], train_args=course / r['train_args'],
                       onnx_export=course / r['onnx_export'], train_paths=dict(r['train_paths'])),
     )

@@ -13,6 +13,7 @@ from portfolio_export.model import export_model
 from portfolio_export.outputs import sha256, write_json
 from portfolio_export.recipe import write_recipe
 from portfolio_export.runs import RUN_FILES, check_rows, read_json, read_yaml
+from portfolio_export.vo import Thumbs, run_doc
 
 
 def main() -> None:
@@ -98,6 +99,24 @@ def export(cfg: Config) -> None:
     out = cfg.data_dir / 'facts.json'
     write_json(out, facts(cfg.facts, cfg.course), compact=False)
     done(out, [f.file for f in cfg.facts])
+
+    nav = cfg.navigation
+    thumbs = Thumbs(every=nav.thumbs_every, size=nav.thumbs_size, cols=nav.thumbs_cols)
+    vo_runs, shared = {}, None
+    for name, run in nav.runs.items():
+        out = cfg.media_dir / 'tum' / f'{name}.jpg'
+        doc, sh = run_doc(run, cfg.course, out, public, thumbs)
+        if shared is not None and sh['gt'] != shared['gt']:
+            raise ValueError(f'{run}: associates other ground truth poses than the first run')
+        shared = sh
+        vo_runs[name] = doc
+        seq = cfg.course / read_yaml(run / 'run_config.yaml')['sequence_dir']
+        done(out, [seq / 'rgb.txt', run / 'run_config.yaml'])
+    out = cfg.data_dir / 'navigation.json'
+    write_json(out, {**shared, 'runs': vo_runs})
+    gt_file = seq / read_yaml(run / 'run_config.yaml')['config']['sequence']['gt']
+    done(out, [gt_file] + [run / f for run in nav.runs.values()
+                           for f in ('trajectory.tum', 'vo_log.csv', 'eval.json', 'run_config.yaml', 'calibration.yaml')])
 
     out = cfg.data_dir / 'engineering.json'
     doc, sources = engineering(cfg.engineering, cfg.course)

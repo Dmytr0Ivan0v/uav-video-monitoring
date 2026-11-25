@@ -225,6 +225,12 @@ detector:                  # browser lab: model, reference frames, tolerance
   curves: runs_hw4/degradations/curves.json
   fixtures: ../site/src/lib/detector/fixtures   # relative to this file
 
+navigation:                # VO runs on TUM RGB-D fr1_xyz, a handheld camera
+  runs:
+    base: runs/l09_vo_base
+    blur: runs/l09_vo_blur   # motion blur 15 px on the VO input
+  thumbs: {every: 8, size: [128, 96], cols: 10}   # 100 gray frames per run in one JPEG
+
 recipe:
   out: recipe              # relative to this file
   train_args: runs_hw3/ft1_train/args.yaml
