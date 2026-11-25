@@ -17,11 +17,11 @@ export async function webgpuAvailable(): Promise<boolean> {
   }
 }
 
-// the model is large: read it as a stream to show progress
-export async function fetchModel(url: string, onProgress: (loaded: number, total: number) => void): Promise<Uint8Array> {
+// the model is large: read it as a stream to show progress. The total comes from the export, not from
+// Content-Length: nginx sends the model gzipped, and the stream counts bytes after decompression
+export async function fetchModel(url: string, onProgress: (loaded: number) => void): Promise<Uint8Array> {
   const r = await fetch(url);
   if (!r.ok || !r.body) throw new Error(`${url}: HTTP ${r.status}`);
-  const total = Number(r.headers.get('content-length') ?? 0);
   const chunks: Uint8Array[] = [];
   let loaded = 0;
   const reader = r.body.getReader();
@@ -30,7 +30,7 @@ export async function fetchModel(url: string, onProgress: (loaded: number, total
     if (done) break;
     chunks.push(value);
     loaded += value.length;
-    onProgress(loaded, total);
+    onProgress(loaded);
   }
   const out = new Uint8Array(loaded);
   let at = 0;
