@@ -16,6 +16,7 @@ Needs Node 24 (`.nvmrc`), uv, Docker.
 make install   # npm ci + uv sync
 make dev       # http://localhost:4321
 make test      # pytest, astro check, vitest
+make e2e       # build, then Playwright on the build: pages, console, labs, axe, first-screen budget
 make image     # docker image uav-portfolio
 ```
 
