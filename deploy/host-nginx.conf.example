@@ -1,9 +1,8 @@
-# Host nginx -> container on 127.0.0.1:8020. Copy to /etc/nginx/sites-available/, set server_name,
-# link into sites-enabled, then `certbot --nginx -d <domain>` adds the 443 server and the redirect.
+# Host nginx -> container on 127.0.0.1:8020. Copy to /etc/nginx/sites-available/, link into sites-enabled,
+# then `certbot --nginx -d uav.devspace.pp.ua` adds the 443 server and the redirect.
 server {
     listen 80;
-    listen [::]:80;
-    server_name example.com;
+    server_name uav.devspace.pp.ua;
 
     location / {
         proxy_pass http://127.0.0.1:8020;
