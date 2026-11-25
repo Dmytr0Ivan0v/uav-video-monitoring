@@ -5,7 +5,8 @@ import type { CheckRow } from '../lib/console/types';
 import { readPublicJson } from '../lib/data/files';
 import { fill } from '../lib/format';
 import { factVars } from '../lib/home/facts';
-import type { EngineeringDoc, FactsDoc, StabilityCheck } from '../lib/home/types';
+import type { ClipDoc } from '../lib/console/types';
+import type { EngineeringDoc, FactsDoc, ObjectSize, StabilityCheck } from '../lib/home/types';
 import SectionHead from './SectionHead.astro';
 
 interface Props {
@@ -18,6 +19,10 @@ const doc = readPublicJson<EngineeringDoc>('data/engineering.json');
 const vars = factVars(readPublicJson<FactsDoc>('data/facts.json'));
 const st = doc.stability;
 const rss = st.checks.find((c) => c.check === 'rss_growth_extrapolated_mb')!;
+const clip = readPublicJson<ClipDoc>('data/console/clip137.json');
+const [coco, tuned] = doc.sizes.finetune.runs;
+const big = doc.sizes.resolution.runs[1];
+const sizes: ObjectSize[] = ['small', 'medium', 'large', 'all'];
 
 // shorter numbers stay readable with two decimals, longer ones need one
 const ms = (v: number) => (v < 10 ? v.toFixed(2) : v.toFixed(1));
@@ -75,6 +80,81 @@ function stabilityValue(c: StabilityCheck): string {
     </div>
     <p class="note">{fill(e.engines.protocol, doc.protocol)}</p>
     <p class="src mono">{doc.engines.flatMap((g) => g.sources).filter((s, i, all) => all.indexOf(s) === i).join(' · ')}</p>
+
+    <h3>{e.sizes.title}</h3>
+    <p class="text">
+      {
+        fill(e.sizes.text, {
+          small: coco.by_size.small.objects,
+          all: coco.by_size.all.objects,
+          width: clip.source_size[0],
+          imgsz: tuned.imgsz,
+          before: coco.by_size.small.map50_95,
+          after: tuned.by_size.small.map50_95,
+        })
+      }
+    </p>
+    <div class="pair">
+      <div>
+        <p class="cap">{fill(e.sizes.finetune, { imgsz: tuned.imgsz })}</p>
+        <div class="tbl">
+          <table>
+            <thead>
+              <tr>
+                <th>{e.sizes.size}</th>
+                <th class="n">{e.sizes.objects}</th>
+                <th class="n">{e.sizes.coco}</th>
+                <th class="n">{e.sizes.finetuned}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                sizes.map((s) => (
+                  <tr>
+                    <td>{e.sizes.names[s]}</td>
+                    <td class="n">{coco.by_size[s].objects}</td>
+                    <td class="n">{coco.by_size[s].map50_95}</td>
+                    <td class="n">{tuned.by_size[s].map50_95}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="src mono">{doc.sizes.finetune.sources.join(' · ')}</p>
+      </div>
+      <div>
+        <p class="cap">{e.sizes.resolution}</p>
+        <div class="tbl">
+          <table>
+            <thead>
+              <tr>
+                <th class="n">{e.sizes.input}</th>
+                <th class="n">{e.sizes.smallMap}</th>
+                <th class="n">{e.sizes.allMap}</th>
+                <th class="n">{e.sizes.recall}</th>
+                <th class="n">{e.sizes.time}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                doc.sizes.resolution.runs.map((r) => (
+                  <tr>
+                    <td class="n">{r.imgsz}</td>
+                    <td class="n">{r.by_size.small.map50_95}</td>
+                    <td class="n">{r.by_size.all.map50_95}</td>
+                    <td class="n">{r.recall}</td>
+                    <td class="n">{r.time_mean_ms}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="note">{fill(e.sizes.note, { time: big.time_mean_ms, budget: vars.frame_budget_ms!, big: big.imgsz })}</p>
+        <p class="src mono">{doc.sizes.resolution.sources.join(' · ')}</p>
+      </div>
+    </div>
 
     <div class="cols">
       <div>
@@ -193,6 +273,19 @@ function stabilityValue(c: StabilityCheck): string {
     gap: 28px;
   }
 
+  .pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .cap {
+    margin: 4px 0 6px;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
   .tbl {
     overflow-x: auto;
     padding: 4px 14px;
@@ -267,7 +360,8 @@ function stabilityValue(c: StabilityCheck): string {
   }
 
   @media (max-width: 980px) {
-    .cols {
+    .cols,
+    .pair {
       grid-template-columns: minmax(0, 1fr);
     }
   }

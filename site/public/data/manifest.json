@@ -421,7 +421,7 @@
       }
     },
     "data/engineering.json": {
-      "sha256": "bbcb282885c8da7aa5853a086329d0315b3ea430ff7578b7bc3c54f630e29538",
+      "sha256": "4f124487a06d1e3929cbd5e2eb0d4a167803bcffd1d110ff8566f3a8d2be3056",
       "sources": {
         "runs/l11_bench_onnx/bench.json": "2a5fe630e7368701b55bd4332275ce9154cc4f28b19302b4301a94ccedf5b520",
         "runs/l11_bench_pytorch/bench.json": "c697af7689c2b9cbd60208f79e46dda5dc7658033f2f7a74a209552c88909910",
@@ -430,7 +430,11 @@
         "runs/l11_quality/results.json": "38b7f513809c2f0571811c4c23ea46ef9dadba24fc2f54c8fee57973105e0ee9",
         "runs/l11_quality_t4/results.json": "f41a0e410577cd714a84ceeecef2e6f48cd6b394096577d5032956cfed961489",
         "runs/l12_scenarios/results.json": "0d5364ea5db3c7b0c5e8c9e5915634a78aab10ba074b0eae0f3f165dfafe8f8e",
-        "runs/l12_stability/stability.json": "e28ec3858a9d2b4ea4180d509b864f8eb08b1dee54e6527224ab080d75fc4158"
+        "runs/l12_stability/stability.json": "e28ec3858a9d2b4ea4180d509b864f8eb08b1dee54e6527224ab080d75fc4158",
+        "runs_hw2/baseline_640.json": "628ce9f76d5b6678e713ae687ce09804904779facca42d2427266b3adfa4a35a",
+        "runs_hw2/imgsz_1280.json": "6cec9981d2ba3be258b6d91ec68cc50049f9a6cd6adbdc58ea505f5dcc2a1ff5",
+        "runs_hw3/b0_640.json": "4ec7e3ac2578fcbc3c86cbaba80e145ac58f51c665eb72fe9e7d2345b51c4143",
+        "runs_hw3/ft1_640.json": "86acc2b661974d6ca26d75fa0787a3711f8536fc5441cfb1d283bcb308d25dce"
       }
     }
   }

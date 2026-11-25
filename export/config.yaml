@@ -227,6 +227,9 @@ engineering:
     - {id: tensorrt_t4, bench: runs/l11_bench_trt, results: runs/l11_quality_t4/results.json, row: TRT}
   scenarios: runs/l12_scenarios/results.json
   stability: runs/l12_stability/stability.json
+  # mAP50-95 by object size on VisDrone-DET val
+  finetune: [runs_hw3/b0_640.json, runs_hw3/ft1_640.json]          # COCO weights -> fine-tuned, cleaned val
+  resolution: [runs_hw2/baseline_640.json, runs_hw2/imgsz_1280.json]  # COCO weights, val before cleaning
 
 hero:
   run: nominal             # console run whose boxes are drawn into the clip

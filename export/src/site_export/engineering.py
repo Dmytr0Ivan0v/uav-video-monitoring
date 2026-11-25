@@ -1,4 +1,4 @@
-"""Engineering section: bench runs, scenario results, stability run -> engineering document."""
+"""Engineering section: bench runs, scenario results, stability run, eval by object size -> engineering document."""
 
 from pathlib import Path
 
@@ -8,6 +8,7 @@ from site_export.runs import check_rows, read_json
 BENCH_KEYS = ('inference_p50_ms', 'inference_p95_ms', 'step_p95_ms', 'throughput_fps', 'peak_rss_mb')
 QUALITY_CHECKS = ('idf1', 'recall', 'p95_ms')
 WINDOW_KEYS = ('window', 'frames_timed', 'p50_ms', 'p95_ms', 'rss_mb', 'events_in_memory', 'idf1', 'recall')
+SIZES = ('small', 'medium', 'large', 'all')
 
 
 def engine(e: Engine, course: Path) -> dict:
@@ -42,6 +43,27 @@ def stability(path: Path) -> dict:
     }
 
 
+def eval_run(path: Path) -> dict:
+    d = read_json(path)
+    by_size = d['metrics']['by_size']
+    return {
+        'name': d['config']['name'],
+        'imgsz': d['config']['imgsz'],
+        'by_size': {s: {'objects': by_size[s]['objects'], 'map50_95': by_size[s]['mAP50-95']} for s in SIZES},
+        'recall': d['metrics']['recall'],
+        'time_mean_ms': d['performance']['time_mean_ms'],
+    }
+
+
+# two eval runs compared on one split: the object counts of every size must agree
+def size_pair(paths: tuple[Path, Path], course: Path) -> dict:
+    runs = [eval_run(p) for p in paths]
+    counts = [{s: r['by_size'][s]['objects'] for s in SIZES} for r in runs]
+    if counts[0] != counts[1]:
+        raise ValueError(f'{paths[0]} and {paths[1]}: different splits, objects {counts[0]} vs {counts[1]}')
+    return {'sources': [p.relative_to(course).as_posix() for p in paths], 'runs': runs}
+
+
 def engineering(cfg: Engineering, course: Path) -> tuple[dict, list[Path]]:
     protocol = read_json(cfg.engines[0].bench / 'bench.json')['protocol']
     doc = {
@@ -49,6 +71,7 @@ def engineering(cfg: Engineering, course: Path) -> tuple[dict, list[Path]]:
         'engines': [engine(e, course) for e in cfg.engines],
         'scenarios': {'source': cfg.scenarios.relative_to(course).as_posix(), 'rows': scenario_rows(cfg.scenarios)},
         'stability': {'source': cfg.stability.relative_to(course).as_posix(), **stability(cfg.stability)},
+        'sizes': {'finetune': size_pair(cfg.finetune, course), 'resolution': size_pair(cfg.resolution, course)},
     }
     sources = [p for e in cfg.engines for p in (e.bench / 'bench.json', e.results)]
-    return doc, sources + [cfg.scenarios, cfg.stability]
+    return doc, sources + [cfg.scenarios, cfg.stability, *cfg.finetune, *cfg.resolution]
