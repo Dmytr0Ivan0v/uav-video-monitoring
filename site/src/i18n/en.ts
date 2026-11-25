@@ -253,6 +253,15 @@ export const en = {
     },
     frameNote: 'What VO saw: the gray frame.',
     frameNoteBlur: 'What VO saw: the gray frame with motion blur.',
+    metrics: {
+      title: 'Both runs',
+      metric: 'Metric',
+      ate: 'ATE RMSE',
+      ateMax: 'ATE max',
+      rpe: 'RPE over {delta} {unit}',
+      degraded: 'DEGRADED · LOST frames',
+      note: 'ATE: position error after one {alignment} alignment of the whole run to motion capture. RPE: error of the relative motion over a fixed span, translation RMSE and mean rotation; it shows drift and does not depend on that alignment.',
+    },
     stats: {
       title: 'Whole run',
       ate: 'ATE RMSE',

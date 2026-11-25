@@ -254,6 +254,15 @@ export const uk: Dict = {
     },
     frameNote: 'Що бачила VO: сірий кадр.',
     frameNoteBlur: 'Що бачила VO: сірий кадр з розмиттям від руху.',
+    metrics: {
+      title: 'Обидва прогони',
+      metric: 'Метрика',
+      ate: 'ATE RMSE',
+      ateMax: 'ATE max',
+      rpe: 'RPE на {delta} {unit}',
+      degraded: 'Кадри DEGRADED · LOST',
+      note: 'ATE: похибка положення після одного вирівнювання {alignment} усього прогону до motion capture. RPE: похибка відносного руху на фіксованому відрізку, RMSE зсуву й середній поворот; вона показує дрейф і не залежить від цього вирівнювання.',
+    },
     stats: {
       title: 'Увесь прогін',
       ate: 'ATE RMSE',

@@ -1,0 +1,134 @@
+---
+import type { Dict } from '../../i18n/en';
+import { readPublicJson } from '../../lib/data/files';
+import { fill } from '../../lib/format';
+import type { NavigationDoc, VoRun } from '../../lib/navigation/types';
+
+interface Props {
+  t: Dict['navigation'];
+}
+
+const { t } = Astro.props;
+const m = t.metrics;
+const doc = readPublicJson<NavigationDoc>('data/navigation.json');
+const runs: VoRun[] = [doc.runs.base, doc.runs.blur];
+const title = (r: VoRun) => (r.degradation ? fill(t.runs.blur, { length: r.degradation.length_px }) : t.runs.base);
+---
+
+<div class="metrics">
+  <h3>{m.title}</h3>
+  <div class="tbl">
+    <table>
+      <thead>
+        <tr>
+          <th>{m.metric}</th>
+          {runs.map((r) => <th class="n">{title(r)}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{m.ate}, {t.units.m}</td>
+          {runs.map((r) => <td class="n">{r.ate_m.rmse}</td>)}
+        </tr>
+        <tr>
+          <td>{m.ateMax}, {t.units.m}</td>
+          {runs.map((r) => <td class="n">{r.ate_m.max}</td>)}
+        </tr>
+        {
+          doc.runs.base.rpe.map((span, k) => (
+            <tr>
+              <td>{fill(m.rpe, { delta: span.delta, unit: t.units[span.unit] })}</td>
+              {runs.map((r) => (
+                <td class="n">
+                  <span>{r.rpe[k]!.trans_rmse_m} {t.units.m}</span>
+                  <span class="rot">{r.rpe[k]!.rot_mean_deg}°</span>
+                </td>
+              ))}
+            </tr>
+          ))
+        }
+        <tr>
+          <td>{m.degraded}</td>
+          {runs.map((r) => <td class="n">{r.status_counts.DEGRADED} · {r.status_counts.LOST}</td>)}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">{fill(m.note, { alignment: doc.alignment })}</p>
+</div>
+
+<style>
+  .metrics {
+    margin-bottom: 18px;
+  }
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+  }
+
+  .tbl {
+    max-width: 720px;
+    overflow-x: auto;
+    padding: 4px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  th,
+  td {
+    padding: 7px 12px 7px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
+  th {
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .n {
+    font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  th.n {
+    white-space: normal;
+  }
+
+  .rot::before {
+    content: ' · ';
+  }
+
+  /* on a phone both runs stay in view: translation over rotation */
+  @media (max-width: 560px) {
+    .rot {
+      display: block;
+    }
+
+    .rot::before {
+      content: none;
+    }
+  }
+
+  .note {
+    max-width: 75ch;
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+  }
+</style>
