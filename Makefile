@@ -1,6 +1,7 @@
 IMAGE ?= uav-video-monitoring
+COMPOSE = docker compose -f deploy/docker-compose.prod.yml
 
-.PHONY: install export dev build test e2e image
+.PHONY: install export dev build test e2e image prod media
 
 install: site/node_modules
 	cd export && uv sync
@@ -29,3 +30,12 @@ e2e: site/node_modules
 
 image:
 	docker build -f deploy/Dockerfile -t $(IMAGE) .
+
+# on the server, in the checkout: build the image and (re)start the container on 127.0.0.1:8020
+prod:
+	$(COMPOSE) up -d --build
+
+# from the machine that ran make export: copy the git-ignored VisDrone media and CV into the server checkout
+media:
+	@test -n "$(DEST)" || { echo 'usage: make media DEST=user@host:/path/to/checkout'; exit 1; }
+	rsync -avR --delete site/public/media/visdrone/ site/public/data/visdrone/ site/public/cv/ $(DEST)/

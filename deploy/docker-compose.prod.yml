@@ -1,0 +1,17 @@
+name: uav-video-monitoring
+
+services:
+  site:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: uav-video-monitoring
+    restart: unless-stopped
+    # only the host nginx reaches the container: it holds the domain and TLS
+    ports:
+      - '127.0.0.1:8020:80'
+    # VisDrone pixels and the CV are neither in git nor in the image: make media copies them next to the checkout
+    volumes:
+      - ../site/public/media/visdrone:/usr/share/nginx/html/media/visdrone:ro
+      - ../site/public/data/visdrone:/usr/share/nginx/html/data/visdrone:ro
+      - ../site/public/cv:/usr/share/nginx/html/cv:ro

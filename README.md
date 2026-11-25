@@ -20,6 +20,20 @@ make e2e       # build, then Playwright on the build: pages, console, labs, axe,
 make image     # docker image uav-video-monitoring
 ```
 
+## Production
+
+The server runs Docker and nginx. The container serves the static build on `127.0.0.1:8020`; the host nginx holds the domain and TLS and proxies to it (`deploy/host-nginx.conf.example`).
+
+```bash
+# on this machine, after make export: VisDrone media and CV -> server checkout
+make media DEST=user@host:/path/to/uav-video-monitoring
+
+# on the server, in the checkout
+git pull && make prod   # docker compose -f deploy/docker-compose.prod.yml up -d --build
+```
+
+The media and CV are mounted into the container read-only, so `make media` alone updates them without a rebuild.
+
 `make export` reads the course repository from `../cv_course` (see `export/config.yaml`). It needs ffmpeg and the VisDrone2019-MOT-val annotations in the course checkout.
 
 ## Data
