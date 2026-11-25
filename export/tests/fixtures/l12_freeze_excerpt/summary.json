@@ -1,0 +1,22 @@
+{
+  "frames_source": 233,
+  "frames_processed": 117,
+  "frames_expected": 117,
+  "frames_dropped": 0,
+  "frames_frozen": 14,
+  "torch_threads": 8,
+  "wall_s": 7.065,
+  "fps_wall": 32.98,
+  "fps_processed": 16.56,
+  "events": 6999,
+  "tracks": 684,
+  "dropped_share": 0.224,
+  "snapshots": [
+    30,
+    70,
+    110,
+    150,
+    190,
+    232
+  ]
+}

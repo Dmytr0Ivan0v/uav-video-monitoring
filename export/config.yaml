@@ -1,3 +1,101 @@
-# Paths are relative to this file.
+# Paths are relative to this file; paths below course are relative to the cv_course checkout.
 course: ../../cv_course   # cv_course checkout, read only
 site: ../site             # Astro project that receives public/data and public/media
+
+contract: configs/cv_contract.yaml       # frame budget and statuses shown on the timeline
+eval_classes: configs/eval_classes.json  # VisDrone categories -> model class ids, as in evaluation
+
+clip:
+  id: '137'                # control clip of report 07; every console run below must use it
+  size: [960, 540]         # site video, px; boxes stay in source pixels
+  crf: 25
+  gop: 10                  # keyframe every 10 frames: seeking to any frame decodes at most 9 more
+  poster_frame: 0
+
+# Console runs: one file site/public/data/console/<id>.json each, checks from the row of results.
+console:
+  - id: nominal
+    run: runs/l12_nominal
+    results: runs/l12_scenarios/results.json
+    row: nominal
+  - id: drop_every
+    run: runs/l12_drop_every
+    results: runs/l12_scenarios/results.json
+    row: drop_every
+  - id: freeze_nocheck
+    run: runs/l12_freeze_nocheck
+    results: runs/l12_scenarios/results.json
+    row: freeze_nocheck
+  - id: freeze
+    run: runs/l12_freeze
+    results: runs/l12_scenarios/results.json
+    row: freeze
+  - id: pytorch_cpu        # reference of the ONNX row
+    run: runs/l10_s1_nominal
+    results: runs/l11_quality/results.json
+    row: S1
+  - id: onnx_cpu
+    run: runs/l11_quality_onnx
+    results: runs/l11_quality/results.json
+    row: ONNX
+  - id: pytorch_t4         # reference of the TensorRT row, same T4 host
+    run: runs/l11_quality_gpu
+    results: runs/l11_quality_t4/results.json
+    row: S1
+  - id: tensorrt_t4
+    run: runs/l11_quality_trt
+    results: runs/l11_quality_t4/results.json
+    row: TRT
+
+# Headline numbers: each one is a field of a check row, never typed by hand.
+facts:
+  ok_in_freeze_nocheck:
+    results: runs/l12_scenarios/results.json
+    row: freeze_nocheck
+    check: ok_in_freeze
+    field: ms
+  frozen_detected:
+    results: runs/l12_scenarios/results.json
+    row: freeze
+    check: frozen
+    field: ms
+  frozen_expected:
+    results: runs/l12_scenarios/results.json
+    row: freeze
+    check: frozen
+    field: m0
+  idf1_drop_rel_nocheck:
+    results: runs/l12_scenarios/results.json
+    row: freeze_nocheck
+    check: idf1
+    field: delta_rel
+  frame_dropped:
+    results: runs/l12_scenarios/results.json
+    row: drop_every
+    check: frame_dropped
+    field: ms
+  idf1_drop_rel_onnx:
+    results: runs/l11_quality/results.json
+    row: ONNX
+    check: idf1
+    field: delta_rel
+  idf1_drop_rel_tensorrt:
+    results: runs/l11_quality_t4/results.json
+    row: TRT
+    check: idf1
+    field: delta_rel
+  p95_ms_tensorrt:
+    results: runs/l11_quality_t4/results.json
+    row: TRT
+    check: p95_ms
+    field: ms
+
+recipe:
+  out: recipe              # relative to this file
+  train_args: runs_hw3/ft1_train/args.yaml
+  onnx_export: runs/l11_export/export.json
+  # absolute paths of the training machine -> paths inside cv_course
+  train_paths:
+    data: configs/visdrone_coco_classes.yaml
+    project: runs_hw3
+    save_dir: runs_hw3/ft1_train

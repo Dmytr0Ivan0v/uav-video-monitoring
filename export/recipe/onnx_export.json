@@ -1,0 +1,52 @@
+{
+  "command": "python -m uav_monitor export --config configs/deploy.yaml --run-id l11_export",
+  "weights": "weights/ft1.pt",
+  "weights_sha256": "7c72d8dfd79162506fc335403a946d58b1b6a33d6ed770a17df58d88bc000a33",
+  "export": {
+    "format": "onnx",
+    "imgsz": [
+      384,
+      640
+    ],
+    "opset": 18,
+    "nms": false,
+    "dynamic": false,
+    "simplify": true,
+    "batch": 1
+  },
+  "opset": 18,
+  "inputs": {
+    "images": [
+      1,
+      3,
+      384,
+      640
+    ]
+  },
+  "outputs": {
+    "output0": [
+      1,
+      84,
+      5040
+    ]
+  },
+  "onnx_sha256": "92d9cd0a5c14f519e19c9396cc8a3d937acddb44e5f1fa5f6d045846189e1091",
+  "onnx_mb": 36.2,
+  "versions": {
+    "python": "3.12.3",
+    "opencv": "5.0.0",
+    "torch": "2.14.1+cpu",
+    "ultralytics": "8.4.174",
+    "numpy": "2.5.3",
+    "lap": "0.5.13",
+    "motmetrics": "1.4.0",
+    "pyyaml": "6.0.3",
+    "onnx": "1.23.2",
+    "onnxruntime": "1.32.0",
+    "onnxslim": "0.1.99"
+  },
+  "git": {
+    "commit": "a4f18a2703f2506859defdf276453c57775d27f9",
+    "dirty": false
+  }
+}

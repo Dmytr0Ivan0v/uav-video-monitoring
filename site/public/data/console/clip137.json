@@ -1,0 +1,41 @@
+{
+  "id": "137",
+  "name": "uav0000137_00458_v",
+  "fps": 30,
+  "frames": 233,
+  "source_size": [
+    2688,
+    1512
+  ],
+  "video_size": [
+    960,
+    540
+  ],
+  "vid_stride": 2,
+  "contract": {
+    "version": 3,
+    "statuses": [
+      "ok",
+      "frame_dropped",
+      "frozen"
+    ],
+    "frame_budget_ms": 66.7,
+    "latency_p95_ms": 100
+  },
+  "classes": {
+    "0": "person",
+    "1": "bicycle",
+    "2": "car",
+    "3": "motorcycle",
+    "5": "bus",
+    "7": "truck"
+  },
+  "media": {
+    "video": "media/visdrone/clip137.mp4",
+    "poster": "media/visdrone/clip137_f000.jpg",
+    "stills": {
+      "0": "media/visdrone/clip137_f000.jpg",
+      "100": "media/visdrone/clip137_f100.jpg"
+    }
+  }
+}

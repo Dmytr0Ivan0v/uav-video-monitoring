@@ -1,0 +1,6 @@
+{"frame": 98, "t": 3.267, "status": "ok", "track_id": 3, "cls": 2, "score": 0.886, "xyxy": [554.41, 631.48, 751.9, 762.76]}
+{"frame": 98, "t": 3.267, "status": "ok", "track_id": 4, "cls": 2, "score": 0.881, "xyxy": [450.99, 732.93, 603.97, 895.38]}
+{"frame": 100, "t": 3.333, "status": "ok", "track_id": 3, "cls": 2, "score": 0.885, "xyxy": [554.01, 631.47, 752.32, 763.34]}
+{"frame": 100, "t": 3.333, "status": "ok", "track_id": 4, "cls": 2, "score": 0.881, "xyxy": [450.04, 736.22, 602.49, 898.83]}
+{"frame": 102, "t": 3.4, "status": "frozen", "track_id": null, "cls": null, "score": null, "xyxy": null}
+{"frame": 104, "t": 3.467, "status": "frozen", "track_id": null, "cls": null, "score": null, "xyxy": null}

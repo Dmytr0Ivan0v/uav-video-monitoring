@@ -1,0 +1,58 @@
+{
+  "ok_in_freeze_nocheck": {
+    "value": 1863,
+    "source": "runs/l12_scenarios/results.json",
+    "row": "freeze_nocheck",
+    "check": "ok_in_freeze",
+    "field": "ms"
+  },
+  "frozen_detected": {
+    "value": 14,
+    "source": "runs/l12_scenarios/results.json",
+    "row": "freeze",
+    "check": "frozen",
+    "field": "ms"
+  },
+  "frozen_expected": {
+    "value": 14,
+    "source": "runs/l12_scenarios/results.json",
+    "row": "freeze",
+    "check": "frozen",
+    "field": "m0"
+  },
+  "idf1_drop_rel_nocheck": {
+    "value": 0.06,
+    "source": "runs/l12_scenarios/results.json",
+    "row": "freeze_nocheck",
+    "check": "idf1",
+    "field": "delta_rel"
+  },
+  "frame_dropped": {
+    "value": 23,
+    "source": "runs/l12_scenarios/results.json",
+    "row": "drop_every",
+    "check": "frame_dropped",
+    "field": "ms"
+  },
+  "idf1_drop_rel_onnx": {
+    "value": 0.0,
+    "source": "runs/l11_quality/results.json",
+    "row": "ONNX",
+    "check": "idf1",
+    "field": "delta_rel"
+  },
+  "idf1_drop_rel_tensorrt": {
+    "value": 0.017,
+    "source": "runs/l11_quality_t4/results.json",
+    "row": "TRT",
+    "check": "idf1",
+    "field": "delta_rel"
+  },
+  "p95_ms_tensorrt": {
+    "value": 64.809,
+    "source": "runs/l11_quality_t4/results.json",
+    "row": "TRT",
+    "check": "p95_ms",
+    "field": "ms"
+  }
+}

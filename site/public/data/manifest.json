@@ -1,0 +1,137 @@
+{
+  "course": {
+    "commit": "acc298dccc37602e2a23ce47804d08a0813e04fe",
+    "dirty": false
+  },
+  "files": {
+    "data/console/nominal.json": {
+      "sha256": "25aea0ff39e5acafe5267df93b088dc0be3faf77a5f37866a94b79dc4d960ff2",
+      "sources": {
+        "runs/l12_nominal/events.jsonl": "276ae21c909f336e7a8d6ae94ff1293f55bca3c87e0e1b17e53ec96ab673671b",
+        "runs/l12_nominal/frames.csv": "ffff8742b92c7c360fe6381954dd38a7b48ffbed93630486ee2dad65d4859411",
+        "runs/l12_nominal/manifest.json": "7157cd7f9fc855aa0e0cfcbd5741f8a6fa3f4868cf85fda800e82bcb6cd31316",
+        "runs/l12_nominal/run_config.yaml": "366faca4ca3fe4a51a9cadfae46083c3265a137488e533c9ac2bba136af24ce7",
+        "runs/l12_nominal/summary.json": "d6729724a9a1810b6c35323949830f4d0fd98e790e88ad8f660be4f7f7eff49c",
+        "runs/l12_scenarios/results.json": "0d5364ea5db3c7b0c5e8c9e5915634a78aab10ba074b0eae0f3f165dfafe8f8e"
+      }
+    },
+    "data/console/drop_every.json": {
+      "sha256": "534bcd5cfc8b9cbf3eeb80ec73ad14e6809c0c7ba8ee146b14ab02a47c6e0411",
+      "sources": {
+        "runs/l12_drop_every/events.jsonl": "1a6690fd214623cf8bb9843087d01a7ca6ce862e3f402250c12e45d6a331a505",
+        "runs/l12_drop_every/frames.csv": "7a3cc5690dae491e9579f040d5bff249e7e51b3c2c0433791ab7d16195f2e91b",
+        "runs/l12_drop_every/manifest.json": "b6595980a54891f86f137a49c3426bcc77187f3aea7aa538d7e891bcb36964cc",
+        "runs/l12_drop_every/run_config.yaml": "cd959ba13ec245fd2d8bf2a62775a827dfbaf5ad0bb4b1329000df17ae2c16f4",
+        "runs/l12_drop_every/summary.json": "670825e81f2e45a9f285a5923e2e2f1fc611cfb88bbe0003a8f545676d4c6134",
+        "runs/l12_scenarios/results.json": "0d5364ea5db3c7b0c5e8c9e5915634a78aab10ba074b0eae0f3f165dfafe8f8e"
+      }
+    },
+    "data/console/freeze_nocheck.json": {
+      "sha256": "88b72ac01e28a53cafd4e72328c9bdbccc7c52fc1d2ae52bcb6aef5716cee69f",
+      "sources": {
+        "runs/l12_freeze_nocheck/events.jsonl": "70ec391948db8a2b427c433f8935698493ea2213e919d23308c50d28a9b94279",
+        "runs/l12_freeze_nocheck/frames.csv": "3373226521f6821e8007203138b0b775f886aebb1434b29602b504f709c66f28",
+        "runs/l12_freeze_nocheck/manifest.json": "35eeb78aec180f9ed42aa93e7cf0ec644173035285d58af0fdffaa3b33811768",
+        "runs/l12_freeze_nocheck/run_config.yaml": "902fd91fdac4de5e7b69eecde98eaddcbe63b57e7df21447b780470f8a7efdbf",
+        "runs/l12_freeze_nocheck/summary.json": "6ed372a9f4980b49bfc8732069df959be296389292ee75e3a830702fb1754634",
+        "runs/l12_scenarios/results.json": "0d5364ea5db3c7b0c5e8c9e5915634a78aab10ba074b0eae0f3f165dfafe8f8e"
+      }
+    },
+    "data/console/freeze.json": {
+      "sha256": "fd7c6a6ea97fd1f55477d762fbd7b9926556519c071995ea3ad6105269eaaf49",
+      "sources": {
+        "runs/l12_freeze/events.jsonl": "5409ef30b8636e15a094ee31553a99c0434c6af39474a79214235880a554067d",
+        "runs/l12_freeze/frames.csv": "f9924aecc0a13266a557dfe76f01a3e172d4487eb2ab3e630c614a0f7b316de2",
+        "runs/l12_freeze/manifest.json": "4489af1be961834c3c2f498f328570c9c09ec67a063dd48a344a8b1214584aa3",
+        "runs/l12_freeze/run_config.yaml": "9673d7541a6c7c6cc0e7dd280aa0603a34d7f2b276c3dec87644012c8f45d9be",
+        "runs/l12_freeze/summary.json": "89565609483d1aaf13e959de79abed3f63359bcc3e23ec19b0bce8517c661417",
+        "runs/l12_scenarios/results.json": "0d5364ea5db3c7b0c5e8c9e5915634a78aab10ba074b0eae0f3f165dfafe8f8e"
+      }
+    },
+    "data/console/pytorch_cpu.json": {
+      "sha256": "6a45e4d2a6d9fbd6989d00ab337e1da96282ac79c67b548da7bee16eb843597a",
+      "sources": {
+        "runs/l10_s1_nominal/events.jsonl": "276ae21c909f336e7a8d6ae94ff1293f55bca3c87e0e1b17e53ec96ab673671b",
+        "runs/l10_s1_nominal/frames.csv": "ab04b2ff248b2d2070d2a16b35ed92436634d1a65bfae3dcdf056a41cf731d9b",
+        "runs/l10_s1_nominal/manifest.json": "f073c6dd1cef38725015214ab1fd165d02333de9b17f9d7196f6f6e387b32549",
+        "runs/l10_s1_nominal/run_config.yaml": "72e26f623572a27efcceb0744e10170cb22519a1dc15eaa87ef1b65f898e300b",
+        "runs/l10_s1_nominal/summary.json": "8052987301b2013b477035b564786e01d8438fa6dfccb769e069493de596d601",
+        "runs/l11_quality/results.json": "38b7f513809c2f0571811c4c23ea46ef9dadba24fc2f54c8fee57973105e0ee9"
+      }
+    },
+    "data/console/onnx_cpu.json": {
+      "sha256": "7413daa01963cb7fa90a7cf49e507f3b2d17a494efea720a5aba52293d107c0e",
+      "sources": {
+        "runs/l11_quality/results.json": "38b7f513809c2f0571811c4c23ea46ef9dadba24fc2f54c8fee57973105e0ee9",
+        "runs/l11_quality_onnx/events.jsonl": "d7a551f2c2c19f46765ed91bddf94dcd967ea4283dd1980192decc04dcbc34bc",
+        "runs/l11_quality_onnx/frames.csv": "f3b047d0cd7cd901e9168aa28832867bb4d81629fb2087fa63f46aceb123b1b0",
+        "runs/l11_quality_onnx/manifest.json": "d62213d7da9d5a33dac2ad13cca3f570a6c77a1adfb1f69e7335cb1241736a1b",
+        "runs/l11_quality_onnx/run_config.yaml": "75ed19e4ef25b249548fb9ff18e7325b486e30f8309adfea0f7e65a0e1f2c898",
+        "runs/l11_quality_onnx/summary.json": "e0f49c9884915660cf3a51e880f6c8600dd984824be8fedb9b5d86db026dafd4"
+      }
+    },
+    "data/console/pytorch_t4.json": {
+      "sha256": "4e035fbd321df6c8d755a4600375e18f5909adca1a4c255a35e53c6030327e95",
+      "sources": {
+        "runs/l11_quality_gpu/events.jsonl": "7f5e08418a05f147dfb618fa199e2c3546578b1180cbd93e41cd63b9cafa14d4",
+        "runs/l11_quality_gpu/frames.csv": "09b824f27838fd61f28eda68f49dc9e0f20bd7061136d84260fd1ca37cb59ffb",
+        "runs/l11_quality_gpu/manifest.json": "8186e1c2f0e8160f08b5ee0fc0f330c7fec2ee4259c2d630aaf434e792a0500e",
+        "runs/l11_quality_gpu/run_config.yaml": "dbe8e228ddac7dd02c853cb9c36e08f31b0538b9da6690f60f1722979b057c79",
+        "runs/l11_quality_gpu/summary.json": "d574d281cd67a6ca7d5a1b9dd2e626ccde6481707aff77535456961c884a91d7",
+        "runs/l11_quality_t4/results.json": "f41a0e410577cd714a84ceeecef2e6f48cd6b394096577d5032956cfed961489"
+      }
+    },
+    "data/console/tensorrt_t4.json": {
+      "sha256": "317b35e4683495352b54d642d573e28a22cb4856bd8be2a96da8f0ee262ce28e",
+      "sources": {
+        "runs/l11_quality_t4/results.json": "f41a0e410577cd714a84ceeecef2e6f48cd6b394096577d5032956cfed961489",
+        "runs/l11_quality_trt/events.jsonl": "8b9d431cf76c13ba7393161d34a978432c3ec1a0b80584ffa8f8926122b82cdd",
+        "runs/l11_quality_trt/frames.csv": "39e0364e32eb17e41f2345352c282a91134f916af6736dcb71e1183309e017f5",
+        "runs/l11_quality_trt/manifest.json": "d33f98272eeec030306d067104d8740acd3b14bebdcc64c3a54da39b2a577db5",
+        "runs/l11_quality_trt/run_config.yaml": "422564d9208eefcba8fec095c1db9a5df7cdccb666b3f1c5aceaea05bcd5d075",
+        "runs/l11_quality_trt/summary.json": "67629ec8d1ac8025dcabc5ad634c3c2a8cbcacf5054e75d00f162b8fff0170cf"
+      }
+    },
+    "media/visdrone/clip137.mp4": {
+      "sha256": "32b89f1664535d39cfd31cb7a05ce71d5cc9117df1ff5b98b0b9581032029494",
+      "sources": {
+        "clips/uav0000137_00458_v.mp4": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866"
+      }
+    },
+    "media/visdrone/clip137_f000.jpg": {
+      "sha256": "f9514290f35f05962c2aa8498c6556ec2b5483ea521eb0cde36f3c7e1ab4584d",
+      "sources": {
+        "clips/uav0000137_00458_v.mp4": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866"
+      }
+    },
+    "media/visdrone/clip137_f100.jpg": {
+      "sha256": "04cd78c923923e573779c4a09b483be697fa02fef44b2c495688ed777b4b84f9",
+      "sources": {
+        "clips/uav0000137_00458_v.mp4": "56c181a441d48221ae065bfba8a77b7d4d95c973e9f1dd9f06d054667f214866"
+      }
+    },
+    "data/console/clip137.json": {
+      "sha256": "a753b670d49395cea738d549e704bffec9498ae7c66dacf5766ed55229a9ba13",
+      "sources": {
+        "configs/cv_contract.yaml": "361ed14d1b2bb88273cb2e13d1d2477353189d3265c6deed8a2c1ecd6ef14e15",
+        "configs/eval_classes.json": "7360b35ec8f97495bc3aa54f6e4d4e754e9edcfdcc5131df07cd2489323c9ae6",
+        "runs/l12_nominal/run_config.yaml": "366faca4ca3fe4a51a9cadfae46083c3265a137488e533c9ac2bba136af24ce7"
+      }
+    },
+    "data/visdrone/clip137_gt.json": {
+      "sha256": "10830d8889a1d277e1540b480748417d8145877a7bf890ed151da309508a70e2",
+      "sources": {
+        "configs/eval_classes.json": "7360b35ec8f97495bc3aa54f6e4d4e754e9edcfdcc5131df07cd2489323c9ae6",
+        "data/VisDrone2019-MOT-val/annotations/uav0000137_00458_v.txt": "f055c20516df44a7092500e868830ac3a07f24e02f3241992ff211e3438887cc"
+      }
+    },
+    "data/facts.json": {
+      "sha256": "67f399c409122961238624e73ffe4628273e363e875edd49a74a10d3cf64e97c",
+      "sources": {
+        "runs/l11_quality/results.json": "38b7f513809c2f0571811c4c23ea46ef9dadba24fc2f54c8fee57973105e0ee9",
+        "runs/l11_quality_t4/results.json": "f41a0e410577cd714a84ceeecef2e6f48cd6b394096577d5032956cfed961489",
+        "runs/l12_scenarios/results.json": "0d5364ea5db3c7b0c5e8c9e5915634a78aab10ba074b0eae0f3f165dfafe8f8e"
+      }
+    }
+  }
+}
