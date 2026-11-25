@@ -3,7 +3,7 @@
 import subprocess
 from pathlib import Path
 
-from portfolio_export.outputs import sha256
+from site_export.outputs import sha256
 
 
 def course_git(course: Path) -> dict:

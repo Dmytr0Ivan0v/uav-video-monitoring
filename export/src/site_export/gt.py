@@ -3,7 +3,7 @@
 import csv
 from pathlib import Path
 
-from portfolio_export.runs import read_json
+from site_export.runs import read_json
 
 
 def class_map(eval_classes: Path) -> tuple[dict[int, int], dict[int, str]]:

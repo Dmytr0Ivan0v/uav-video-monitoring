@@ -7,7 +7,7 @@ import { gaussianKernel, lowLight } from './degrade';
 import { letterbox, letterboxParams } from './preprocess';
 import type { Box } from './types';
 
-// the fixtures are written by export (export/src/portfolio_export/model.py) with cv2 and numpy
+// the fixtures are written by export (export/src/site_export/model.py) with cv2 and numpy
 const fixture = <T>(name: string): T =>
   JSON.parse(readFileSync(join(__dirname, 'fixtures', name), 'utf-8')) as T;
 

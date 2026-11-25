@@ -1,4 +1,4 @@
-from portfolio_export.gt import read_gt
+from site_export.gt import read_gt
 
 # made-up rows in the VisDrone MOT layout: frame, target, x, y, w, h, score, category, truncation, occlusion
 ROWS = """1,7,10,20,30,40,1,4,0,0

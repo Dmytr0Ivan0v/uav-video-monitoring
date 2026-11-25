@@ -1,24 +1,24 @@
-"""Command line interface: python -m portfolio_export [--config config.yaml]."""
+"""Command line interface: python -m site_export [--config config.yaml]."""
 
 import argparse
 from pathlib import Path
 
-from portfolio_export import console, gt, media
-from portfolio_export.change import export_change
-from portfolio_export.config import Config, load_config
-from portfolio_export.engineering import engineering
-from portfolio_export.facts import facts
-from portfolio_export.hero import hero_clip
-from portfolio_export.manifest import course_git, entry
-from portfolio_export.model import export_model
-from portfolio_export.outputs import sha256, write_json
-from portfolio_export.recipe import write_recipe
-from portfolio_export.runs import RUN_FILES, check_rows, read_json, read_yaml
-from portfolio_export.vo import Thumbs, run_doc
+from site_export import console, gt, media
+from site_export.change import export_change
+from site_export.config import Config, load_config
+from site_export.engineering import engineering
+from site_export.facts import facts
+from site_export.hero import hero_clip
+from site_export.manifest import course_git, entry
+from site_export.model import export_model
+from site_export.outputs import sha256, write_json
+from site_export.recipe import write_recipe
+from site_export.runs import RUN_FILES, check_rows, read_json, read_yaml
+from site_export.vo import Thumbs, run_doc
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(prog='portfolio_export')
+    parser = argparse.ArgumentParser(prog='site_export')
     parser.add_argument('--config', type=Path, default=Path('config.yaml'))
     args = parser.parse_args()
     export(load_config(args.config))

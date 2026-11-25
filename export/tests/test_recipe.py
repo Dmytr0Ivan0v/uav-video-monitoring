@@ -1,7 +1,7 @@
 import pytest
 
-from portfolio_export.config import Recipe
-from portfolio_export.recipe import train_args
+from site_export.config import Recipe
+from site_export.recipe import train_args
 
 ARGS = """model: yolo11s.pt
 data: /home/user/notebooks/configs/visdrone_coco_classes.yaml

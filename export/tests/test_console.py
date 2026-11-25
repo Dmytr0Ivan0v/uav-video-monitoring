@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from portfolio_export.console import scenario
+from site_export.console import scenario
 
 # frames 98-104 of runs/l12_freeze: two ok frames with their first two events, then two frozen frames
 FIXTURES = Path(__file__).parent / 'fixtures'

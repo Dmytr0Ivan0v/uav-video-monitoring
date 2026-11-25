@@ -1,6 +1,6 @@
 import numpy as np
 
-from portfolio_export.vo import associate, quat_from_rot, rot_from_quat, umeyama_se3
+from site_export.vo import associate, quat_from_rot, rot_from_quat, umeyama_se3
 
 
 def test_alignment_recovers_a_known_rotation_and_shift():

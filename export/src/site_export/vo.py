@@ -7,7 +7,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from portfolio_export.runs import read_json, read_yaml
+from site_export.runs import read_json, read_yaml
 
 STATUSES = ['INIT', 'OK', 'DEGRADED', 'LOST']
 

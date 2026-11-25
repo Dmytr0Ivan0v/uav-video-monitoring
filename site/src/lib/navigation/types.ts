@@ -1,4 +1,4 @@
-// public/data/navigation.json, written by export/src/portfolio_export/vo.py
+// public/data/navigation.json, written by export/src/site_export/vo.py
 
 // t from the first frame s, x y z m, qx qy qz qw, error m, status index, inliers, frame;
 // positions and orientation in the motion-capture frame, z up, after one SE3 alignment

@@ -1,4 +1,4 @@
-// public/data/change.json, written by export/src/portfolio_export/change.py
+// public/data/change.json, written by export/src/site_export/change.py
 
 export type PairKind = 'motion' | 'motion_camera' | 'static' | 'light';
 

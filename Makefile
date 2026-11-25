@@ -1,4 +1,4 @@
-IMAGE ?= uav-portfolio
+IMAGE ?= uav-video-monitoring
 
 .PHONY: install export dev build test e2e image
 
@@ -10,7 +10,7 @@ site/node_modules: site/package.json site/package-lock.json
 	touch site/node_modules
 
 export:
-	cd export && uv run python -m portfolio_export
+	cd export && uv run python -m site_export
 
 dev: site/node_modules
 	cd site && npm run dev

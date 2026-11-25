@@ -3,7 +3,7 @@
 // and the built HTML, so the browser decodes them only when the visitor clicks.
 export const PROFILE = {
   name: { en: 'Dmytro Ivanov', uk: 'Дмитро Іванов' },
-  source: 'https://github.com/Dmytr0Ivan0v/uav-portfolio',
+  source: 'https://github.com/Dmytr0Ivan0v/uav-video-monitoring',
   email: 'bW9jLmxpYW1nQDY4OTEwdm9uYXZpb3J0eW1k' as string | null,
   linkedin: 'ODIyYjdiNjQwLXZvbmF2aS1vcnR5bWQvbmkvbW9jLm5pZGVrbmlsLnd3dy8vOnNwdHRo' as string | null,
   telegram: 'djBuYXZpb3J0eW1kL2VtLnQvLzpzcHR0aA==' as string | null,

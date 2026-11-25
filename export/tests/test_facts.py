@@ -2,8 +2,8 @@ import json
 
 import pytest
 
-from portfolio_export.config import Fact
-from portfolio_export.facts import fact_value
+from site_export.config import Fact
+from site_export.facts import fact_value
 
 # OVERALL and bicycle lines of runs/l10_s4_blur/eval.csv, cut to three columns
 EVAL_CSV = """class,idf1,num_switches,recall

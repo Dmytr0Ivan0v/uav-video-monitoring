@@ -1,6 +1,6 @@
 import numpy as np
 
-from portfolio_export.yolo import decode, letterbox_params
+from site_export.yolo import decode, letterbox_params
 
 CLASSES = [0, 2]
 

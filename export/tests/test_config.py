@@ -2,15 +2,15 @@ from pathlib import Path
 
 import pytest
 
-from portfolio_export.config import load_config
+from site_export.config import load_config
 
 
 def make_tree(root: Path) -> None:
     (root / 'cv_course' / 'runs').mkdir(parents=True)
     (root / 'cv_course' / 'src' / 'uav_monitor').mkdir(parents=True)
-    (root / 'portfolio' / 'site').mkdir(parents=True)
-    (root / 'portfolio' / 'site' / 'astro.config.mjs').write_text('', encoding='utf-8')
-    (root / 'portfolio' / 'export').mkdir()
+    (root / 'project' / 'site').mkdir(parents=True)
+    (root / 'project' / 'site' / 'astro.config.mjs').write_text('', encoding='utf-8')
+    (root / 'project' / 'export').mkdir()
 
 
 def write_config(path: Path, course: str) -> None:
@@ -59,24 +59,24 @@ recipe:
 
 def test_paths_resolve_against_config_file(tmp_path, monkeypatch):
     make_tree(tmp_path)
-    config = tmp_path / 'portfolio' / 'export' / 'config.yaml'
+    config = tmp_path / 'project' / 'export' / 'config.yaml'
     write_config(config, '../../cv_course')
     # the working directory must not matter
     monkeypatch.chdir(tmp_path)
 
-    cfg = load_config(Path('portfolio/export/config.yaml'))
+    cfg = load_config(Path('project/export/config.yaml'))
 
     assert cfg.course == (tmp_path / 'cv_course').resolve()
-    assert cfg.data_dir == (tmp_path / 'portfolio' / 'site' / 'public' / 'data').resolve()
+    assert cfg.data_dir == (tmp_path / 'project' / 'site' / 'public' / 'data').resolve()
     assert cfg.console[0].run == cfg.course / 'runs' / 'l12_freeze'
-    assert cfg.recipe.out == (tmp_path / 'portfolio' / 'export' / 'recipe').resolve()
+    assert cfg.recipe.out == (tmp_path / 'project' / 'export' / 'recipe').resolve()
     assert cfg.facts[0].list == 'rows'
     assert cfg.hero.colors == {0: '#ff77b0'}
 
 
 def test_wrong_course_path_fails(tmp_path):
     make_tree(tmp_path)
-    config = tmp_path / 'portfolio' / 'export' / 'config.yaml'
+    config = tmp_path / 'project' / 'export' / 'config.yaml'
     write_config(config, '../cv_course')
 
     with pytest.raises(FileNotFoundError, match='not a cv_course checkout'):

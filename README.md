@@ -1,4 +1,4 @@
-# uav-portfolio
+# uav-video-monitoring
 
 Static site about `uav_monitor`, a detection and tracking pipeline for UAV video. The site replays recorded runs; the computations themselves live in a separate course repository (private, available on request).
 
@@ -17,7 +17,7 @@ make install   # npm ci + uv sync
 make dev       # http://localhost:4321
 make test      # pytest, astro check, vitest
 make e2e       # build, then Playwright on the build: pages, console, labs, axe, first-screen budget
-make image     # docker image uav-portfolio
+make image     # docker image uav-video-monitoring
 ```
 
 `make export` reads the course repository from `../cv_course` (see `export/config.yaml`). It needs ffmpeg and the VisDrone2019-MOT-val annotations in the course checkout.

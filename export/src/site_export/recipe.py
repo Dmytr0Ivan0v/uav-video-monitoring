@@ -1,8 +1,8 @@
 """Weights recipe: fine-tune args and ONNX export record of cv_course -> export/recipe/."""
 
-from portfolio_export.config import Recipe
-from portfolio_export.outputs import write_json, write_yaml
-from portfolio_export.runs import read_json, read_yaml
+from site_export.config import Recipe
+from site_export.outputs import write_json, write_yaml
+from site_export.runs import read_json, read_yaml
 
 # what reproduces the model; timings, warnings and the host are left in cv_course
 ONNX_KEYS = ('command', 'weights', 'weights_sha256', 'export', 'opset', 'inputs', 'outputs',

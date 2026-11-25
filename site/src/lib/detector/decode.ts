@@ -1,4 +1,4 @@
-// Model output -> boxes in picture pixels, step for step as export/src/portfolio_export/yolo.py (Ultralytics 8.4).
+// Model output -> boxes in picture pixels, step for step as export/src/site_export/yolo.py (Ultralytics 8.4).
 import type { Letterbox } from './preprocess';
 import type { Box } from './types';
 

@@ -10,10 +10,10 @@ import shutil
 
 import onnxruntime as ort
 
-from portfolio_export.config import Config
-from portfolio_export.outputs import sha256, write_json
-from portfolio_export.runs import read_json, read_yaml
-from portfolio_export.yolo import Detections, decode, letterbox, to_tensor
+from site_export.config import Config
+from site_export.outputs import sha256, write_json
+from site_export.runs import read_json, read_yaml
+from site_export.yolo import Detections, decode, letterbox, to_tensor
 
 
 @dataclass(frozen=True)
@@ -77,7 +77,7 @@ def letterbox_fixture() -> dict:
         cases.append({'shape': list(shape), 'unpad': list(lb.unpad), 'top': lb.top, 'left': lb.left,
                       'expected_rgb': img[..., ::-1].reshape(-1).tolist()})
     return {
-        'source': 'export/src/portfolio_export/model.py: letterbox_fixture, cv2 ' + cv2.__version__,
+        'source': 'export/src/site_export/model.py: letterbox_fixture, cv2 ' + cv2.__version__,
         'width': w, 'height': h, 'rgb': rgb.reshape(-1).tolist(),
         'cases': cases,
     }
@@ -87,7 +87,7 @@ def degrade_fixture(types: dict) -> dict:
     # kernels cv2.GaussianBlur builds for 8-bit pictures, and low light on a made-up row of pixels
     pixels = np.arange(0, 256, 5, dtype=np.uint8)
     return {
-        'source': 'export/src/portfolio_export/model.py: degrade_fixture, cv2 ' + cv2.__version__,
+        'source': 'export/src/site_export/model.py: degrade_fixture, cv2 ' + cv2.__version__,
         'kernels': {str(s): cv2.getGaussianKernel(int(round(s * 6 + 1)) | 1, s).ravel().tolist()
                     for s in types['blur']['levels'] if s},
         'pixels': pixels.tolist(),

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-from portfolio_export.media import BITEXACT
+from site_export.media import BITEXACT
 
 
 def hero_clip(src: Path, out: Path, poster: Path, run: dict, source_size: list[int], size: tuple[int, int],

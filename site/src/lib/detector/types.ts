@@ -1,4 +1,4 @@
-// public/data/detector.json, written by export/src/portfolio_export/model.py
+// public/data/detector.json, written by export/src/site_export/model.py
 
 // model class id, score, x1, y1, x2, y2 in image pixels
 export type Box = [number, number, number, number, number, number];
