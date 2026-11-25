@@ -97,9 +97,9 @@ export const uk: Dict = {
         {
           title: 'Обробка кожного другого кадру',
           problem: 'Сам інференс, {inference_p50_ms_pytorch_cpu} мс p50 на CPU ноутбука, довший за один кадр відео {clip_fps} к/с.',
-          decision: 'Модель працює на кожному другому кадрі. Змінив одну змінну, решта конфігурації та сама.',
-          result: 'Пайплайн встигає за джерелом. На кліпі 137 IDF1 {idf1_every_frame} -> {idf1_every_second_frame}.',
-          cost: 'Recall {recall_every_frame} -> {recall_every_second_frame}: менше кадрів, менше підтверджених об’єктів. Цю ціну я взяв, щоб лишитися в реальному часі.',
+          decision: 'Модель працює на 1 з {vid_stride} кадрів (vid_stride = {vid_stride}): {stream_hz} з {clip_fps} кадрів щосекунди, на кожен {frame_budget_ms} мс. Змінив одну змінну, решта конфігурації та сама.',
+          result: 'Увесь кадр на CPU ноутбука займає {frame_p50_ms_every_second_frame} мс p50, у межах бюджету. p95 - на межі бюджету: {frame_p95_ms_every_second_frame_r1}, {frame_p95_ms_every_second_frame_r2} і {frame_p95_ms_every_second_frame_r3} мс у трьох повторах. На кліпі 137 IDF1 {idf1_every_frame} -> {idf1_every_second_frame}.',
+          cost: 'На виході {stream_hz} кадрів на секунду, а не {clip_fps}. Recall {recall_every_frame} -> {recall_every_second_frame}: менше кадрів, менше підтверджених об’єктів. Цю ціну я взяв, щоб встигати за джерелом {clip_fps} к/с на CPU ноутбука.',
         },
         {
           title: 'Pass і fail до прогонів',

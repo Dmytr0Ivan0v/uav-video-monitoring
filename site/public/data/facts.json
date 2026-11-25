@@ -199,6 +199,53 @@
     "source": "runs/l11_bench_pytorch/bench.json",
     "field": "summary.inference_p50_ms"
   },
+  "vid_stride": {
+    "value": 2,
+    "source": "runs/stride2_137_r1/run_config.yaml",
+    "field": "config.run.vid_stride"
+  },
+  "stream_hz": {
+    "value": 15,
+    "source": "configs/cv_contract.yaml",
+    "field": "cv_component.outputs.tracks.hz"
+  },
+  "frame_budget_ms": {
+    "value": 66.7,
+    "source": "configs/cv_contract.yaml",
+    "field": "cv_component.outputs.tracks.frame_budget_ms"
+  },
+  "frame_p50_ms_every_second_frame": {
+    "value": 62.448,
+    "source": "runs/stride2_137_r1/stages.csv",
+    "match": {
+      "stage": "total"
+    },
+    "field": "p50"
+  },
+  "frame_p95_ms_every_second_frame_r1": {
+    "value": 67.624,
+    "source": "runs/stride2_137_r1/stages.csv",
+    "match": {
+      "stage": "total"
+    },
+    "field": "p95"
+  },
+  "frame_p95_ms_every_second_frame_r2": {
+    "value": 65.959,
+    "source": "runs/stride2_137_r2/stages.csv",
+    "match": {
+      "stage": "total"
+    },
+    "field": "p95"
+  },
+  "frame_p95_ms_every_second_frame_r3": {
+    "value": 66.539,
+    "source": "runs/stride2_137_r3/stages.csv",
+    "match": {
+      "stage": "total"
+    },
+    "field": "p95"
+  },
   "idf1_every_frame": {
     "value": 0.417,
     "source": "runs/base_137_r1/eval.csv",
