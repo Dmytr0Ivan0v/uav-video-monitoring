@@ -42,8 +42,7 @@ export const uk: Dict = {
       videoLabel: 'Кліп VisDrone з рамками мого номінального прогону',
     },
     facts: [
-      { value: '{frozen_detected} / {frozen_expected}', text: 'застиглих кадрів позначено як frozen; подій ok на них: {ok_in_freeze_check}' },
-      { value: '{ok_in_freeze_nocheck}', text: 'рамок ok із застиглої картинки без перевірки, а IDF1 впав лише на {idf1_drop_rel_nocheck_pct}' },
+      { value: '{ok_in_freeze_nocheck} -> {ok_in_freeze_check}', text: 'рамок ok із застиглої картинки, без перевірки frozen і з нею; без неї IDF1 впав лише на {idf1_drop_rel_nocheck_pct}' },
       { value: '{frame_dropped}', text: 'подій frame_dropped з очікуваним часом, коли канал губить кожен {drop_every_n}-й кадр' },
       { value: '{idf1_drop_rel_tensorrt_pct}', text: 'зміна IDF1 з PyTorch на TensorRT FP16 на GPU T4; {idf1_drop_rel_onnx_pct} - на ONNX Runtime на CPU' },
     ],
@@ -58,7 +57,6 @@ export const uk: Dict = {
         hardware: 'Залізо',
         inference: 'Інференс p95, мс',
         step: 'Крок моделі p95, мс',
-        memory: 'Пік RSS, МБ',
         idf1: 'IDF1',
         delta: 'Δ_rel',
         limit: 'Поріг',
@@ -142,10 +140,8 @@ export const uk: Dict = {
         'Бортовий комп’ютер. TensorRT працював на хмарному GPU T4, а не на Jetson чи іншій платі.',
         'INT8. Зібрав лише рушії FP32 і FP16.',
         'Довгий прогін. Пам’ять і затримку за годину реального потоку не міряв.',
-        'Лазерний далекомір. Синхронізацію з камерою і координати в метрах описано в контракті, але без запису LRF я їх не міряв.',
         'Живу камеру для перевірки застигання. Поріг підібрано на replay.',
         'Власні польоти чи симулятор. Детекція і трекінг працюють на кліпах VisDrone.',
-        'Зміну роздільності посеред потоку і моніторинг статистик вхідних кадрів.',
         'Тайлінг (SAHI) для дрібних об’єктів. Донавчання на 1280 px і донавчання разом із входом 1280 px.',
       ],
     },
@@ -487,6 +483,7 @@ export const uk: Dict = {
       onnx_cpu: [
         'Та сама модель, експортована в ONNX і запущена в ONNX Runtime на тому самому CPU. IDF1 змінюється на {idf1Drop}, ліміт {idf1Limit}.',
         'p95 часу кадру: {p95Before} мс з PyTorch, {p95} мс з ONNX Runtime.',
+        'Сама модель швидша: інференс p50 {inference_p50_ms_frame_onnx_cpu} мс проти {inference_p50_ms_frame_pytorch_cpu} мс. Хвіст дають кроки навколо неї: передобробка p95 {preprocess_p95_ms_frame_onnx_cpu} мс проти {preprocess_p95_ms_frame_pytorch_cpu} мс, постобробка p95 {postprocess_p95_ms_frame_onnx_cpu} мс проти {postprocess_p95_ms_frame_pytorch_cpu} мс. Це один прогін, причину я не міряв.',
       ],
       pytorch_t4: [
         'Еталон для TensorRT: номінальний потік з PyTorch на хмарному GPU T4.',

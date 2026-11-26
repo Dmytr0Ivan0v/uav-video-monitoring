@@ -189,17 +189,19 @@
       }
     },
     "data/facts.json": {
-      "sha256": "16af98d95dafbcf3ca10738c375df334d7dc12097e94cb859c7f90dec54f8062",
+      "sha256": "ed23d989da7be3c505d4b42ae4ad5be02125b220b97c0e190ad53bee7553b57a",
       "sources": {
         "configs/cv_contract.yaml": "361ed14d1b2bb88273cb2e13d1d2477353189d3265c6deed8a2c1ecd6ef14e15",
         "runs/base_137_r1/eval.csv": "3373d3e45aaa334a366626a189ce89a9930a8a5ef9c91e63450c33e7f75dda28",
         "runs/l10_s1_nominal/eval.csv": "f19442ea97e4a837597b5a8e9333c7d60759504469168590c2ea8ecc9bb64fd4",
+        "runs/l10_s1_nominal/stages.csv": "85457d827ea84635f980d773ae6f922b620046dd427a85b3e4a29955df271cea",
         "runs/l10_s4_blur/eval.csv": "2ecf7d090a9f4caac636b5e2db28df1d7a9153d9cc2aaefbb586989eff733403",
         "runs/l10_scenarios/results.json": "1e01bdbe0f10d3ca6d47a8cec04968ff1ab795e06199f144b0ae8aa80f29dbe4",
         "runs/l11_bench_pytorch/bench.json": "c697af7689c2b9cbd60208f79e46dda5dc7658033f2f7a74a209552c88909910",
         "runs/l11_bench_pytorch_gpu/bench.json": "e2f56fdf44610a9837b35cea7fa376a1878c88b0d6e7062b537254c31fa1a1bb",
         "runs/l11_bench_trt/bench.json": "45752e3beb5ea310f930f21fb54a0363d88f08b1d39fad3d19dc1885eb6a2a5c",
         "runs/l11_quality/results.json": "38b7f513809c2f0571811c4c23ea46ef9dadba24fc2f54c8fee57973105e0ee9",
+        "runs/l11_quality_onnx/stages.csv": "1493c2ea84bd4ad5dc46e39598d72f02ef0211f7a9521ef5cb57ed76927ddfe0",
         "runs/l11_quality_t4/results.json": "f41a0e410577cd714a84ceeecef2e6f48cd6b394096577d5032956cfed961489",
         "runs/l12_drop_every/manifest.json": "b6595980a54891f86f137a49c3426bcc77187f3aea7aa538d7e891bcb36964cc",
         "runs/l12_nominal/run_config.yaml": "366faca4ca3fe4a51a9cadfae46083c3265a137488e533c9ac2bba136af24ce7",
@@ -420,7 +422,7 @@
       }
     },
     "data/engineering.json": {
-      "sha256": "b08bb3e6292c909ab78327a0b745c42260583b5fafdd8e05bfe54c2de00724fa",
+      "sha256": "8678825b2225226ec15c86d9a9e17ec1e7d8351e369397455fd2dab33ba231cb",
       "sources": {
         "runs/l11_bench_onnx/bench.json": "2a5fe630e7368701b55bd4332275ce9154cc4f28b19302b4301a94ccedf5b520",
         "runs/l11_bench_pytorch/bench.json": "c697af7689c2b9cbd60208f79e46dda5dc7658033f2f7a74a209552c88909910",

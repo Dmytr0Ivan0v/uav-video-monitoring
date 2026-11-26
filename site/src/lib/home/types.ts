@@ -14,7 +14,6 @@ export interface EngineRow {
     inference_p95_ms: number;
     step_p95_ms: number;
     throughput_fps: number;
-    peak_rss_mb: number;
   };
   quality: { idf1: CheckRow; recall: CheckRow; p95_ms: CheckRow };
   sources: string[];

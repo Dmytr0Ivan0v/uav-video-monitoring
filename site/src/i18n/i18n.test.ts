@@ -21,9 +21,9 @@ describe.each(Object.values(DICTS))('$lang dictionary', (t) => {
     }
   });
 
-  it('fills every story from the numbers of its run', () => {
+  it('fills every story from the numbers of its run and facts.json', () => {
     for (const [id, run] of runs) {
-      for (const p of t.console.stories[id]) expect(() => fill(p, storyVars(run))).not.toThrow();
+      for (const p of t.console.stories[id]) expect(() => fill(p, { ...facts, ...storyVars(run) })).not.toThrow();
     }
   });
 

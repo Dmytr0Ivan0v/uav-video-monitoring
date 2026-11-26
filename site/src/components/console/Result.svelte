@@ -9,12 +9,13 @@
     t: Dict['console'];
     runId: RunId;
     run: RunDoc;
+    facts: Record<string, string>;
   }
 
-  let { t, runId, run }: Props = $props();
+  let { t, runId, run, facts }: Props = $props();
 
   const story = $derived.by(() => {
-    const vars = storyVars(run);
+    const vars = { ...facts, ...storyVars(run) };
     return t.stories[runId].map((p) => fill(p, vars));
   });
   const verdict = $derived(limits(run.checks));

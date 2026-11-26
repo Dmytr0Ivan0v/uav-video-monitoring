@@ -46,7 +46,6 @@ function limitText(threshold: CheckRow['threshold']): string {
             <th>{e.engines.hardware}</th>
             <th class="n">{e.engines.inference}</th>
             <th class="n">{e.engines.step}</th>
-            <th class="n">{e.engines.memory}</th>
             <th class="n">{e.engines.idf1}</th>
             <th class="n">{e.engines.delta}</th>
             <th>{e.engines.limit}</th>
@@ -61,7 +60,6 @@ function limitText(threshold: CheckRow['threshold']): string {
                 <td class="hw">{g.gpu ?? g.cpu}</td>
                 <td class="n">{ms(g.bench.inference_p95_ms)}</td>
                 <td class="n">{ms(g.bench.step_p95_ms)}</td>
-                <td class="n">{g.bench.peak_rss_mb.toFixed(0)}</td>
                 <td class="n">{valueText(g.quality.idf1, 'ms')}</td>
                 <td class="n">{deltaText(g.quality.idf1)}</td>
                 <td>{g.quality.idf1.delta_rel == null ? e.engines.reference : limitText(g.quality.idf1.threshold)}</td>

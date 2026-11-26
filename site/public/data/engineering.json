@@ -16,8 +16,7 @@
         "inference_p50_ms": 41.935,
         "inference_p95_ms": 51.435,
         "step_p95_ms": 56.116,
-        "throughput_fps": 20.7,
-        "peak_rss_mb": 879.2
+        "throughput_fps": 20.7
       },
       "quality": {
         "idf1": {
@@ -72,8 +71,7 @@
         "inference_p50_ms": 42.776,
         "inference_p95_ms": 47.321,
         "step_p95_ms": 56.064,
-        "throughput_fps": 22.0,
-        "peak_rss_mb": 904.2
+        "throughput_fps": 22.0
       },
       "quality": {
         "idf1": {
@@ -119,8 +117,7 @@
         "inference_p50_ms": 10.839,
         "inference_p95_ms": 11.61,
         "step_p95_ms": 16.488,
-        "throughput_fps": 69.2,
-        "peak_rss_mb": 1844.1
+        "throughput_fps": 69.2
       },
       "quality": {
         "idf1": {
@@ -175,8 +172,7 @@
         "inference_p50_ms": 1.834,
         "inference_p95_ms": 1.856,
         "step_p95_ms": 7.042,
-        "throughput_fps": 160.1,
-        "peak_rss_mb": 1860.8
+        "throughput_fps": 160.1
       },
       "quality": {
         "idf1": {

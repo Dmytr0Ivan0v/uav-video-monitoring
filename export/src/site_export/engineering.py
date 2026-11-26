@@ -5,7 +5,7 @@ from pathlib import Path
 from site_export.config import Engine, Engineering
 from site_export.runs import check_rows, read_json
 
-BENCH_KEYS = ('inference_p50_ms', 'inference_p95_ms', 'step_p95_ms', 'throughput_fps', 'peak_rss_mb')
+BENCH_KEYS = ('inference_p50_ms', 'inference_p95_ms', 'step_p95_ms', 'throughput_fps')
 QUALITY_CHECKS = ('idf1', 'recall', 'p95_ms')
 SIZES = ('small', 'medium', 'large', 'all')
 
