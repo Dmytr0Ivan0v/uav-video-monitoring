@@ -40,7 +40,7 @@ The media and CV are mounted into the container read-only, so `make media` alone
 
 - `site/public/data/console/` - replay of recorded runs on VisDrone clip 137: boxes per frame, statuses, stage timings, checks of the scenario tables.
 - `site/public/data/facts.json` - every number the page texts quote, each with the course file and field it comes from.
-- `site/public/data/engineering.json` - engine benchmarks, scenario results and the long stability run.
+- `site/public/data/engineering.json` - engine benchmarks, stream scenario results and eval by object size.
 - `site/public/data/detector.json` and `site/public/models/ft1.onnx` - the browser detector: the ONNX model of the course runs, its thresholds, reference boxes on five clip frames, the robustness curves.
 - `site/public/data/navigation.json` and `site/public/media/tum/` - visual odometry runs on TUM RGB-D fr1_xyz: poses after one SE3 alignment, the error at every pose, gray frames the odometry saw.
 - `site/public/data/change.json` - change detection on clip 137: PR curve over the thresholds, pair statistics, light normalization, the hand review of false spots. The aligned frames and the mask levels per threshold are VisDrone pixels and are built into `site/public/media/visdrone/change/`.

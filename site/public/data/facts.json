@@ -311,13 +311,5 @@
       "class": "bicycle"
     },
     "field": "recall"
-  },
-  "rss_growth_extrapolated_mb": {
-    "value": 3307.7,
-    "source": "runs/l12_stability/stability.json",
-    "match": {
-      "check": "rss_growth_extrapolated_mb"
-    },
-    "field": "value"
   }
 }

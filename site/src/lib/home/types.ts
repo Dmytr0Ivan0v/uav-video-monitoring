@@ -20,17 +20,6 @@ export interface EngineRow {
   sources: string[];
 }
 
-export interface StabilityCheck {
-  check: string;
-  reference: number | [number, number];
-  value: number;
-  threshold: number | string;
-  result: 'pass' | 'fail';
-  per_window_mb?: number;
-  windows_per_span?: number;
-  hours?: number;
-}
-
 export type ObjectSize = 'small' | 'medium' | 'large' | 'all';
 
 // one VisDrone-DET val evaluation; sizes are COCO area classes in the original frame
@@ -53,21 +42,5 @@ export interface EngineeringDoc {
   protocol: { batch: number; warmup: number; iters: number; series: number };
   engines: EngineRow[];
   scenarios: { source: string; rows: Record<string, CheckRow[]> };
-  stability: {
-    source: string;
-    window_video_s: number;
-    rss_start_mb: number;
-    windows: {
-      window: number;
-      frames_timed: number;
-      p50_ms: number;
-      p95_ms: number;
-      rss_mb: number;
-      events_in_memory: number;
-      idf1: number;
-      recall: number;
-    }[];
-    checks: StabilityCheck[];
-  };
   sizes: { finetune: EvalPair; resolution: EvalPair };
 }

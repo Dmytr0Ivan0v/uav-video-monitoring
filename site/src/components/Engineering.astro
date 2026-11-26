@@ -6,7 +6,7 @@ import { readPublicJson } from '../lib/data/files';
 import { fill } from '../lib/format';
 import { factVars } from '../lib/home/facts';
 import type { ClipDoc } from '../lib/console/types';
-import type { EngineeringDoc, FactsDoc, ObjectSize, StabilityCheck } from '../lib/home/types';
+import type { EngineeringDoc, FactsDoc, ObjectSize } from '../lib/home/types';
 import SectionHead from './SectionHead.astro';
 
 interface Props {
@@ -17,8 +17,6 @@ const { t } = Astro.props;
 const e = t.home.engineering;
 const doc = readPublicJson<EngineeringDoc>('data/engineering.json');
 const vars = factVars(readPublicJson<FactsDoc>('data/facts.json'));
-const st = doc.stability;
-const rss = st.checks.find((c) => c.check === 'rss_growth_extrapolated_mb')!;
 const clip = readPublicJson<ClipDoc>('data/console/clip137.json');
 const [coco, tuned] = doc.sizes.finetune.runs;
 const big = doc.sizes.resolution.runs[1];
@@ -27,14 +25,10 @@ const sizes: ObjectSize[] = ['small', 'medium', 'large', 'all'];
 // shorter numbers stay readable with two decimals, longer ones need one
 const ms = (v: number) => (v < 10 ? v.toFixed(2) : v.toFixed(1));
 
-function limitText(threshold: CheckRow['threshold'] | StabilityCheck['threshold']): string {
+function limitText(threshold: CheckRow['threshold']): string {
   if (threshold == null) return '-';
   if (typeof threshold === 'number') return `≤ ${threshold}`;
   return t.console.thresholds[threshold as keyof typeof t.console.thresholds];
-}
-
-function stabilityValue(c: StabilityCheck): string {
-  return c.check === 'rss_growth_extrapolated_mb' ? c.value.toFixed(1) : String(c.value);
 }
 ---
 
@@ -156,97 +150,36 @@ function stabilityValue(c: StabilityCheck): string {
       </div>
     </div>
 
-    <div class="cols">
-      <div>
-        <h3>{e.scenarios.title}</h3>
-        <p class="text">{e.scenarios.text}</p>
-        <div class="tbl">
-          <table>
-            <thead>
-              <tr>
-                <th>{e.scenarios.scenario}</th>
-                <th class="n">{e.scenarios.limits}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                Object.entries(doc.scenarios.rows).map(([id, rows]) => {
-                  const v = limits(rows);
-                  return (
-                    <tr>
-                      <td>{t.console.runs[id as keyof typeof t.console.runs].title}</td>
-                      <td class:list={['n', v.passed === v.total ? 'pass' : 'fail']}>
-                        {v.passed} / {v.total}
-                      </td>
-                    </tr>
-                  );
-                })
-              }
-            </tbody>
-          </table>
-        </div>
-        <p class="note"><a href="#console">{e.scenarios.open} ↑</a></p>
-        <p class="src mono">{doc.scenarios.source}</p>
-      </div>
-
-      <div>
-        <h3>{e.stability.title}</h3>
-        <p class="text">{fill(e.stability.text, { windows: st.windows.length, seconds: st.window_video_s })}</p>
-        <div class="tbl">
-          <table>
-            <thead>
-              <tr>
-                <th>{e.stability.window}</th>
-                <th class="n">{e.stability.p50}</th>
-                <th class="n">{e.stability.p95}</th>
-                <th class="n">{e.stability.rss}</th>
-                <th class="n">{e.stability.events}</th>
-                <th class="n">{e.stability.idf1}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                st.windows.map((w) => (
+    <div>
+      <h3>{e.scenarios.title}</h3>
+      <p class="text">{e.scenarios.text}</p>
+      <div class="tbl narrow">
+        <table>
+          <thead>
+            <tr>
+              <th>{e.scenarios.scenario}</th>
+              <th class="n">{e.scenarios.limits}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              Object.entries(doc.scenarios.rows).map(([id, rows]) => {
+                const v = limits(rows);
+                return (
                   <tr>
-                    <td class="n">{w.window}</td>
-                    <td class="n">{w.p50_ms.toFixed(1)}</td>
-                    <td class="n">{w.p95_ms.toFixed(1)}</td>
-                    <td class="n">{w.rss_mb.toFixed(1)}</td>
-                    <td class="n">{w.events_in_memory}</td>
-                    <td class="n">{w.idf1.toFixed(3)}</td>
+                    <td>{t.console.runs[id as keyof typeof t.console.runs].title}</td>
+                    <td class:list={['n', v.passed === v.total ? 'pass' : 'fail']}>
+                      {v.passed} / {v.total}
+                    </td>
                   </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
-        <div class="tbl checks">
-          <table>
-            <thead>
-              <tr>
-                <th>{e.stability.check}</th>
-                <th class="n">{e.stability.value}</th>
-                <th>{e.stability.limit}</th>
-                <th>{e.stability.result}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                st.checks.map((c) => (
-                  <tr>
-                    <td>{e.stability.checks[c.check as keyof typeof e.stability.checks]}</td>
-                    <td class="n">{stabilityValue(c)}</td>
-                    <td>{limitText(c.threshold)}</td>
-                    <td class:list={['n', c.result]}>{c.result}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
-        <p class="note">{fill(e.stability.rssNote, { perWindow: rss.per_window_mb!, perHour: rss.windows_per_span! })}</p>
-        <p class="src mono">{st.source}</p>
+                );
+              })
+            }
+          </tbody>
+        </table>
       </div>
+      <p class="note"><a href="#console">{e.scenarios.open} ↑</a></p>
+      <p class="src mono">{doc.scenarios.source}</p>
     </div>
   </div>
 </section>
@@ -265,12 +198,6 @@ function stabilityValue(c: StabilityCheck): string {
     max-width: 75ch;
     margin: 0 0 10px;
     color: var(--muted);
-  }
-
-  .cols {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-    gap: 28px;
   }
 
   .pair {
@@ -294,8 +221,8 @@ function stabilityValue(c: StabilityCheck): string {
     background: var(--panel);
   }
 
-  .tbl.checks {
-    margin-top: 10px;
+  .tbl.narrow {
+    max-width: 560px;
   }
 
   table {
@@ -360,7 +287,6 @@ function stabilityValue(c: StabilityCheck): string {
   }
 
   @media (max-width: 980px) {
-    .cols,
     .pair {
       grid-template-columns: minmax(0, 1fr);
     }

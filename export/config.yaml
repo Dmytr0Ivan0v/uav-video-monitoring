@@ -212,12 +212,6 @@ facts:
     file: runs/l10_s4_blur/eval.csv
     match: {class: bicycle}
     field: recall
-  # stability, runs/l12_stability
-  rss_growth_extrapolated_mb:
-    file: runs/l12_stability/stability.json
-    list: checks
-    match: {check: rss_growth_extrapolated_mb}
-    field: value
 
 engineering:
   engines:                 # bench of the engine and its quality row against PyTorch on the same hardware
@@ -226,7 +220,6 @@ engineering:
     - {id: pytorch_t4, bench: runs/l11_bench_pytorch_gpu, results: runs/l11_quality_t4/results.json, row: S1}
     - {id: tensorrt_t4, bench: runs/l11_bench_trt, results: runs/l11_quality_t4/results.json, row: TRT}
   scenarios: runs/l12_scenarios/results.json
-  stability: runs/l12_stability/stability.json
   # mAP50-95 by object size on VisDrone-DET val
   finetune: [runs_hw3/b0_640.json, runs_hw3/ft1_640.json]          # COCO weights -> fine-tuned, cleaned val
   resolution: [runs_hw2/baseline_640.json, runs_hw2/imgsz_1280.json]  # COCO weights, val before cleaning

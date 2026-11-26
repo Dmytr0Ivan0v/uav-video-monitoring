@@ -10,15 +10,15 @@ EVAL_CSV = """class,idf1,num_switches,recall
 bicycle,0.039,12,0.021
 OVERALL,0.395,475,0.442
 """
-# two rows of runs/l12_stability/stability.json checks
-STABILITY = {'checks': [
-    {'check': 'p95_growth_rel', 'value': 0.008, 'result': 'pass'},
-    {'check': 'rss_growth_extrapolated_mb', 'value': 3307.7, 'result': 'fail'},
+# two S4 rows of runs/l10_scenarios/results.json, cut to four fields
+SCENARIOS = {'rows': [
+    {'row': 'S4', 'check': 'idf1', 'delta_rel': 0.006, 'threshold': 0.15},
+    {'row': 'S4', 'check': 'recall', 'delta_rel': 0.08, 'threshold': 0.15},
 ]}
 
 
-def fact(path, match, field, list_key='rows'):
-    return Fact(name='f', file=path, match=match, list=list_key, field=field)
+def fact(path, match, field):
+    return Fact(name='f', file=path, match=match, field=field)
 
 
 def test_csv_cell_is_a_number(tmp_path):
@@ -29,18 +29,16 @@ def test_csv_cell_is_a_number(tmp_path):
     assert fact_value(fact(path, {'class': 'OVERALL'}, 'num_switches')) == 475
 
 
-def test_json_row_from_a_named_list(tmp_path):
-    path = tmp_path / 'stability.json'
-    path.write_text(json.dumps(STABILITY), encoding='utf-8')
+def test_json_row_from_rows(tmp_path):
+    path = tmp_path / 'results.json'
+    path.write_text(json.dumps(SCENARIOS), encoding='utf-8')
 
-    f = fact(path, {'check': 'rss_growth_extrapolated_mb'}, 'value', list_key='checks')
-
-    assert fact_value(f) == 3307.7
+    assert fact_value(fact(path, {'row': 'S4', 'check': 'recall'}, 'delta_rel')) == 0.08
 
 
 def test_match_must_pick_exactly_one_row(tmp_path):
-    path = tmp_path / 'stability.json'
-    path.write_text(json.dumps(STABILITY), encoding='utf-8')
+    path = tmp_path / 'results.json'
+    path.write_text(json.dumps(SCENARIOS), encoding='utf-8')
 
-    with pytest.raises(ValueError, match='0 rows match'):
-        fact_value(fact(path, {'check': 'rss_growth_mb'}, 'value', list_key='checks'))
+    with pytest.raises(ValueError, match='2 rows match'):
+        fact_value(fact(path, {'row': 'S4'}, 'delta_rel'))

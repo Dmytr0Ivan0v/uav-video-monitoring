@@ -27,7 +27,6 @@ engineering:
   engines:
     - {{id: tensorrt_t4, bench: runs/l11_bench_trt, results: runs/l11_quality_t4/results.json, row: TRT}}
   scenarios: runs/l12_scenarios/results.json
-  stability: runs/l12_stability/stability.json
   finetune: [runs_hw3/b0_640.json, runs_hw3/ft1_640.json]
   resolution: [runs_hw2/baseline_640.json, runs_hw2/imgsz_1280.json]
 hero: {{run: nominal, crf: 30, colors: {{0: '#ff77b0'}}}}
@@ -72,7 +71,6 @@ def test_paths_resolve_against_config_file(tmp_path, monkeypatch):
     assert cfg.data_dir == (tmp_path / 'project' / 'site' / 'public' / 'data').resolve()
     assert cfg.console[0].run == cfg.course / 'runs' / 'l12_freeze'
     assert cfg.recipe.out == (tmp_path / 'project' / 'export' / 'recipe').resolve()
-    assert cfg.facts[0].list == 'rows'
     assert cfg.hero.colors == {0: '#ff77b0'}
 
 
