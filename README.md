@@ -22,7 +22,7 @@ make image     # docker image uav-video-monitoring
 
 ## Production
 
-The server runs Docker and nginx. The container serves the static build on `127.0.0.1:8020`; the host nginx holds the domain and TLS and proxies to it (`deploy/host-nginx.conf.example`).
+The server runs Docker and nginx. The container serves the static build on `127.0.0.1:8020`; the host nginx holds the domain and TLS and proxies to it (`deploy/host-nginx.conf.example`). The domain is proxied by Cloudflare (SSL mode Full (strict), a cache rule that keeps origin `Cache-Control`, a rate limit). The host nginx takes the visitor IP from `CF-Connecting-IP` and answers 403 to anything that does not come from Cloudflare ranges (`deploy/cloudflare.conf`).
 
 ```bash
 # on this machine, after make export: VisDrone media and CV -> server checkout

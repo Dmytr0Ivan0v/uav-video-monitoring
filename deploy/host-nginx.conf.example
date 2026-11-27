@@ -4,6 +4,9 @@ server {
     listen 80;
     server_name uav.devspace.pp.ua;
 
+    # the domain is proxied by Cloudflare: real visitor IPs, and no way in around it
+    include /var/www/pet_projects/uav-video-monitoring/deploy/cloudflare.conf;
+
     location / {
         proxy_pass http://127.0.0.1:8020;
         proxy_set_header Host $host;
