@@ -28,7 +28,6 @@ class Fact:
     name: str
     file: Path              # JSON, YAML or CSV of the course, absolute
     match: dict | None      # pick the one row whose keys equal these values
-    list: str               # key of the row list in a JSON document
     field: str              # dots go into nested dicts
 
 
@@ -44,7 +43,6 @@ class Engine:
 class Engineering:
     engines: tuple[Engine, ...]
     scenarios: Path         # results.json of the stream scenarios
-    stability: Path         # stability.json of the long run
     finetune: tuple[Path, Path]     # eval JSON before and after fine-tuning, one split
     resolution: tuple[Path, Path]   # eval JSON at two input sizes, one split
 
@@ -145,14 +143,13 @@ def load_config(path: Path) -> Config:
         console=tuple(ConsoleRun(id=e['id'], run=course / e['run'], results=course / e['results'],
                                  row=e['row'])
                       for e in d['console']),
-        facts=tuple(Fact(name=name, file=course / f['file'], match=f.get('match'), list=f.get('list', 'rows'),
+        facts=tuple(Fact(name=name, file=course / f['file'], match=f.get('match'),
                          field=f['field'])
                     for name, f in d['facts'].items()),
         engineering=Engineering(
             engines=tuple(Engine(id=g['id'], bench=course / g['bench'], results=course / g['results'], row=g['row'])
                           for g in eng['engines']),
             scenarios=course / eng['scenarios'],
-            stability=course / eng['stability'],
             finetune=(course / eng['finetune'][0], course / eng['finetune'][1]),
             resolution=(course / eng['resolution'][0], course / eng['resolution'][1]),
         ),

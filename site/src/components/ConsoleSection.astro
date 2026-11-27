@@ -3,6 +3,8 @@ import type { Dict } from '../i18n/en';
 import type { ClipDoc } from '../lib/console/types';
 import { readPublicJson } from '../lib/data/files';
 import { fill } from '../lib/format';
+import { factVars } from '../lib/home/facts';
+import type { FactsDoc } from '../lib/home/types';
 import Console from './console/Console.svelte';
 import SectionHead from './SectionHead.astro';
 
@@ -12,6 +14,7 @@ interface Props {
 
 const { t } = Astro.props;
 const clip = readPublicJson<ClipDoc>('data/console/clip137.json');
+const facts = factVars(readPublicJson<FactsDoc>('data/facts.json'));
 ---
 
 <section id="console">
@@ -19,7 +22,7 @@ const clip = readPublicJson<ClipDoc>('data/console/clip137.json');
     <SectionHead eyebrow={fill(t.console.eyebrow, { clip: clip.id })} title={t.console.title}>
       <p>{t.console.intro}</p>
     </SectionHead>
-    <Console client:visible t={t.console} lang={t.lang} {clip} />
+    <Console client:visible t={t.console} lang={t.lang} {clip} {facts} />
   </div>
 </section>
 

@@ -30,7 +30,7 @@ def load(path: Path):
 def fact_value(f: Fact):
     doc = load(f.file)
     if f.match:
-        items = doc if isinstance(doc, list) else doc[f.list]
+        items = doc if isinstance(doc, list) else doc['rows']
         hits = [r for r in items if all(r.get(k) == v for k, v in f.match.items())]
         if len(hits) != 1:
             raise ValueError(f'fact {f.name}: {len(hits)} rows match {f.match} in {f.file}')

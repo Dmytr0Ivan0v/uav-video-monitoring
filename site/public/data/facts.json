@@ -149,6 +149,54 @@
     },
     "field": "ms"
   },
+  "inference_p50_ms_frame_pytorch_cpu": {
+    "value": 39.776,
+    "source": "runs/l10_s1_nominal/stages.csv",
+    "match": {
+      "stage": "inference"
+    },
+    "field": "p50"
+  },
+  "inference_p50_ms_frame_onnx_cpu": {
+    "value": 32.54,
+    "source": "runs/l11_quality_onnx/stages.csv",
+    "match": {
+      "stage": "inference"
+    },
+    "field": "p50"
+  },
+  "preprocess_p95_ms_frame_pytorch_cpu": {
+    "value": 2.003,
+    "source": "runs/l10_s1_nominal/stages.csv",
+    "match": {
+      "stage": "preprocess"
+    },
+    "field": "p95"
+  },
+  "preprocess_p95_ms_frame_onnx_cpu": {
+    "value": 22.023,
+    "source": "runs/l11_quality_onnx/stages.csv",
+    "match": {
+      "stage": "preprocess"
+    },
+    "field": "p95"
+  },
+  "postprocess_p95_ms_frame_pytorch_cpu": {
+    "value": 1.01,
+    "source": "runs/l10_s1_nominal/stages.csv",
+    "match": {
+      "stage": "postprocess"
+    },
+    "field": "p95"
+  },
+  "postprocess_p95_ms_frame_onnx_cpu": {
+    "value": 12.989,
+    "source": "runs/l11_quality_onnx/stages.csv",
+    "match": {
+      "stage": "postprocess"
+    },
+    "field": "p95"
+  },
   "recall_coco": {
     "value": 0.2066,
     "source": "runs_hw3/b0_640.json",
@@ -311,13 +359,5 @@
       "class": "bicycle"
     },
     "field": "recall"
-  },
-  "rss_growth_extrapolated_mb": {
-    "value": 3307.7,
-    "source": "runs/l12_stability/stability.json",
-    "match": {
-      "check": "rss_growth_extrapolated_mb"
-    },
-    "field": "value"
   }
 }

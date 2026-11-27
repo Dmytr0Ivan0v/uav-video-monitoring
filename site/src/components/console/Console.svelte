@@ -20,9 +20,10 @@
     t: Dict['console'];
     lang: string;
     clip: ClipDoc;
+    facts: Record<string, string>;   // facts.json as story variables
   }
 
-  let { t, lang, clip }: Props = $props();
+  let { t, lang, clip, facts }: Props = $props();
 
   let root: HTMLElement;
   let video = $state() as HTMLVideoElement;
@@ -262,7 +263,7 @@
         <EventLog {t} {clip} {replay} {stepIndex} />
       </aside>
       <div class="outcome">
-        <Result {t} runId={shownId} run={replay.run} />
+        <Result {t} runId={shownId} run={replay.run} {facts} />
       </div>
     </div>
   {/if}
